@@ -1,26 +1,264 @@
 @import "tailwindcss";
 
+/* =========================================================
+   CRUSTEA — DESIGN TOKENS
+   ========================================================= */
+
 :root {
+  /* Radius */
+  --radius: 0.5rem;
+
+  /* Brand Colors */
+  --brand-primary: #abc937;
+  --brand-secondary: #658c64;
+  --brand-dark: #05546a;
+
+  /* Base */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #05546a;
+
+  /* Cards & Popovers */
+  --card: #ffffff;
+  --card-foreground: #05546a;
+
+  --popover: #ffffff;
+  --popover-foreground: #05546a;
+
+  /* Primary */
+  --primary: #abc937;
+  --primary-foreground: #ffffff;
+
+  /* Secondary */
+  --secondary: #f1f5ed;
+  --secondary-foreground: #05546a;
+
+  /* Muted */
+  --muted: #f6f8f4;
+  --muted-foreground: #658c64;
+
+  /* Accent */
+  --accent: #edf4d6;
+  --accent-foreground: #05546a;
+
+  /* Destructive */
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  /* Borders & Inputs */
+  --border: #e4e9df;
+  --input: #e4e9df;
+  --ring: #abc937;
+
+  /* Charts */
+  --chart-1: #abc937;
+  --chart-2: #658c64;
+  --chart-3: #05546a;
+  --chart-4: #8fae42;
+  --chart-5: #3f765f;
+
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #05546a;
+  --sidebar-primary: #abc937;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f1f5ed;
+  --sidebar-accent-foreground: #05546a;
+  --sidebar-border: #e4e9df;
+  --sidebar-ring: #abc937;
 }
+
+
+/* =========================================================
+   TAILWIND THEME
+   ========================================================= */
 
 @theme inline {
+  /* Fonts */
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Base Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Brand Colors */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-dark: var(--brand-dark);
+
+  /* Semantic Colors */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* UI */
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Charts */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+  }
+
+  button,
+  a {
+    letter-spacing: 0;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+/* =========================================================
+   CUSTOM UTILITIES
+   ========================================================= */
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility hero-grid {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in oklch, var(--border) 65%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--border) 65%, transparent) 1px,
+      transparent 1px
+    );
+
+  background-size: 64px 64px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black,
+    transparent 85%
+  );
+}
+
+
+/* =========================================================
+   ACCESSIBILITY / REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@keyframes story-slider {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 0.75rem));
+  }
+}
+
+.story-slider-track {
+  animation: story-slider 38s linear infinite;
+}
+
+.story-slider-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-slider-track {
+    animation: none;
+  }
+}
+
+
+/* =========================================================
+   SERVICES TIMELINE
+   ========================================================= */
+
+.service-line {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .service-line::before {
+    content: "";
+    position: absolute;
+    top: -1.5rem;
+    left: 2.4rem;
+    right: 2.4rem;
+    border-top: 2px dashed color-mix(
+      in srgb,
+      var(--brand-primary) 80%,
+      transparent
+    );
+  }
 }
