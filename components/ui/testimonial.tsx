@@ -28,14 +28,14 @@ const testimonials: Testimonial[] = [
     role: "Pembudidaya udang, Jawa Tengah",
     quote:
       "Teknologi yang diberikan Crustea membantu kami lebih mudah memahami kondisi tambak dan mengambil keputusan selama proses budidaya.",
-    image: "/img/testimoni.webp",
+    image: "/img/testimoni2.webp",
   },
   {
     name: "Bapak Rudi Santoso",
     role: "Pengelola tambak, Jawa Timur",
     quote:
       "Yang paling kami rasakan bukan hanya dari teknologinya, tetapi juga pendampingan dari tim Crustea selama proses budidaya berlangsung.",
-    image: "/img/testimoni.webp",
+    image: "/img/testimoni3.webp",
   },
 ];
 

@@ -15,24 +15,24 @@ const news: NewsItem[] = [
     excerpt:
       "Bagaimana teknologi dapat membantu pembudidaya meningkatkan produktivitas, efisiensi, dan keberlanjutan dalam pengelolaan tambak.",
     date: "2026-09-15",
-    image: "/img/about-us.webp",
-    href: "/news/teknologi-akuakultur-berkelanjutan",
+    image: "/img/berita/artikel1.webp",
+    href: "/berita/teknologi-akuakultur-berkelanjutan",
   },
   {
     title: "Meningkatkan Efisiensi Tambak dengan Eco-Aerator",
     excerpt:
       "Pemanfaatan teknologi aerasi yang lebih efisien membantu pembudidaya mengelola kebutuhan oksigen sekaligus mengoptimalkan penggunaan energi.",
     date: "2026-09-10",
-    image: "/img/about-us.webp",
-    href: "/news/meningkatkan-efisiensi-tambak-dengan-eco-aerator",
+    image: "/img/berita/artikel2.webp",
+    href: "/berita/meningkatkan-efisiensi-tambak-dengan-eco-aerator",
   },
   {
     title: "Menjaga Kualitas Air untuk Budidaya Udang",
     excerpt:
       "Kualitas air menjadi salah satu faktor penting dalam keberhasilan budidaya. Pemantauan parameter air membantu pembudidaya mengambil keputusan dengan lebih tepat.",
     date: "2026-09-05",
-    image: "/img/about-us.webp",
-    href: "/news/menjaga-kualitas-air-budidaya-udang",
+    image: "/img/berita/artikel3.webp",
+    href: "/berita/menjaga-kualitas-air-budidaya-udang",
   },
   {
     title: "Masa Depan Akuakultur Berbasis Teknologi",
@@ -40,7 +40,7 @@ const news: NewsItem[] = [
       "Perkembangan teknologi membuka peluang baru untuk menciptakan proses budidaya yang lebih terukur, efisien, dan berkelanjutan.",
     date: "2026-08-28",
     image: "/img/about-us.webp",
-    href: "/news/masa-depan-akuakultur-berbasis-teknologi",
+    href: "/berita/masa-depan-akuakultur-berbasis-teknologi",
   },
   {
     title: "Energi Terbarukan untuk Budidaya Tambak",
@@ -48,7 +48,7 @@ const news: NewsItem[] = [
       "Pemanfaatan energi terbarukan menjadi salah satu pendekatan untuk mengurangi ketergantungan terhadap energi konvensional dalam operasional tambak.",
     date: "2026-08-20",
     image: "/img/about-us.webp",
-    href: "/news/energi-terbarukan-untuk-budidaya-tambak",
+    href: "/berita/energi-terbarukan-untuk-budidaya-tambak",
   },
 ];
 

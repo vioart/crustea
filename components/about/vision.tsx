@@ -102,7 +102,7 @@ export default function Vision() {
 
             <div className="relative min-h-[320px] lg:min-h-[520px]">
               <img
-                src="/img/bg-hero.webp"
+                src="/img/visi.webp"
                 alt="Teknologi smart farming untuk masa depan akuakultur"
                 width={1200}
                 height={900}

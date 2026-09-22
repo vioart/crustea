@@ -54,31 +54,19 @@ const companyLinks = [
     href: "/tentang-kami",
   },
   {
-    label: "Cerita Pelanggan",
-    href: "/tentang-kami/cerita-pelanggan",
-  },
-  {
     label: "Kemitraan",
     href: "/produk/kemitraan",
-  },
-  {
-    label: "Karier",
-    href: "/karier",
   },
 ];
 
 const resourceLinks = [
   {
-    label: "News",
-    href: "/news",
-  },
-  {
-    label: "Pusat Bantuan",
-    href: "/pusat-bantuan",
+    label: "Berita",
+    href: "/berita",
   },
   {
     label: "FAQ",
-    href: "/pusat-bantuan#faq",
+    href: "/faq",
   },
   {
     label: "Syarat & Ketentuan",
@@ -87,10 +75,6 @@ const resourceLinks = [
   {
     label: "Kebijakan Privasi",
     href: "/kebijakan-privasi",
-  },
-  {
-    label: "Kebijakan Garansi",
-    href: "/kebijakan-garansi",
   },
 ];
 
@@ -282,7 +266,6 @@ export default function Footer() {
             </FooterColumn>
           </div>
         </div>
-
 
         {/* =====================================================
             BOTTOM

@@ -1,10 +1,6 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Mail,
-  MessageCircle,
-  Waves,
-} from "lucide-react";
+import { ArrowRight, Mail, Waves } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function CTASection() {
   return (
@@ -29,7 +25,6 @@ export default function CTASection() {
 
           {/* =================================================
               BASE OVERLAY
-              Sama seperti Hero
           ================================================= */}
           <div
             className="absolute inset-0 bg-black/45"
@@ -38,8 +33,6 @@ export default function CTASection() {
 
           {/* =================================================
               GRADIENT OVERLAY
-              Sisi kiri lebih gelap untuk teks,
-              sisi kanan tetap sedikit gelap untuk tombol.
           ================================================= */}
           <div
             className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/40 to-black/20"
@@ -95,9 +88,8 @@ export default function CTASection() {
                   rel="noopener noreferrer"
                   className="group inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-semibold text-brand-dark transition-all duration-300 hover:bg-primary/90"
                 >
-                  <MessageCircle
-                    className="size-4"
-                    strokeWidth={2}
+                  <FaWhatsapp
+                    className="size-[18px]"
                     aria-hidden="true"
                   />
 

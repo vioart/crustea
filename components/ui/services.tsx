@@ -1,6 +1,4 @@
-import Link from "next/link";
 import {
-  ArrowRight,
   Check,
   ClipboardCheck,
   Handshake,
@@ -9,15 +7,11 @@ import {
   Waves,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-
 type Service = {
   number: string;
   phase: string;
   title: string;
   items: string[];
-  action: string;
-  href: string;
   icon: typeof ClipboardCheck;
 };
 
@@ -31,8 +25,6 @@ const services: Service[] = [
       "Desain dan konstruksi kolam",
       "Perhitungan kebutuhan aerasi & energi",
     ],
-    action: "Jadwalkan Survei",
-    href: "/kontak",
     icon: ClipboardCheck,
   },
   {
@@ -44,8 +36,6 @@ const services: Service[] = [
       "Pemasangan oleh teknisi",
       "Pelatihan operator tambak",
     ],
-    action: "Hitung Penghematan",
-    href: "/produk/eco-aerator",
     icon: Settings2,
   },
   {
@@ -57,8 +47,6 @@ const services: Service[] = [
       "Aerator otomatis",
       "Peringatan dini gangguan",
     ],
-    action: "Lihat Cara Kerja",
-    href: "/produk/crustea-aio",
     icon: Sprout,
   },
   {
@@ -70,8 +58,6 @@ const services: Service[] = [
       "Akses pasar hasil panen",
       "Pengolahan limbah",
     ],
-    action: "Ajukan Kemitraan",
-    href: "/produk/kemitraan",
     icon: Handshake,
   },
 ];
@@ -119,21 +105,23 @@ export default function Services() {
             className="max-w-3xl font-display text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-4xl lg:text-[42px]"
           >
             Dari persiapan hingga pasar,{" "}
-            <span className="text-primary">kami mendampingi setiap tahap.</span>
+            <span className="text-primary">
+              kami mendampingi setiap tahap.
+            </span>
           </h2>
         </header>
 
         {/* =====================================================
             SERVICES TIMELINE
         ===================================================== */}
-        <div className="service-line relative mt-16 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="service-line relative mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => {
             const Icon = service.icon;
 
             return (
               <article
                 key={service.number}
-                className="group relative flex min-h-[350px] flex-col rounded-[24px] border border-border bg-background p-6 pt-10 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                className="group relative flex h-full min-h-[280px] flex-col rounded-[24px] border border-border bg-background p-6 pt-10 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
               >
                 {/* =================================================
                     STEP NUMBER
@@ -152,7 +140,10 @@ export default function Services() {
                   className="absolute right-6 top-11 flex size-9 items-center justify-center rounded-lg bg-secondary text-brand-secondary transition-colors duration-300 group-hover:bg-accent group-hover:text-primary"
                   aria-hidden="true"
                 >
-                  <Icon className="size-[18px]" strokeWidth={1.8} />
+                  <Icon
+                    className="size-[18px]"
+                    strokeWidth={1.8}
+                  />
                 </div>
 
                 {/* =================================================
@@ -174,7 +165,7 @@ export default function Services() {
                 ================================================= */}
                 <ul
                   aria-label={`Layanan ${service.title}`}
-                  className="mt-7 space-y-3.5"
+                  className="mt-6 space-y-3.5"
                 >
                   {service.items.map((item) => (
                     <li
@@ -191,20 +182,6 @@ export default function Services() {
                     </li>
                   ))}
                 </ul>
-
-                {/* =================================================
-                    ACTION
-                ================================================= */}
-                <Button
-                  size="sm"
-                  className="mt-auto w-full bg-brand-dark text-white hover:bg-brand-dark/90"
-                  asChild
-                >
-                  <Link href={service.href}>
-                    {service.action}
-                    <ArrowRight />
-                  </Link>
-                </Button>
               </article>
             );
           })}

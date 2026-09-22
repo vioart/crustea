@@ -10,37 +10,37 @@ type SliderImage = {
 
 const images: SliderImage[] = [
   {
-    src: "/img/bg-hero.webp",
+    src: "/img/produk3.png",
     alt: "Teknologi akuakultur Crustea",
     title: "Inovasi Teknologi Akuakultur",
     category: "Teknologi",
   },
   {
-    src: "/img/bg-hero.webp",
+    src: "/img/lapangan.jpg",
     alt: "Implementasi teknologi Crustea di lapangan",
     title: "Implementasi di Lapangan",
     category: "Implementasi",
   },
   {
-    src: "/img/bg-hero.webp",
+    src: "/img/mendampingi.jpg",
     alt: "Tim Crustea mendampingi pembudidaya tambak",
     title: "Mendampingi Pembudidaya",
     category: "Lapangan",
   },
   {
-    src: "/img/bg-hero.webp",
+    src: "/img/awards5.png",
     alt: "Tim Crustea mengembangkan teknologi akuakultur",
     title: "Kolaborasi dan Pengembangan",
     category: "Tim Crustea",
   },
   {
-    src: "/img/bg-hero.webp",
+    src: "/img/awards1.png",
     alt: "Crustea menerima penghargaan atas inovasi teknologi",
     title: "Apresiasi atas Inovasi",
     category: "Pencapaian",
   },
   {
-    src: "/img/bg-hero.webp",
+    src: "/img/awards3.png",
     alt: "Pencapaian Crustea dalam pengembangan teknologi",
     title: "Mendorong Dampak yang Lebih Luas",
     category: "Pencapaian",

@@ -30,7 +30,7 @@ export default function Story() {
           <div className="relative">
             <div className="overflow-hidden rounded-[24px]">
               <img
-                src="/img/about-us.webp"
+                src="/img/about-us.jpg"
                 alt="Tim Crustea bekerja bersama pembudidaya tambak di Indonesia"
                 width={1200}
                 height={900}

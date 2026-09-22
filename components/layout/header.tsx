@@ -215,12 +215,12 @@ export default function Header() {
               </NavigationMenuItem>
 
               {/* -------------------------------------------------
-                  ARTIKEL
+                  BERITA
               ------------------------------------------------- */}
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
-                    href="/artikel"
+                    href="/berita"
                     className={cn(
                       "inline-flex h-9 items-center rounded-md px-4 py-2 text-sm font-medium transition-colors",
                       isSolid
@@ -228,7 +228,7 @@ export default function Header() {
                         : "text-white hover:bg-white/10",
                     )}
                   >
-                    Artikel
+                    Berita
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
@@ -316,7 +316,13 @@ export default function Header() {
 
             {/* CTA */}
             <Button asChild>
-              <Link href="/kontak">Hubungi Kami</Link>
+              <a
+                href="https://wa.me/6282140773592"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Hubungi Kami
+              </a>
             </Button>
           </div>
 
@@ -581,7 +587,7 @@ const productLinks: LinkItem[] = [
   },
   {
     title: "Produk Olahan - Krasty",
-    href: "/produk/krasty",
+    href: "/produk/produk-olahan",
     description: "Produk olahan hasil perikanan dengan cita rasa khas.",
     icon: Package,
   },
@@ -624,12 +630,6 @@ const companyLinks: LinkItem[] = [
     icon: Users,
   },
   {
-    title: "Cerita Pelanggan",
-    href: "/tentang-kami/cerita-pelanggan",
-    description: "Lihat pengalaman dan cerita dari pelanggan kami.",
-    icon: Star,
-  },
-  {
     title: "Kemitraan",
     href: "/produk/kemitraan",
     description: "Kolaborasi dan peluang kemitraan bersama Crustea.",
@@ -649,13 +649,8 @@ const companyLinks2: LinkItem[] = [
     icon: Shield,
   },
   {
-    title: "Kebijakan Garansi",
-    href: "/kebijakan-garansi",
-    icon: RotateCcw,
-  },
-  {
-    title: "Pusat Bantuan",
-    href: "/pusat-bantuan",
+    title: "FAQ",
+    href: "/faq",
     icon: HelpCircle,
   },
 ];
@@ -665,22 +660,27 @@ const companyLinks2: LinkItem[] = [
    ========================================================= */
 
 function useScroll(threshold: number) {
-  const [scrolled, setScrolled] = React.useState(false);
-
-  const onScroll = React.useCallback(
-    () => setScrolled(window.scrollY > threshold),
-    [threshold],
-  );
-
-  React.useEffect(() => {
-    onScroll();
-
-    window.addEventListener("scroll", onScroll, {
+  const subscribe = React.useCallback((callback: () => void) => {
+    window.addEventListener("scroll", callback, {
       passive: true,
     });
 
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [onScroll]);
+    return () => {
+      window.removeEventListener("scroll", callback);
+    };
+  }, []);
 
-  return scrolled;
+  const getSnapshot = React.useCallback(() => {
+    return window.scrollY > threshold;
+  }, [threshold]);
+
+  const getServerSnapshot = React.useCallback(() => {
+    return false;
+  }, []);
+
+  return React.useSyncExternalStore(
+    subscribe,
+    getSnapshot,
+    getServerSnapshot,
+  );
 }

@@ -32,7 +32,7 @@ const products: Product[] = [
     image: "/img/ebii-system.webp",
     icon: Gauge,
     highlights: ["pH", "DO", "Salinitas", "Suhu"],
-    href: "/produk/ebii-system",
+    href: "/produk/software/ebii-system",
   },
   {
     number: "02",
@@ -43,7 +43,7 @@ const products: Product[] = [
     image: "/img/eco-aerator.webp",
     icon: Leaf,
     highlights: ["Solar Panel", "Impeller", "Efisiensi Aerasi"],
-    href: "/produk/eco-aerator",
+    href: "/produk/hardware-teknologi/eco-aerator",
   },
   {
     number: "03",
@@ -54,7 +54,7 @@ const products: Product[] = [
     image: "/img/smart-energy.webp",
     icon: Smartphone,
     highlights: ["Monitor Energi", "Kontrol Jarak Jauh", "Via Smartphone"],
-    href: "/produk/smart-energy",
+    href: "/produk/hardware-teknologi/smart-energy",
   },
 ];
 

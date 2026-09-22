@@ -114,12 +114,12 @@ export default function Home() {
           <div className="relative mx-auto max-w-7xl px-5 py-20 sm:py-24 lg:px-8 lg:py-28">
             <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
               {/* =================================================
-          IMAGE
-      ================================================= */}
+                  IMAGE
+              ================================================= */}
               <div className="relative">
                 <div className="overflow-hidden rounded-[24px]">
                   <img
-                    src="/img/about-us.webp"
+                    src="/img/about-us.jpg"
                     alt="Tim Crustea bekerja bersama pembudidaya tambak di Indonesia"
                     className="aspect-[4/3] h-full w-full object-cover"
                   />
@@ -127,8 +127,8 @@ export default function Home() {
               </div>
 
               {/* =================================================
-          CONTENT
-      ================================================= */}
+            CONTENT
+        ================================================= */}
               <div className="max-w-xl">
                 {/* Eyebrow */}
                 <p className="mb-4 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary">

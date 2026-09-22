@@ -144,7 +144,7 @@ export default function Challenges() {
           <div className="relative min-h-[320px] lg:min-h-0">
             <div className="relative h-full min-h-[320px] overflow-hidden rounded-[28px] border border-border bg-background lg:min-h-full">
               <img
-                src="/img/bg-hero.webp"
+                src="/img/tantangan.jpg"
                 alt="Pembudidaya tambak dalam aktivitas budidaya"
                 width={1200}
                 height={900}
