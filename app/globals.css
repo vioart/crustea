@@ -262,3 +262,20 @@
     );
   }
 }
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+
+/* Keep browser autofill consistent with the login input */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: white !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.07) inset !important;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.07) inset !important;
+  caret-color: white;
+  transition: background-color 9999s ease-in-out 0s;
+}
