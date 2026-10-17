@@ -1,9 +1,10 @@
+
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import { createPortal } from "react-dom";
-import { usePathname } from "next/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import type { LucideIcon } from "lucide-react";
 import {
   Calculator,
@@ -16,11 +17,9 @@ import {
   HelpCircle,
   Layers3,
   Package,
-  RotateCcw,
   Shield,
   ShoppingCart,
   Sprout,
-  Star,
   Users,
 } from "lucide-react";
 
@@ -45,13 +44,25 @@ type LinkItem = {
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+  const t = useTranslations("Header");
+
+  const language = locale === "en" ? "en" : "id";
 
   const [open, setOpen] = React.useState(false);
   const [languageOpen, setLanguageOpen] = React.useState(false);
-  const [language, setLanguage] = React.useState<"id" | "en">("id");
+
+  const chooseLanguage = (value: "id" | "en") => {
+    setLanguageOpen(false);
+    setOpen(false);
+
+    if (value === language) return;
+
+    router.replace(pathname, { locale: value });
+  };
 
   const scrolled = useScroll(10);
-
   const isHomePage = pathname === "/";
   const isSolid = !isHomePage || scrolled;
 
@@ -63,10 +74,83 @@ export default function Header() {
     };
   }, [open]);
 
-  const chooseLanguage = (value: "id" | "en") => {
-    setLanguage(value);
-    setLanguageOpen(false);
-  };
+  const productLinks: LinkItem[] = [
+    {
+      title: t("productsList.hardware.title"),
+      href: "/produk/hardware-teknologi",
+      description: t("productsList.hardware.description"),
+      icon: Cpu,
+    },
+    {
+      title: t("productsList.software.title"),
+      href: "/produk/software",
+      description: t("productsList.software.description"),
+      icon: Code2,
+    },
+    {
+      title: t("productsList.processedProduct.title"),
+      href: "/produk/produk-olahan",
+      description: t("productsList.processedProduct.description"),
+      icon: Package,
+    },
+    {
+      title: t("productsList.trading.title"),
+      href: "/produk/trading",
+      description: t("productsList.trading.description"),
+      icon: ShoppingCart,
+    },
+    {
+      title: t("productsList.aquagrowth.title"),
+      href: "/produk/aquagrowth",
+      description: t("productsList.aquagrowth.description"),
+      icon: Sprout,
+    },
+    {
+      title: t("productsList.partnership.title"),
+      href: "/produk/kemitraan",
+      description: t("productsList.partnership.description"),
+      icon: Handshake,
+    },
+    {
+      title: t("productsList.calculator.title"),
+      href: "/produk/kalkulator-budidaya",
+      description: t("productsList.calculator.description"),
+      icon: Calculator,
+    },
+  ];
+
+  const companyLinks: LinkItem[] = [
+    {
+      title: t("companyLinks.about.title"),
+      href: "/tentang-kami",
+      description: t("companyLinks.about.description"),
+      icon: Users,
+    },
+    {
+      title: t("companyLinks.partnership.title"),
+      href: "/produk/kemitraan",
+      description: t("companyLinks.partnership.description"),
+      icon: Handshake,
+    },
+  ];
+
+  const companyLinks2: LinkItem[] = [
+    {
+      title: t("companyLinks.terms"),
+      href: "/syarat-ketentuan",
+      icon: FileText,
+    },
+    {
+      title: t("companyLinks.privacy"),
+      href: "/kebijakan-privasi",
+      icon: Shield,
+    },
+    {
+      title: t("companyLinks.faq"),
+      href: "/faq",
+      icon: HelpCircle,
+    },
+  ];
 
   return (
     <>
@@ -79,25 +163,17 @@ export default function Header() {
         )}
       >
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 lg:px-8">
-          {/* =====================================================
-              LOGO
-          ===================================================== */}
           <Link href="/" className="flex items-center" aria-label="Crustea">
             <img
-              src={isSolid ? "/logo.svg" : "/logo.svg"}
+              src="/logo.svg"
               alt="Crustea logo"
               className="h-9 w-auto object-contain transition-opacity duration-300"
             />
           </Link>
 
-          {/* =====================================================
-              DESKTOP NAVIGATION
-          ===================================================== */}
+          {/* Navigasi desktop */}
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
-              {/* -------------------------------------------------
-                  BERANDA
-              ------------------------------------------------- */}
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
@@ -109,14 +185,12 @@ export default function Header() {
                         : "text-white hover:bg-white/10",
                     )}
                   >
-                    Beranda
+                    {t("home")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              {/* -------------------------------------------------
-                  PRODUK
-              ------------------------------------------------- */}
+              {/* Dropdown produk */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn(
@@ -126,19 +200,17 @@ export default function Header() {
                       : "!text-white hover:!bg-white/10 hover:!text-white",
                   )}
                 >
-                  Produk
+                  {t("products")}
                 </NavigationMenuTrigger>
 
                 <NavigationMenuContent>
                   <div className="grid w-[760px] grid-cols-[1fr_210px] gap-2 p-3">
-                    {/* Product Links */}
                     <ul className="grid grid-cols-2 gap-1">
                       {productLinks.map((item) => (
-                        <ListItem key={item.title} {...item} />
+                        <ListItem key={item.href} {...item} />
                       ))}
                     </ul>
 
-                    {/* Product Highlight */}
                     <div className="flex flex-col justify-between rounded-md bg-secondary p-5">
                       <div>
                         <div className="mb-4 flex size-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
@@ -146,33 +218,29 @@ export default function Header() {
                         </div>
 
                         <p className="font-display text-lg font-semibold text-secondary-foreground">
-                          Solusi Akuakultur Crustea
+                          {t("productSolutionTitle")}
                         </p>
 
                         <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                          Teknologi dan solusi terintegrasi untuk mendukung
-                          kebutuhan budidaya dan bisnis akuakultur.
+                          {t("productSolutionDescription")}
                         </p>
                       </div>
 
                       <p className="mt-7 text-sm text-muted-foreground">
-                        Ingin mengetahui lebih lanjut?{" "}
-                        <a
+                        {t("learnMore")}{" "}
+                        <Link
                           href="/kontak"
                           className="font-medium text-foreground underline underline-offset-4"
                         >
-                          Hubungi kami
-                        </a>
+                          {t("contactUsLink")}
+                        </Link>
                       </p>
                     </div>
                   </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {/* -------------------------------------------------
-                  TENTANG KAMI
-                  Menggunakan struktur Company dari template awal
-              ------------------------------------------------- */}
+              {/* Dropdown tentang kami */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn(
@@ -182,30 +250,28 @@ export default function Header() {
                       : "!text-white hover:!bg-white/10 hover:!text-white",
                   )}
                 >
-                  Tentang Kami
+                  {t("about")}
                 </NavigationMenuTrigger>
 
                 <NavigationMenuContent>
                   <div className="grid w-[620px] grid-cols-[1fr_210px] gap-2 p-3">
-                    {/* Company Links - kiri */}
                     <ul className="space-y-1">
                       {companyLinks.map((item) => (
-                        <ListItem key={item.title} {...item} />
+                        <ListItem key={item.href} {...item} />
                       ))}
                     </ul>
 
-                    {/* Company Links - kanan */}
                     <ul className="rounded-md bg-secondary p-2">
                       {companyLinks2.map((item) => (
-                        <li key={item.title}>
+                        <li key={item.href}>
                           <NavigationMenuLink asChild>
-                            <a
+                            <Link
                               href={item.href}
                               className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-secondary-foreground transition-colors hover:bg-background"
                             >
                               <item.icon className="size-4 text-muted-foreground" />
                               {item.title}
-                            </a>
+                            </Link>
                           </NavigationMenuLink>
                         </li>
                       ))}
@@ -214,9 +280,6 @@ export default function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {/* -------------------------------------------------
-                  BERITA
-              ------------------------------------------------- */}
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
@@ -228,14 +291,11 @@ export default function Header() {
                         : "text-white hover:bg-white/10",
                     )}
                   >
-                    Berita
+                    {t("news")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              {/* -------------------------------------------------
-                  KONTAK
-              ------------------------------------------------- */}
               <NavigationMenuItem>
                 <NavigationMenuLink asChild>
                   <Link
@@ -247,24 +307,21 @@ export default function Header() {
                         : "text-white hover:bg-white/10",
                     )}
                   >
-                    Kontak
+                    {t("contact")}
                   </Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* =====================================================
-              DESKTOP ACTIONS
-          ===================================================== */}
+          {/* Pemilih bahasa desktop */}
           <div className="hidden items-center gap-2 md:flex">
-            {/* Language */}
             <div className="relative">
               <Button
                 variant="ghost"
                 onClick={() => setLanguageOpen((current) => !current)}
                 aria-expanded={languageOpen}
-                aria-label="Pilih bahasa"
+                aria-label={t("chooseLanguage")}
                 className={cn(
                   isSolid
                     ? "text-foreground hover:bg-accent"
@@ -272,7 +329,6 @@ export default function Header() {
                 )}
               >
                 <Globe2 className="size-4" />
-
                 {language === "id" ? "ID" : "EN"}
 
                 <ChevronDown
@@ -283,7 +339,7 @@ export default function Header() {
                 />
               </Button>
 
-              {languageOpen ? (
+              {languageOpen && (
                 <div className="absolute right-0 top-11 w-44 rounded-md border border-border bg-popover p-1.5 text-popover-foreground shadow-lg">
                   <Button
                     type="button"
@@ -311,24 +367,21 @@ export default function Header() {
                     <span className="text-xs text-muted-foreground">EN</span>
                   </Button>
                 </div>
-              ) : null}
+              )}
             </div>
 
-            {/* CTA */}
             <Button asChild>
               <a
                 href="https://wa.me/6282140773592"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Hubungi Kami
+                {t("contactUs")}
               </a>
             </Button>
           </div>
 
-          {/* =====================================================
-              MOBILE MENU BUTTON
-          ===================================================== */}
+          {/* Tombol menu mobile */}
           <Button
             variant="ghost"
             size="icon"
@@ -336,51 +389,46 @@ export default function Header() {
             className="md:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
-            aria-label={open ? "Tutup menu" : "Buka menu"}
+            aria-label={open ? t("closeMenu") : t("openMenu")}
           >
             <MenuToggleIcon open={open} />
           </Button>
         </div>
       </header>
 
-      {/* =========================================================
-          MOBILE MENU
-      ========================================================= */}
+      {/* Navigasi mobile */}
       <MobileMenu open={open} id="mobile-menu">
         <nav
           className="flex flex-1 flex-col overflow-y-auto px-5 pb-5 pt-28"
-          aria-label="Navigasi utama"
+          aria-label={t("mainNavigation")}
         >
-          {/* Beranda */}
           <Link
             href="/"
             onClick={() => setOpen(false)}
             className="flex items-center border-b border-border py-4 text-sm font-semibold text-foreground"
           >
-            Beranda
+            {t("home")}
           </Link>
 
-          {/* Produk */}
           <p className="mb-3 mt-8 text-xs font-semibold uppercase text-muted-foreground">
-            Produk
+            {t("products")}
           </p>
 
           {productLinks.map((link) => (
             <MobileLink
-              key={link.title}
+              key={link.href}
               item={link}
               onClick={() => setOpen(false)}
             />
           ))}
 
-          {/* Tentang Kami */}
           <p className="mb-3 mt-8 text-xs font-semibold uppercase text-muted-foreground">
-            Tentang Kami
+            {t("about")}
           </p>
 
           {companyLinks.map((link) => (
             <MobileLink
-              key={link.title}
+              key={link.href}
               item={link}
               onClick={() => setOpen(false)}
             />
@@ -388,35 +436,33 @@ export default function Header() {
 
           {companyLinks2.map((link) => (
             <MobileLink
-              key={link.title}
+              key={link.href}
               item={link}
               onClick={() => setOpen(false)}
               compact
             />
           ))}
 
-          {/* Artikel */}
-          <a
-            href="/artikel"
+          <Link
+            href="/berita"
             onClick={() => setOpen(false)}
             className="mt-8 flex items-center border-b border-border py-4 text-sm font-semibold text-foreground"
           >
-            Artikel
-          </a>
+            {t("news")}
+          </Link>
 
-          {/* Kontak */}
-          <a
+          <Link
             href="/kontak"
             onClick={() => setOpen(false)}
             className="flex items-center border-b border-border py-4 text-sm font-semibold text-foreground"
           >
-            Kontak
-          </a>
+            {t("contact")}
+          </Link>
 
-          {/* Bahasa */}
+          {/* Pemilih bahasa mobile */}
           <div className="mt-8">
             <p className="mb-3 text-xs font-semibold uppercase text-muted-foreground">
-              Bahasa
+              {t("language")}
             </p>
 
             <div className="grid grid-cols-2 gap-2">
@@ -424,7 +470,9 @@ export default function Header() {
                 type="button"
                 variant="outline"
                 onClick={() => chooseLanguage("id")}
-                className={cn(language === "id" && "border-primary bg-accent")}
+                className={cn(
+                  language === "id" && "border-primary bg-accent",
+                )}
               >
                 Indonesia
                 <span className="ml-auto text-xs text-muted-foreground">
@@ -436,7 +484,9 @@ export default function Header() {
                 type="button"
                 variant="outline"
                 onClick={() => chooseLanguage("en")}
-                className={cn(language === "en" && "border-primary bg-accent")}
+                className={cn(
+                  language === "en" && "border-primary bg-accent",
+                )}
               >
                 English
                 <span className="ml-auto text-xs text-muted-foreground">
@@ -447,10 +497,9 @@ export default function Header() {
           </div>
         </nav>
 
-        {/* Mobile CTA */}
         <div className="border-t border-border p-5">
           <Button className="w-full" onClick={() => setOpen(false)} asChild>
-            <a href="/kontak">Hubungi Kami</a>
+            <Link href="/kontak">{t("contactUs")}</Link>
           </Button>
         </div>
       </MobileMenu>
@@ -458,15 +507,16 @@ export default function Header() {
   );
 }
 
-/* =========================================================
-   MOBILE MENU
-   ========================================================= */
-
 type MobileMenuProps = React.ComponentProps<"div"> & {
   open: boolean;
 };
 
-function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
+function MobileMenu({
+  open,
+  children,
+  className,
+  ...props
+}: MobileMenuProps) {
   if (!open || typeof window === "undefined") {
     return null;
   }
@@ -485,10 +535,6 @@ function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
   );
 }
 
-/* =========================================================
-   DESKTOP DROPDOWN ITEM
-   ========================================================= */
-
 function ListItem({
   title,
   description,
@@ -500,7 +546,7 @@ function ListItem({
   return (
     <li className={className} {...props}>
       <NavigationMenuLink asChild>
-        <a
+        <Link
           href={href}
           className="flex gap-3 rounded-md p-3 transition-colors hover:bg-accent focus:bg-accent"
         >
@@ -519,15 +565,11 @@ function ListItem({
               </span>
             )}
           </span>
-        </a>
+        </Link>
       </NavigationMenuLink>
     </li>
   );
 }
-
-/* =========================================================
-   MOBILE LINK
-   ========================================================= */
 
 function MobileLink({
   item,
@@ -541,7 +583,7 @@ function MobileLink({
   const Icon = item.icon;
 
   return (
-    <a
+    <Link
       href={item.href}
       onClick={onClick}
       className={cn(
@@ -564,100 +606,9 @@ function MobileLink({
           </span>
         )}
       </span>
-    </a>
+    </Link>
   );
 }
-
-/* =========================================================
-   PRODUCT MENU
-   ========================================================= */
-
-const productLinks: LinkItem[] = [
-  {
-    title: "Hardware Teknologi",
-    href: "/produk/hardware-teknologi",
-    description: "Teknologi perangkat untuk mendukung kebutuhan akuakultur.",
-    icon: Cpu,
-  },
-  {
-    title: "Software",
-    href: "/produk/software",
-    description: "Solusi perangkat lunak untuk membantu pengelolaan bisnis.",
-    icon: Code2,
-  },
-  {
-    title: "Produk Olahan - Krasty",
-    href: "/produk/produk-olahan",
-    description: "Produk olahan hasil perikanan dengan cita rasa khas.",
-    icon: Package,
-  },
-  {
-    title: "Trading",
-    href: "/produk/trading",
-    description: "Solusi perdagangan dan distribusi produk akuakultur.",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Aquagrowth",
-    href: "/produk/aquagrowth",
-    description: "Solusi untuk mendukung pertumbuhan dan pengembangan usaha.",
-    icon: Sprout,
-  },
-  {
-    title: "Kemitraan",
-    href: "/produk/kemitraan",
-    description: "Peluang kolaborasi dan kemitraan bersama Crustea.",
-    icon: Handshake,
-  },
-  {
-    title: "Kalkulator Budidaya",
-    href: "/produk/kalkulator-budidaya",
-    description: "Alat bantu perhitungan untuk kebutuhan budidaya.",
-    icon: Calculator,
-  },
-];
-
-/* =========================================================
-   TENTANG KAMI
-   Struktur ini sengaja mengikuti COMPANY dari template awal
-   ========================================================= */
-
-const companyLinks: LinkItem[] = [
-  {
-    title: "Tentang Kami",
-    href: "/tentang-kami",
-    description: "Mengenal lebih dekat Crustea, perjalanan, dan tim kami.",
-    icon: Users,
-  },
-  {
-    title: "Kemitraan",
-    href: "/produk/kemitraan",
-    description: "Kolaborasi dan peluang kemitraan bersama Crustea.",
-    icon: Handshake,
-  },
-];
-
-const companyLinks2: LinkItem[] = [
-  {
-    title: "Syarat & Ketentuan",
-    href: "/syarat-ketentuan",
-    icon: FileText,
-  },
-  {
-    title: "Kebijakan Privasi",
-    href: "/kebijakan-privasi",
-    icon: Shield,
-  },
-  {
-    title: "FAQ",
-    href: "/faq",
-    icon: HelpCircle,
-  },
-];
-
-/* =========================================================
-   SCROLL DETECTION
-   ========================================================= */
 
 function useScroll(threshold: number) {
   const subscribe = React.useCallback((callback: () => void) => {
@@ -674,9 +625,7 @@ function useScroll(threshold: number) {
     return window.scrollY > threshold;
   }, [threshold]);
 
-  const getServerSnapshot = React.useCallback(() => {
-    return false;
-  }, []);
+  const getServerSnapshot = React.useCallback(() => false, []);
 
   return React.useSyncExternalStore(
     subscribe,

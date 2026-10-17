@@ -1,135 +1,60 @@
+"use client";
+
 import {
   ArrowRight,
   BarChart3,
   Building2,
   Handshake,
   Leaf,
-  LineChart,
   RefreshCw,
   Settings,
   ShoppingBag,
   Users,
   Waves,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
-type ProductModel = {
-  title: string;
-  description: string;
-  icon: typeof ShoppingBag;
-};
+const productIcons = [ShoppingBag, RefreshCw, Settings];
 
-type ServiceModel = {
-  title: string;
-  description?: string;
-};
-
-const productModels: ProductModel[] = [
-  {
-    title: "Direct Selling",
-    description: "Penjualan teknologi secara langsung kepada pelanggan.",
-    icon: ShoppingBag,
-  },
-  {
-    title: "Leasing",
-    description: "Skema penggunaan teknologi melalui model sewa.",
-    icon: RefreshCw,
-  },
-  {
-    title: "PaaS / SaaS",
-    description: "Layanan teknologi berbasis platform dan software.",
-    icon: Settings,
-  },
-];
-
-const serviceModels: ServiceModel[] = [
-  {
-    title: "Shrimp Trading & Processing Products",
-  },
-  {
-    title: "Projects",
-    description: "Aquaculture, Empowerment, Sustainability",
-  },
-  {
-    title: "Consulting & Technical Assistance",
-  },
-  {
-    title: "Technology Maintenance & Repair",
-  },
-];
-
-const businessMetrics = [
-  {
-    value: "200",
-    unit: "ppm",
-    label: "Production Capacity",
-    description: "Per month",
-  },
-  {
-    value: "$40M",
-    unit: "",
-    label: "Revenue Projected",
-    description: "in 2030",
-  },
-  {
-    value: "35%",
-    unit: "Up to",
-    label: "Gross Margin",
-    description: "",
-  },
-];
-
-const impactMetrics = [
-  {
-    value: "200%",
-    label: "Bigger & Higher Quality Shrimp",
-  },
-  {
-    value: "80%",
-    label: "Operational Cost Saving",
-  },
-  {
-    value: "23k",
-    label: "tCO₂e GHG Reduction",
-  },
-  {
-    value: "60%",
-    label: "Women Management",
-  },
-];
-
-const sdgs = [
-  {
-    src: "/img/sdg/SDGs-1.webp",
-    alt: "SDG 1 - Tanpa Kemiskinan",
-  },
-  {
-    src: "/img/sdg/SDGs-2.webp",
-    alt: "SDG 2 - Tanpa Kelaparan",
-  },
-  {
-    src: "/img/sdg/SDGs-7.webp",
-    alt: "SDG 7 - Energi Bersih dan Terjangkau",
-  },
-  {
-    src: "/img/sdg/SDGs-14.webp",
-    alt: "SDG 14 - Ekosistem Lautan",
-  },
-  {
-    src: "/img/sdg/SDGs-13.webp",
-    alt: "SDG 13 - Penanganan Perubahan Iklim",
-  },
+const sdgImages = [
+  { src: "/img/sdg/SDGs-1.webp", key: "sdg1" },
+  { src: "/img/sdg/SDGs-2.webp", key: "sdg2" },
+  { src: "/img/sdg/SDGs-7.webp", key: "sdg7" },
+  { src: "/img/sdg/SDGs-14.webp", key: "sdg14" },
+  { src: "/img/sdg/SDGs-13.webp", key: "sdg13" },
 ];
 
 export default function BusinessModel() {
+  const t = useTranslations("About.businessModel");
+
+  const productModels = t.raw("products.items") as {
+    title: string;
+    description: string;
+  }[];
+
+  const serviceModels = t.raw("services.items") as {
+    title: string;
+    description?: string;
+  }[];
+
+  const businessMetrics = t.raw("performance.items") as {
+    value: string;
+    unit: string;
+    label: string;
+    description: string;
+  }[];
+
+  const impactMetrics = t.raw("impact.metrics") as {
+    value: string;
+    label: string;
+  }[];
+
   return (
     <section
       aria-labelledby="business-model-title"
       className="relative overflow-hidden bg-background"
     >
-      {/* =====================================================
-          DECORATIVE BACKGROUND
-      ===================================================== */}
-
+      {/* DECORATIVE BACKGROUND */}
       <div
         className="pointer-events-none absolute -right-40 -top-40 size-[420px] rounded-full bg-secondary/70 blur-3xl"
         aria-hidden="true"
@@ -140,15 +65,9 @@ export default function BusinessModel() {
         aria-hidden="true"
       />
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
-
+      {/* CONTENT */}
       <div className="relative mx-auto max-w-7xl px-5 py-20 sm:py-24 lg:px-8 lg:py-28">
-        {/* =================================================
-            HEADER
-        ================================================= */}
-
+        {/* HEADER */}
         <header className="max-w-3xl">
           <p className="mb-4 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary">
             <Waves
@@ -156,36 +75,26 @@ export default function BusinessModel() {
               strokeWidth={2}
               aria-hidden="true"
             />
-            Model Bisnis
+            {t("eyebrow")}
           </p>
 
           <h2
             id="business-model-title"
             className="font-display text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-4xl lg:text-[42px]"
           >
-            Membangun nilai melalui{" "}
-            <span className="text-primary">
-              teknologi dan layanan akuakultur.
-            </span>
+            {t("titleBefore")}{" "}
+            <span className="text-primary">{t("titleHighlight")}</span>
           </h2>
 
           <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-[17px]">
-            Crustea mengembangkan model bisnis yang menghubungkan pembudidaya,
-            sektor publik dan swasta, teknologi, layanan, serta akses pasar
-            dalam satu ekosistem akuakultur.
+            {t("description")}
           </p>
         </header>
 
-        {/* =================================================
-            BUSINESS FLOW
-        ================================================= */}
-
+        {/* BUSINESS FLOW */}
         <div className="mt-12 overflow-hidden rounded-[28px] border border-border bg-muted">
           <div className="grid lg:grid-cols-[0.8fr_1.15fr_1fr]">
-            {/* =================================================
-                CUSTOMERS
-            ================================================= */}
-
+            {/* CUSTOMERS */}
             <div className="relative border-b border-border p-6 sm:p-8 lg:border-b-0 lg:border-r">
               <div className="flex items-center gap-3">
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary text-brand-secondary">
@@ -198,32 +107,26 @@ export default function BusinessModel() {
 
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand-secondary">
-                    Customers
+                    {t("customers.label")}
                   </p>
-
                   <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
-                    B2B
+                    {t("customers.title")}
                   </h3>
                 </div>
               </div>
 
               <div className="mt-8 space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                  <p className="text-sm leading-6 text-muted-foreground">
-                    Pond Farmers
-                  </p>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
-                  <p className="text-sm leading-6 text-muted-foreground">
-                    Public / Private Sectors
-                  </p>
-                </div>
+                {(t.raw("customers.items") as string[]).map((customer) => (
+                  <div key={customer} className="flex items-start gap-3">
+                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
+                    <p className="text-sm leading-6 text-muted-foreground">
+                      {customer}
+                    </p>
+                  </div>
+                ))}
               </div>
 
-              {/* Flow Arrow */}
+              {/* FLOW ARROW */}
               <div className="absolute -right-3 top-1/2 z-10 hidden size-6 -translate-y-1/2 items-center justify-center rounded-full bg-primary text-brand-dark lg:flex">
                 <ArrowRight
                   className="size-3.5"
@@ -233,10 +136,7 @@ export default function BusinessModel() {
               </div>
             </div>
 
-            {/* =================================================
-                PRODUCTS
-            ================================================= */}
-
+            {/* PRODUCTS */}
             <div className="border-b border-border p-6 sm:p-8 lg:border-b-0 lg:border-r">
               <div className="flex items-center gap-3">
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary text-brand-secondary">
@@ -249,18 +149,17 @@ export default function BusinessModel() {
 
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand-secondary">
-                    Products
+                    {t("products.label")}
                   </p>
-
                   <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
-                    Technology
+                    {t("products.title")}
                   </h3>
                 </div>
               </div>
 
               <div className="mt-7 grid gap-3 sm:grid-cols-3">
-                {productModels.map((product) => {
-                  const Icon = product.icon;
+                {productModels.map((product, index) => {
+                  const Icon = productIcons[index];
 
                   return (
                     <article
@@ -288,10 +187,7 @@ export default function BusinessModel() {
               </div>
             </div>
 
-            {/* =================================================
-                SERVICES
-            ================================================= */}
-
+            {/* SERVICES */}
             <div className="p-6 sm:p-8">
               <div className="flex items-center gap-3">
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-secondary text-brand-secondary">
@@ -304,21 +200,17 @@ export default function BusinessModel() {
 
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.14em] text-brand-secondary">
-                    Services
+                    {t("services.label")}
                   </p>
-
                   <h3 className="mt-1 font-display text-xl font-semibold text-foreground">
-                    Other Revenue
+                    {t("services.title")}
                   </h3>
                 </div>
               </div>
 
               <div className="mt-7 space-y-4">
                 {serviceModels.map((service, index) => (
-                  <div
-                    key={service.title}
-                    className="flex items-start gap-3"
-                  >
+                  <div key={service.title} className="flex items-start gap-3">
                     <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-secondary font-mono text-[9px] font-semibold text-brand-secondary">
                       {index + 1}
                     </span>
@@ -341,10 +233,7 @@ export default function BusinessModel() {
           </div>
         </div>
 
-        {/* =================================================
-            BUSINESS PERFORMANCE
-        ================================================= */}
-
+        {/* BUSINESS PERFORMANCE */}
         <div className="mt-12">
           <div className="flex items-center gap-3">
             <BarChart3
@@ -354,7 +243,7 @@ export default function BusinessModel() {
             />
 
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary">
-              Business Performance
+              {t("performance.label")}
             </p>
           </div>
 
@@ -396,13 +285,10 @@ export default function BusinessModel() {
           </div>
         </div>
 
-        {/* =================================================
-            IMPACT
-        ================================================= */}
-
+        {/* IMPACT */}
         <div className="mt-12 overflow-hidden rounded-[28px] bg-secondary p-6 sm:p-8 lg:p-10">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-            {/* Impact Header */}
+            {/* IMPACT HEADER */}
             <div className="max-w-sm">
               <div className="flex items-center gap-3">
                 <div className="flex size-11 items-center justify-center rounded-full bg-background text-brand-secondary">
@@ -415,39 +301,39 @@ export default function BusinessModel() {
 
                 <div>
                   <p className="text-xs font-bold uppercase tracking-[0.16em] text-brand-secondary">
-                    Sustainability
+                    {t("impact.eyebrow")}
                   </p>
 
                   <h3 className="mt-1 font-display text-2xl font-semibold text-foreground">
-                    Our Impact
+                    {t("impact.title")}
                   </h3>
                 </div>
               </div>
 
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
-                Dampak yang dihasilkan melalui penerapan teknologi dan
-                pengembangan ekosistem akuakultur Crustea.
+                {t("impact.description")}
               </p>
             </div>
 
-            {/* SDG */}
+            {/* SDG IMAGES */}
             <div className="flex flex-wrap gap-2 lg:max-w-md lg:justify-end">
-              {sdgs.map((sdg) => (
+              {sdgImages.map((sdg) => (
                 <div
-                  key={sdg.src}
+                  key={sdg.key}
                   className="overflow-hidden rounded-lg border border-border bg-background"
                 >
                   <img
                     src={sdg.src}
-                    alt={sdg.alt}
+                    alt={t(`impact.sdgAlt.${sdg.key}`)}
                     className="size-14 object-cover sm:size-16"
+                    loading="lazy"
                   />
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Impact Metrics */}
+          {/* IMPACT METRICS */}
           <div className="mt-8 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {impactMetrics.map((metric) => (
               <article

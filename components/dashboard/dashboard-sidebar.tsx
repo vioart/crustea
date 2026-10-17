@@ -1,8 +1,9 @@
+
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   BarChart3,
@@ -15,11 +16,14 @@ import {
   Users,
   X,
 } from "lucide-react";
+
 import { useLanguage } from "@/components/language/language-provider";
+import { clearAuth } from "@/lib/auth";
 
 type DashboardSidebarProps = {
   open?: boolean;
   onClose?: () => void;
+  onExpand?: () => void;
 };
 
 const menuItems = [
@@ -46,10 +50,6 @@ const menuItems = [
     key: "products",
     icon: Package,
     children: [
-      {
-        key: "category",
-        href: "/portal/produk/kategori",
-      },
       {
         key: "hardware",
         href: "/portal/produk/hardware",
@@ -94,6 +94,11 @@ const translations = {
     logout: "Keluar",
     closeSidebar: "Tutup sidebar",
     closeMenu: "Tutup menu",
+    logoutTitle: "Keluar Dari Akun?",
+    logoutDescription:
+      "Apakah Anda yakin ingin keluar dari akun saat ini?",
+    cancel: "Batal",
+    confirmLogout: "Ya, Keluar",
   },
   en: {
     dashboard: "Dashboard",
@@ -112,22 +117,33 @@ const translations = {
     logout: "Logout",
     closeSidebar: "Close sidebar",
     closeMenu: "Close menu",
+    logoutTitle: "Log Out of Account?",
+    logoutDescription:
+      "Are you sure you want to log out of your current account?",
+    cancel: "Cancel",
+    confirmLogout: "Yes, Log Out",
   },
 };
 
 export default function DashboardSidebar({
   open = false,
   onClose,
+  onExpand,
 }: DashboardSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const { language } = useLanguage();
   const t = translations[language];
 
-  const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
+  const [expandedMenus, setExpandedMenus] = useState<
+    Record<string, boolean>
+  >({
     news: pathname.startsWith("/portal/berita"),
     products: pathname.startsWith("/portal/produk"),
   });
+
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
 
   const toggleMenu = (key: string) => {
     setExpandedMenus((current) => ({
@@ -138,6 +154,16 @@ export default function DashboardSidebar({
 
   const getTitle = (key: string) => {
     return t[key as keyof typeof t];
+  };
+
+  const handleLogoutClick = () => {
+    setLogoutModalOpen(true);
+  };
+
+  const handleLogout = () => {
+    clearAuth();
+    setLogoutModalOpen(false);
+    router.replace("/portal/login");
   };
 
   return (
@@ -219,12 +245,9 @@ export default function DashboardSidebar({
             {menuItems.map((item) => {
               const Icon = item.icon;
               const title = getTitle(item.key);
-
               const hasChildren = "children" in item && item.children;
 
-              /*
-               * Menu dengan submenu
-               */
+              {/* Menu dengan submenu */}
               if (hasChildren) {
                 const isParentActive = item.children.some((child) =>
                   pathname.startsWith(child.href),
@@ -238,9 +261,17 @@ export default function DashboardSidebar({
                     <button
                       type="button"
                       onClick={() => {
-                        if (open) {
-                          toggleMenu(item.key);
+                        if (!open) {
+                          setExpandedMenus((current) => ({
+                            ...current,
+                            [item.key]: true,
+                          }));
+
+                          onExpand?.();
+                          return;
                         }
+
+                        toggleMenu(item.key);
                       }}
                       title={!open ? title : undefined}
                       className={`group flex h-10 w-full items-center rounded-lg text-[13px] font-medium transition-all duration-200 ${
@@ -315,9 +346,7 @@ export default function DashboardSidebar({
                 );
               }
 
-              /*
-               * Menu tanpa submenu
-               */
+              {/* Menu tanpa submenu */}
               const isActive =
                 item.href === "/portal"
                   ? pathname === "/portal"
@@ -394,6 +423,7 @@ export default function DashboardSidebar({
         <div className="shrink-0 border-t border-border p-3">
           <button
             type="button"
+            onClick={handleLogoutClick}
             title={!open ? t.logout : undefined}
             className={`group flex h-10 w-full items-center rounded-lg text-[13px] font-medium text-muted-foreground transition-colors hover:bg-red-50 hover:text-red-600 ${
               open ? "gap-3 px-3" : "justify-center px-0"
@@ -411,6 +441,61 @@ export default function DashboardSidebar({
           </button>
         </div>
       </aside>
+
+      {/* Logout Modal */}
+      {logoutModalOpen && (
+        <div
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+          onClick={() => setLogoutModalOpen(false)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sidebar-logout-title"
+            className="w-full max-w-md rounded-2xl bg-background p-6 shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {/* Icon */}
+            <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-red-50 text-red-500">
+              <LogOut className="size-7" />
+            </div>
+
+            {/* Content */}
+            <div className="mt-4 text-center">
+              <h3
+                id="sidebar-logout-title"
+                className="text-xl font-bold text-foreground"
+              >
+                {t.logoutTitle}
+              </h3>
+
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                {t.logoutDescription}
+              </p>
+            </div>
+
+            {/* Buttons */}
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setLogoutModalOpen(false)}
+                className="flex h-11 items-center justify-center rounded-lg border border-border text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted"
+              >
+                {t.cancel}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="flex h-11 items-center justify-center gap-2 rounded-lg bg-red-500 text-sm font-semibold text-white transition-colors hover:bg-red-600"
+              >
+                <LogOut className="size-4" />
+                {t.confirmLogout}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

@@ -95,8 +95,6 @@ export default function RegisterPage() {
         router.push("/portal/login");
       }, 2000);
     } catch (error) {
-      console.error("Register error:", error);
-
       toast.error(error instanceof Error ? error.message : "Registrasi gagal.");
     } finally {
       setProcessing(false);

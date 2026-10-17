@@ -1,4 +1,7 @@
-import Link from "next/link";
+"use client";
+
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { ChevronRight } from "lucide-react";
 
 type NewsBreadcrumbProps = {
@@ -8,6 +11,8 @@ type NewsBreadcrumbProps = {
 export default function NewsBreadcrumb({
   title,
 }: NewsBreadcrumbProps) {
+  const t = useTranslations("DetailNews.breadcrumb");
+
   return (
     <section className="bg-background pt-18">
       <div className="mx-auto max-w-7xl px-5 py-6 sm:py-7 lg:px-8">
@@ -18,7 +23,7 @@ export default function NewsBreadcrumb({
                 href="/"
                 className="text-muted-foreground transition-colors hover:text-brand-secondary"
               >
-                Beranda
+                {t("home")}
               </Link>
             </li>
 
@@ -31,7 +36,7 @@ export default function NewsBreadcrumb({
                 href="/berita"
                 className="text-muted-foreground transition-colors hover:text-brand-secondary"
               >
-                Berita
+                {t("news")}
               </Link>
             </li>
 

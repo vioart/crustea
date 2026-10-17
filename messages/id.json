@@ -1,0 +1,940 @@
+{
+  "Header": {
+    "home": "Beranda",
+    "products": "Produk",
+    "about": "Tentang Kami",
+    "news": "Berita",
+    "contact": "Kontak",
+    "contactUs": "Hubungi Kami",
+    "language": "Bahasa",
+    "chooseLanguage": "Pilih bahasa",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu",
+    "mainNavigation": "Navigasi utama",
+    "productSolutionTitle": "Solusi Akuakultur Crustea",
+    "productSolutionDescription": "Teknologi dan solusi terintegrasi untuk mendukung kebutuhan budidaya dan bisnis akuakultur.",
+    "learnMore": "Ingin mengetahui lebih lanjut?",
+    "contactUsLink": "Hubungi kami",
+    "productsList": {
+      "hardware": {
+        "title": "Hardware Teknologi",
+        "description": "Teknologi perangkat untuk mendukung kebutuhan akuakultur."
+      },
+      "software": {
+        "title": "Software",
+        "description": "Solusi perangkat lunak untuk membantu pengelolaan bisnis."
+      },
+      "processedProduct": {
+        "title": "Produk Olahan - Krasty",
+        "description": "Produk olahan hasil perikanan dengan cita rasa khas."
+      },
+      "trading": {
+        "title": "Trading",
+        "description": "Solusi perdagangan dan distribusi produk akuakultur."
+      },
+      "aquagrowth": {
+        "title": "Aquagrowth",
+        "description": "Solusi untuk mendukung pertumbuhan dan pengembangan usaha."
+      },
+      "partnership": {
+        "title": "Kemitraan",
+        "description": "Peluang kolaborasi dan kemitraan bersama Crustea."
+      },
+      "calculator": {
+        "title": "Kalkulator Budidaya",
+        "description": "Alat bantu perhitungan untuk kebutuhan budidaya."
+      }
+    },
+    "companyLinks": {
+      "about": {
+        "title": "Tentang Kami",
+        "description": "Mengenal lebih dekat Crustea, perjalanan, dan tim kami."
+      },
+      "partnership": {
+        "title": "Kemitraan",
+        "description": "Kolaborasi dan peluang kemitraan bersama Crustea."
+      },
+      "terms": "Syarat & Ketentuan",
+      "privacy": "Kebijakan Privasi",
+      "faq": "FAQ"
+    }
+  },
+
+  "Home": {
+    "hero": {
+      "imageAlt": "Budidaya akuakultur Crustea",
+      "eyebrow": "Solusi Akuakultur Terintegrasi",
+      "titleLine1": "Teknologi Akuakultur",
+      "titleLine2": "untuk Budidaya",
+      "titleHighlight": "Berkelanjutan",
+      "description": "Menciptakan solusi bagi pembudidaya tambak di Indonesia melalui pengembangan berbagai teknologi untuk meningkatkan produktivitas dan efisiensi tambak.",
+      "exploreProducts": "Jelajahi Produk",
+      "contactUs": "Hubungi Kami"
+    },
+    "imageSlider": {
+      "eyebrow": "Teknologi & Perjalanan Kami",
+      "titleBefore": "Dari Inovasi",
+      "titleHighlight": "hingga Dampak di Lapangan.",
+      "galleryLabel": "Galeri perjalanan dan pencapaian Crustea",
+      "items": {
+        "technology": {
+          "alt": "Teknologi akuakultur Crustea",
+          "title": "Inovasi Teknologi Akuakultur",
+          "category": "Teknologi"
+        },
+        "implementation": {
+          "alt": "Implementasi teknologi Crustea di lapangan",
+          "title": "Implementasi di Lapangan",
+          "category": "Implementasi"
+        },
+        "farmers": {
+          "alt": "Tim Crustea mendampingi pembudidaya tambak",
+          "title": "Mendampingi Pembudidaya",
+          "category": "Lapangan"
+        },
+        "collaboration": {
+          "alt": "Tim Crustea mengembangkan teknologi akuakultur",
+          "title": "Kolaborasi dan Pengembangan",
+          "category": "Tim Crustea"
+        },
+        "innovation": {
+          "alt": "Crustea menerima penghargaan atas inovasi teknologi",
+          "title": "Apresiasi atas Inovasi",
+          "category": "Pencapaian"
+        },
+        "impact": {
+          "alt": "Pencapaian Crustea dalam pengembangan teknologi",
+          "title": "Mendorong Dampak yang Lebih Luas",
+          "category": "Pencapaian"
+        }
+      }
+    },
+    "about": {
+      "imageAlt": "Tim Crustea bekerja bersama pembudidaya tambak di Indonesia",
+      "eyebrow": "Cerita Kami",
+      "titleBefore": "Kami Berkomitmen Meningkatkan",
+      "titleHighlight": "Produktivitas Pembudidaya Tambak",
+      "titleAfter": "Indonesia.",
+      "description": "Berangkat dari kepedulian terhadap pembudidaya tambak Indonesia yang menghadapi tingginya biaya operasional yang berdampak pada produktivitas, kami berkomitmen untuk terus menghadirkan inovasi teknologi sebagai solusi.",
+      "learnMore": "Kenali Crustea"
+    },
+    "ourServices": {
+      "eyebrow": "Layanan Kami",
+      "titleBefore": "Solusi terintegrasi untuk",
+      "titleHighlight": "kebutuhan akuakultur Anda.",
+      "description": "Dari pengembangan tambak hingga akses pendanaan dan pasar, Crustea menghadirkan berbagai layanan untuk mendukung produktivitas, efisiensi, dan keberlanjutan bisnis akuakultur.",
+      "items": {
+        "profitSharing": {
+          "title": "Proyek Bagi Hasil & Pengembangan Tambak",
+          "description": "Menjalankan proyek budidaya dengan skema bagi hasil, mulai dari pembangunan tambak hingga dukungan teknologi dan akses pasar untuk menciptakan sistem yang efisien dan berkelanjutan."
+        },
+        "operationalSupport": {
+          "title": "Konsultasi & Dukungan Operasional",
+          "description": "Memberikan panduan dalam budidaya udang dan ikan, mulai dari perencanaan hingga implementasi, termasuk dukungan teknologi di lokasi maupun jarak jauh dengan fokus pada kualitas air, efisiensi energi, dan pencegahan penyakit."
+        },
+        "energyManagement": {
+          "title": "Manajemen & Optimalisasi Energi",
+          "description": "Menyediakan sistem untuk memantau, mengelola, dan mengoptimalkan penggunaan energi melalui perangkat efisien, otomatisasi, dan energi terbarukan untuk membantu mengurangi biaya listrik tanpa mengurangi produktivitas."
+        },
+        "sustainability": {
+          "title": "Keberlanjutan & Pemberdayaan",
+          "description": "Mendukung perdagangan akuakultur yang efisien serta menciptakan produk olahan bernilai tambah dari udang dan ikan melalui pemberdayaan perempuan, inklusi ekonomi, dan pengurangan limbah."
+        },
+        "fundingPartners": {
+          "title": "Akses ke Mitra Pendanaan",
+          "description": "Menghadirkan solusi finansial yang disesuaikan untuk mendukung proyek akuakultur, termasuk akses terhadap sumber daya untuk pengembangan skala usaha dan optimalisasi operasional."
+        },
+        "marketAccess": {
+          "title": "Akses ke Pasar",
+          "description": "Mendukung penjualan produk udang, ikan, dan produk berbasis limbah berkualitas tinggi ke pasar lokal maupun pasar ekspor global."
+        }
+      }
+    },
+    "featuredProducts": {
+      "eyebrow": "Solusi Akuakultur",
+      "titleBefore": "Teknologi untuk Menjawab",
+      "titleHighlight": "Tantangan Budidaya.",
+      "description": "Menghadirkan solusi teknologi yang dirancang untuk membantu pembudidaya mengelola kualitas air, meningkatkan efisiensi aerasi, dan mengoptimalkan penggunaan energi di tambak.",
+      "viewAllProducts": "Lihat Semua Produk",
+      "viewDetails": "Lihat Detail",
+      "featuresLabel": "Fitur",
+      "items": {
+        "ebiiSystem": {
+          "category": "Pemantauan Kualitas Air",
+          "description": "Sistem pemantauan kualitas air dengan empat parameter utama untuk membantu pembudidaya memahami kondisi tambak.",
+          "highlights": ["pH", "DO", "Salinitas", "Suhu"]
+        },
+        "ecoAerator": {
+          "category": "Energi Terbarukan",
+          "description": "Teknologi aerasi dengan solar panel dan impeller yang dirancang untuk menghasilkan gelembung lebih kecil dan meningkatkan kadar oksigen.",
+          "highlights": ["Panel Surya", "Impeller", "Efisiensi Aerasi"]
+        },
+        "smartEnergy": {
+          "category": "Manajemen Energi",
+          "description": "Solusi untuk memantau dan mengontrol penggunaan energi aerator secara lebih mudah melalui perangkat seluler.",
+          "highlights": [
+            "Pemantauan Energi",
+            "Kontrol Jarak Jauh",
+            "Via Smartphone"
+          ]
+        }
+      },
+      "advantages": {
+        "production": {
+          "label": "Potensi Hasil Budidaya",
+          "line1": "Udang hingga",
+          "highlight": "200% lebih besar",
+          "line2": "dan berkualitas lebih tinggi"
+        },
+        "centerLabel": "Keunggulan",
+        "efficiency": {
+          "label": "Efisiensi Operasional",
+          "highlight": "60–80%",
+          "line1": "penghematan",
+          "line2": "biaya operasional"
+        }
+      }
+    },
+    "howWeWork": {
+      "eyebrow": "Cara Kami Bekerja",
+      "titleBefore": "Dari persiapan hingga pasar,",
+      "titleHighlight": "kami mendampingi setiap tahap.",
+      "stepItemsLabel": "Layanan untuk {title}",
+      "steps": {
+        "preparation": {
+          "phase": "Persiapan",
+          "title": "Konsultasi & Konstruksi",
+          "items": [
+            "Survei lokasi & kualitas air",
+            "Desain dan konstruksi kolam",
+            "Perhitungan kebutuhan aerasi & energi"
+          ]
+        },
+        "installation": {
+          "phase": "Instalasi",
+          "title": "Eco-Aerator",
+          "items": [
+            "Panel surya + baterai",
+            "Pemasangan oleh teknisi",
+            "Pelatihan operator tambak"
+          ]
+        },
+        "farming": {
+          "phase": "Budidaya",
+          "title": "Crustea AIO",
+          "items": [
+            "Monitoring DO, suhu & energi",
+            "Aerator otomatis",
+            "Peringatan dini gangguan"
+          ]
+        },
+        "postHarvest": {
+          "phase": "Pasca Panen",
+          "title": "Kemitraan & Pasar",
+          "items": [
+            "Kemitraan bagi hasil",
+            "Akses pasar hasil panen",
+            "Pengolahan limbah"
+          ]
+        }
+      }
+    },
+    "traction": {
+      "eyebrow": "Pencapaian Kami",
+      "titleBefore": "Bertumbuh bersama",
+      "titleHighlight": "ekosistem akuakultur Indonesia.",
+      "description": "Perjalanan Crustea terus berkembang melalui kolaborasi bersama pembudidaya, mitra, dan berbagai pihak dalam ekosistem akuakultur.",
+      "launchContextBefore": "Pencapaian ini diraih dalam",
+      "launchContextHighlight": "6 bulan sejak peluncuran produk.",
+      "items": {
+        "farmers": {
+          "label": "Pembudidaya",
+          "description": "Dalam ekosistem Crustea"
+        },
+        "regions": {
+          "label": "Wilayah",
+          "description": "Tersebar di berbagai daerah"
+        },
+        "awards": {
+          "label": "Penghargaan",
+          "description": "Nasional & internasional"
+        },
+        "partners": {
+          "label": "Mitra",
+          "description": "Nasional & internasional"
+        }
+      },
+      "funding": {
+        "label": "Pendanaan Internasional"
+      }
+    },
+    "ourImpact": {
+      "eyebrow": "Dampak Kami",
+      "titleBefore": "Menciptakan dampak untuk",
+      "titleHighlight": "akuakultur yang lebih berkelanjutan.",
+      "description": "Solusi yang kami kembangkan tidak hanya berfokus pada produktivitas, tetapi juga pada efisiensi, lingkungan, dan pemberdayaan dalam ekosistem akuakultur.",
+      "sdgs": {
+        "eyebrow": "Keberlanjutan",
+        "title": "Kontribusi terhadap SDGs",
+        "description": "Dampak Crustea selaras dengan beberapa Tujuan Pembangunan Berkelanjutan.",
+        "galleryLabel": "Galeri Tujuan Pembangunan Berkelanjutan",
+        "items": {
+          "noPoverty": "SDGs 1 - Tanpa Kemiskinan",
+          "zeroHunger": "SDGs 2 - Tanpa Kelaparan",
+          "cleanEnergy": "SDGs 7 - Energi Bersih dan Terjangkau",
+          "climateAction": "SDGs 13 - Penanganan Perubahan Iklim",
+          "lifeBelowWater": "SDGs 14 - Ekosistem Lautan"
+        }
+      },
+      "metrics": {
+        "shrimp": {
+          "label": "Udang Lebih Besar & Berkualitas",
+          "description": "Peningkatan ukuran dan kualitas udang melalui solusi budidaya yang diterapkan."
+        },
+        "costs": {
+          "label": "Penghematan Biaya Operasional",
+          "description": "Efisiensi biaya operasional melalui teknologi dan optimalisasi penggunaan sumber daya."
+        },
+        "emissions": {
+          "label": "tCO₂e Pengurangan Emisi GHG",
+          "description": "Kontribusi terhadap pengurangan emisi gas rumah kaca melalui pendekatan akuakultur berkelanjutan."
+        },
+        "women": {
+          "label": "Women Management",
+          "description": "Keterlibatan perempuan dalam pengelolaan dan pemberdayaan dalam ekosistem Crustea."
+        }
+      },
+      "note": "Angka dampak ditampilkan berdasarkan data dan metrik yang digunakan oleh Crustea."
+    },
+    "testimonial": {
+      "eyebrow": "Cerita Petambak",
+      "imageAlt": "Testimoni dari {name}",
+      "selectorLabel": "Pilih testimoni",
+      "selectTestimonial": "Lihat testimoni {name}",
+      "previous": "Testimoni sebelumnya",
+      "next": "Testimoni berikutnya",
+      "items": {
+        "sari": {
+          "name": "Ibu Sari Handayani",
+          "role": "Pengelola tambak, Lampung",
+          "quote": "Sejak menggunakan Eco-Aerator, biaya listrik turun drastis dan kadar oksigen tetap stabil. Tim Crustea tidak hanya memasang alat—mereka terus mendampingi kami."
+        },
+        "andi": {
+          "name": "Bapak Andi Pratama",
+          "role": "Pembudidaya udang, Jawa Tengah",
+          "quote": "Teknologi yang diberikan Crustea membantu kami lebih mudah memahami kondisi tambak dan mengambil keputusan selama proses budidaya."
+        },
+        "rudi": {
+          "name": "Bapak Rudi Santoso",
+          "role": "Pengelola tambak, Jawa Timur",
+          "quote": "Yang paling kami rasakan bukan hanya dari teknologinya, tetapi juga pendampingan dari tim Crustea selama proses budidaya berlangsung."
+        }
+      }
+    },
+    "latestNews": {
+      "eyebrow": "Berita & Wawasan",
+      "titleBefore": "Berita terbaru seputar",
+      "titleHighlight": "Crustea.",
+      "viewAll": "Lihat Semua Berita",
+      "loading": "Memuat berita terbaru...",
+      "error": "Berita belum dapat dimuat. Silakan coba lagi nanti.",
+      "empty": "Belum ada berita yang tersedia.",
+      "dateUnavailable": "Tanggal tidak tersedia",
+      "readMore": "Baca Berita"
+    },
+    "cta": {
+      "eyebrow": "Mulai Bersama Crustea",
+      "titleBefore": "Siap meningkatkan",
+      "titleHighlight": "produktivitas tambak?",
+      "description": "Konsultasikan kebutuhan tambak Anda bersama tim Crustea dan temukan solusi teknologi yang sesuai dengan kondisi budidaya Anda.",
+      "whatsapp": "Hubungi via WhatsApp",
+      "email": "Kirim Email",
+      "footer": "Tim Crustea siap membantu menjawab kebutuhan dan pertanyaan terkait produk maupun layanan kami."
+    }
+  },
+
+  "InnerHero": {
+    "breadcrumbLabel": "Navigasi breadcrumb"
+  },
+
+  "About": {
+    "page": {
+      "title": "Tentang Kami",
+      "breadcrumb": {
+        "home": "Beranda",
+        "about": "Tentang Kami"
+      }
+    },
+    "story": {
+      "imageAlt": "Tim Crustea bekerja bersama pembudidaya tambak di Indonesia",
+      "eyebrow": "Cerita Kami",
+      "titleBefore": "Kami Berkomitmen Meningkatkan",
+      "titleHighlight": "Produktivitas Pembudidaya Tambak",
+      "titleAfter": "Indonesia.",
+      "paragraph1": "Berangkat dari kepedulian terhadap pembudidaya tambak Indonesia yang menghadapi tingginya biaya operasional yang berdampak pada produktivitas, kami berkomitmen untuk terus menghadirkan inovasi teknologi sebagai solusi.",
+      "paragraph2": "Melalui pengembangan teknologi akuakultur, Crustea berupaya mendukung pembudidaya dalam meningkatkan produktivitas dan efisiensi tambak secara berkelanjutan."
+    },
+    "challenges": {
+      "eyebrow": "Tantangan Pembudidaya",
+      "titleBefore": "Berbagai tantangan masih membatasi",
+      "titleHighlight": "produktivitas akuakultur.",
+      "description": "Pembudidaya menghadapi berbagai tantangan dalam menjaga produktivitas tambak, mulai dari pengelolaan kualitas air hingga tingginya biaya operasional.",
+      "items": [
+        {
+          "value": "90%",
+          "title": "Pembudidaya Menghadapi Keterbatasan Produktivitas",
+          "description": "Sebagian besar pembudidaya dalam survei menghadapi berbagai kondisi yang membatasi produktivitas akuakultur."
+        },
+        {
+          "value": "70%",
+          "title": "Kematian Udang & Ikan",
+          "description": "Kematian udang dan ikan dikaitkan dengan kondisi dissolved oxygen yang tidak terkontrol."
+        },
+        {
+          "value": "Rp100 Juta",
+          "title": "Biaya Bahan Bakar Tinggi",
+          "description": "Tingginya biaya bahan bakar menjadi salah satu tantangan dalam operasional tambak."
+        }
+      ],
+      "imageAlt": "Pembudidaya tambak dalam aktivitas budidaya",
+      "imageCaption": "Tantangan operasional dan kualitas air menjadi bagian penting yang perlu diperhatikan dalam menjaga produktivitas tambak.",
+      "sourceNote": "* Berdasarkan survei yang dilakukan pada tahun 2021–2022."
+    },
+    "solution": {
+      "eyebrow": "Solusi Crustea",
+      "titleBefore": "Dari tantangan menuju",
+      "titleHighlight": "solusi teknologi.",
+      "description": "Crustea menghadirkan teknologi untuk membantu pembudidaya dalam memantau kualitas air, meningkatkan efisiensi aerasi, dan mengoptimalkan penggunaan energi di tambak.",
+      "items": [
+        {
+          "number": "01",
+          "name": "EBII System",
+          "category": "Pemantauan Kualitas Air",
+          "description": "Sistem pemantauan kualitas air dengan empat parameter utama untuk membantu memahami kondisi tambak."
+        },
+        {
+          "number": "02",
+          "name": "Eco-Aerator",
+          "category": "Energi Terbarukan",
+          "description": "Teknologi aerasi dengan solar panel dan impeller yang dirancang untuk menghasilkan gelembung lebih kecil dan kadar oksigen lebih tinggi."
+        },
+        {
+          "number": "03",
+          "name": "Smart Energy",
+          "category": "Manajemen Energi",
+          "description": "Solusi untuk memantau dan mengontrol penggunaan energi pada aerator dengan mudah melalui smartphone."
+        }
+      ],
+      "imageAlt": "{name} - {category}",
+      "linkLabel": "Lihat Teknologi",
+      "advantages": {
+        "productionLabel": "Potensi Hasil Budidaya",
+        "productionValue": "200%",
+        "productionDescription": "udang lebih besar & berkualitas",
+        "centerLabel": "Keunggulan",
+        "efficiencyLabel": "Efisiensi Operasional",
+        "efficiencyValue": "60–80%",
+        "efficiencyDescription": "penghematan biaya operasional"
+      }
+    },
+    "vision": {
+      "eyebrow": "Visi Crustea",
+      "titleBefore": "Visi",
+      "titleHighlight": "Kami",
+      "statementBefore": "Meningkatkan produktivitas pembudidaya tambak dan ketahanan pangan melalui penerapan",
+      "statementHighlight": "teknologi Eco-Aerator.",
+      "points": [
+        "Meningkatkan produktivitas melalui sistem Eco-Aerator yang presisi.",
+        "Mendukung ketahanan pangan yang berkelanjutan untuk generasi mendatang.",
+        "Memberdayakan pembudidaya tambak yang adaptif terhadap teknologi real-time."
+      ],
+      "imageAlt": "Teknologi smart farming untuk masa depan akuakultur",
+      "imageTitleLine1": "Smart Farming",
+      "imageTitleLine2": "for a Better Future"
+    },
+    "mission": {
+      "eyebrow": "Misi Crustea",
+      "titleBefore": "Misi",
+      "titleHighlight": "Kami",
+      "description": "Menjalankan misi melalui inovasi, keberlanjutan, pemberdayaan, serta distribusi teknologi yang tepat untuk mendukung ekosistem akuakultur Indonesia.",
+      "items": [
+        {
+          "title": "Innovation",
+          "description": "Menciptakan teknologi yang tepat guna dan sesuai dengan kebutuhan pembudidaya."
+        },
+        {
+          "title": "Sustainability",
+          "description": "Membangun hubungan yang baik dan berkelanjutan bersama mitra serta pelanggan."
+        },
+        {
+          "title": "Empowerment",
+          "description": "Menciptakan sumber daya manusia yang berkualitas dan menjunjung tinggi integritas."
+        },
+        {
+          "title": "Repair",
+          "description": "Melakukan perbaikan dan pengembangan teknologi secara berkelanjutan."
+        },
+        {
+          "title": "Distribution",
+          "description": "Memastikan rantai pasok dan produktivitas sektor akuakultur serta perikanan berada dalam kondisi yang baik dan optimal."
+        },
+        {
+          "title": "Target",
+          "description": "Mendistribusikan teknologi yang tepat secara merata sesuai dengan target dan kebutuhan nasional."
+        }
+      ],
+      "closingStatement": "Bersama membangun ekosistem akuakultur yang inovatif, berkelanjutan, dan berdampak."
+    },
+    "values": {
+      "eyebrow": "Nilai-Nilai Crustea",
+      "titleBefore": "Nilai-Nilai",
+      "titleHighlight": "Crustea",
+      "description": "Prinsip yang menjadi dasar cara kami berpikir, bekerja, dan bertumbuh bersama.",
+      "decorativeText": "VALUES",
+      "items": [
+        "Creative & Innovative",
+        "Respect",
+        "Humility",
+        "Skillful",
+        "Teamwork",
+        "Ethics & Integrity",
+        "Adaptive"
+      ]
+    },
+    "businessModel": {
+      "eyebrow": "Model Bisnis",
+      "titleBefore": "Membangun nilai melalui",
+      "titleHighlight": "teknologi dan layanan akuakultur.",
+      "description": "Crustea mengembangkan model bisnis yang menghubungkan pembudidaya, sektor publik dan swasta, teknologi, layanan, serta akses pasar dalam satu ekosistem akuakultur.",
+      "customers": {
+        "label": "Pelanggan",
+        "title": "B2B",
+        "items": ["Pembudidaya tambak", "Sektor publik / swasta"]
+      },
+      "products": {
+        "label": "Produk",
+        "title": "Teknologi",
+        "items": [
+          {
+            "title": "Direct Selling",
+            "description": "Penjualan teknologi secara langsung kepada pelanggan."
+          },
+          {
+            "title": "Leasing",
+            "description": "Skema penggunaan teknologi melalui model sewa."
+          },
+          {
+            "title": "PaaS / SaaS",
+            "description": "Layanan teknologi berbasis platform dan software."
+          }
+        ]
+      },
+      "services": {
+        "label": "Layanan",
+        "title": "Pendapatan Lainnya",
+        "items": [
+          {
+            "title": "Perdagangan Udang & Produk Olahan"
+          },
+          {
+            "title": "Proyek",
+            "description": "Akuakultur, Pemberdayaan, Keberlanjutan"
+          },
+          {
+            "title": "Konsultasi & Bantuan Teknis"
+          },
+          {
+            "title": "Pemeliharaan & Perbaikan Teknologi"
+          }
+        ]
+      },
+      "performance": {
+        "label": "Kinerja Bisnis",
+        "items": [
+          {
+            "value": "200",
+            "unit": "ppm",
+            "label": "Kapasitas Produksi",
+            "description": "Per bulan"
+          },
+          {
+            "value": "$40M",
+            "unit": "",
+            "label": "Proyeksi Pendapatan",
+            "description": "Pada tahun 2030"
+          },
+          {
+            "value": "35%",
+            "unit": "Up to",
+            "label": "Margin Kotor",
+            "description": ""
+          }
+        ]
+      },
+      "impact": {
+        "eyebrow": "Keberlanjutan",
+        "title": "Dampak Kami",
+        "description": "Dampak yang dihasilkan melalui penerapan teknologi dan pengembangan ekosistem akuakultur Crustea.",
+        "sdgAlt": {
+          "sdg1": "SDG 1 - Tanpa Kemiskinan",
+          "sdg2": "SDG 2 - Tanpa Kelaparan",
+          "sdg7": "SDG 7 - Energi Bersih dan Terjangkau",
+          "sdg14": "SDG 14 - Ekosistem Lautan",
+          "sdg13": "SDG 13 - Penanganan Perubahan Iklim"
+        },
+        "metrics": [
+          {
+            "value": "200%",
+            "label": "Udang Lebih Besar & Berkualitas Tinggi"
+          },
+          {
+            "value": "80%",
+            "label": "Penghematan Biaya Operasional"
+          },
+          {
+            "value": "23k",
+            "label": "Pengurangan Emisi GRK (tCO₂e)"
+          },
+          {
+            "value": "60%",
+            "label": "Perempuan dalam Manajemen"
+          }
+        ]
+      }
+    },
+    "businessEcosystem": {
+      "eyebrow": "Ekosistem Bisnis",
+      "titleBefore": "Menghubungkan setiap bagian dari",
+      "titleHighlight": "ekosistem akuakultur.",
+      "description": "Crustea membangun ekosistem yang menghubungkan pembudidaya, teknologi, pembiayaan, pendampingan, pasar, hingga pengolahan hasil untuk menciptakan rantai nilai akuakultur yang lebih terintegrasi.",
+      "supporting": {
+        "title": "Ekosistem Pendukung"
+      },
+      "strategic": {
+        "title": "Dukungan Strategis"
+      },
+      "core": {
+        "titleLine1": "Budidaya Udang & Ikan",
+        "titleLine2": ""
+      },
+      "cultivationFlow": "Alur Budidaya",
+      "stages": {
+        "pre": "Pra-Budidaya",
+        "during": "Selama Budidaya",
+        "post": "Pasca-Budidaya"
+      },
+      "mobileFlow": {
+        "from": "Pra-Budidaya",
+        "to": "Pasca-Budidaya"
+      },
+      "downstream": {
+        "title": "Hilir"
+      },
+      "revenue": {
+        "title": "Pendapatan",
+        "indicator": "Jenis pendapatan: {type}",
+        "types": {
+          "daily": "Harian",
+          "monthly": "Bulanan",
+          "quarterly": "Triwulanan",
+          "yearly": "Tahunan"
+        }
+      },
+      "items": {
+        "ecoTourism": "Ekowisata",
+        "workshop": "Lokakarya & Pelatihan",
+        "csrProjects": "Proyek CSR, Keberlanjutan & Transisi Energi",
+        "empowerment": "Program Pemberdayaan",
+        "funding": "Pendanaan & Kolaborasi Keuangan",
+        "revitalization": "Revitalisasi Tambak & Konsultasi",
+        "equipment": "Eco & Mini Aerator, Panel Surya, Sistem EBII, Smart Energy",
+        "maintenance": "Pemeliharaan Teknologi & Pendampingan Budidaya",
+        "marketplace": "Marketplace",
+        "trading": "Perdagangan: Penjualan & Pengiriman Lokal dan Global",
+        "foodService": "Makanan & Minuman",
+        "foodProcessing": "Pengolahan Pangan",
+        "preservation": "Pengawetan"
+      }
+    }
+  },
+
+  "Product": {
+    "page": {
+      "title": "Produk",
+      "breadcrumb": {
+        "home": "Beranda",
+        "product": "Produk"
+      }
+    },
+    "overview": {
+      "eyebrow": "Produk Crustea",
+      "heading": "Temukan solusi untuk kebutuhan",
+      "headingHighlight": "akuakultur.",
+      "description": "Dari teknologi perangkat hingga solusi digital dan produk olahan, jelajahi berbagai produk yang dikembangkan Crustea untuk mendukung ekosistem akuakultur.",
+      "categoryCount": "Kategori Produk",
+      "categoryNavigation": "Kategori produk",
+      "allProducts": "Semua Produk",
+      "collection": "Koleksi Produk",
+      "viewProduct": "Lihat Produk",
+      "viewAll": "Lihat Semua",
+      "viewDetail": "Lihat Detail",
+      "loading": "Memuat produk...",
+      "loadError": "Produk belum dapat dimuat. Periksa koneksi ke server dan coba lagi.",
+      "retry": "Coba Lagi",
+      "noFeaturedProduct": "Belum ada produk unggulan yang tersedia.",
+      "noImage": "Gambar tidak tersedia",
+      "emptyCategory": "Belum ada produk dalam kategori ini.",
+      "categories": {
+        "hardware": {
+          "title": "Hardware Teknologi",
+          "shortTitle": "Hardware",
+          "description": "Teknologi perangkat untuk mendukung kebutuhan operasional dan budidaya akuakultur."
+        },
+        "software": {
+          "title": "Software",
+          "shortTitle": "Software",
+          "description": "Solusi perangkat lunak untuk membantu digitalisasi, pemantauan, dan pengelolaan aktivitas akuakultur."
+        },
+        "processedProduct": {
+          "title": "Produk Olahan",
+          "shortTitle": "Produk Olahan",
+          "description": "Produk olahan hasil perikanan yang dikembangkan untuk menghadirkan nilai tambah."
+        }
+      }
+    },
+    "detail": {
+      "categories": {
+        "hardware": "Hardware Teknologi",
+        "software": "Software",
+        "processedProduct": "Produk Olahan"
+      },
+      "breadcrumb": "Breadcrumb",
+      "home": "Beranda",
+      "loading": "Memuat detail produk...",
+      "notFoundTitle": "Produk tidak ditemukan",
+      "notFoundDescription": "Produk tidak tersedia atau gagal dimuat. Silakan coba kembali.",
+      "backToProducts": "Kembali ke Produk",
+      "noImage": "Gambar tidak tersedia",
+      "viewImage": "Lihat gambar {number}",
+      "consultProduct": "Konsultasikan Produk",
+      "whatsappMessage": "Halo Crustea, saya tertarik dengan produk {product}. Saya ingin mendapatkan informasi lebih lanjut mengenai produk tersebut.",
+      "contactDescription": "Hubungi tim Crustea untuk informasi produk dan kebutuhan budidaya Anda.",
+      "advantages": "Keunggulan",
+      "advantagesHeading": "Dirancang untuk Kebutuhan Akuakultur",
+      "productInformation": "Informasi Produk",
+      "specifications": "Spesifikasi"
+    }
+  },
+
+  "HardwareProducts": {
+    "breadcrumb": {
+      "home": "Beranda"
+    },
+    "hero": {
+      "title": "Hardware Teknologi"
+    },
+    "section": {
+      "title": "Hardware Teknologi",
+      "description": "Teknologi perangkat untuk mendukung kebutuhan operasional dan budidaya akuakultur."
+    }
+  },
+
+  "SoftwareProducts": {
+    "breadcrumb": {
+      "home": "Beranda"
+    },
+    "hero": {
+      "title": "Software"
+    },
+    "section": {
+      "title": "Software",
+      "description": "Solusi perangkat lunak untuk membantu digitalisasi, pemantauan, dan pengelolaan aktivitas akuakultur."
+    }
+  },
+
+  "ProcessedProducts": {
+    "breadcrumb": {
+      "home": "Beranda"
+    },
+    "hero": {
+      "title": "Produk Olahan"
+    },
+    "section": {
+      "title": "Produk Olahan",
+      "description": "Produk olahan hasil perikanan yang dikembangkan untuk menghadirkan nilai tambah dari hasil akuakultur."
+    }
+  },
+
+  "FAQ": {
+    "page": {
+      "title": "FAQ",
+      "breadcrumb": {
+        "home": "Beranda",
+        "faq": "FAQ"
+      }
+    },
+    "section": {
+      "eyebrow": "Pusat Bantuan",
+      "headingBefore": "Pertanyaan yang",
+      "headingHighlight": "sering ditanyakan.",
+      "description": "Temukan jawaban atas berbagai pertanyaan mengenai produk, layanan, dan peluang kemitraan Crustea. Jika belum menemukan informasi yang Anda butuhkan, tim kami siap membantu.",
+      "categories": {
+        "all": "Semua",
+        "product": "Produk",
+        "service": "Layanan",
+        "partnership": "Kemitraan"
+      },
+      "loading": "Memuat daftar pertanyaan...",
+      "errorTitle": "FAQ tidak dapat dimuat",
+      "errorDescription": "Terjadi masalah saat mengambil data. Silakan coba lagi beberapa saat lagi.",
+      "emptyTitle": "Belum ada pertanyaan",
+      "emptyDescription": "Belum ada FAQ untuk kategori ini.",
+      "contact": {
+        "title": "Masih punya pertanyaan?",
+        "description": "Hubungi tim Crustea dan diskusikan kebutuhan Anda bersama kami.",
+        "button": "Hubungi Kami"
+      }
+    }
+  },
+
+  "News": {
+    "page": {
+      "title": "Berita",
+      "breadcrumb": {
+        "home": "Beranda",
+        "news": "Berita"
+      }
+    },
+    "section": {
+      "loading": "Memuat berita...",
+      "errorTitle": "Berita tidak dapat dimuat",
+      "errorDescription": "Terjadi masalah saat mengambil berita atau kategori. Silakan coba lagi nanti.",
+      "emptyTitle": "Berita tidak ditemukan",
+      "emptyDescription": "Coba gunakan kata kunci lain atau pilih kategori yang berbeda.",
+      "resetFilters": "Reset pencarian",
+      "readMore": "Baca Berita",
+      "paginationLabel": "Halaman berita",
+      "previousPage": "Halaman sebelumnya",
+      "nextPage": "Halaman berikutnya",
+      "searchTitle": "Cari Berita",
+      "searchLabel": "Cari berita",
+      "searchPlaceholder": "Cari berita...",
+      "popularTitle": "Berita Populer",
+      "categoriesTitle": "Kategori",
+      "noCategories": "Belum ada kategori berita.",
+      "clearCategoryFilter": "Hapus filter kategori"
+    }
+  },
+
+  "DetailNews": {
+    "breadcrumb": {
+      "home": "Beranda",
+      "news": "Berita"
+    }
+  },
+
+  "Contact": {
+    "page": {
+      "title": "Kontak",
+      "breadcrumb": {
+        "home": "Beranda",
+        "contact": "Kontak"
+      }
+    },
+    "section": {
+      "eyebrow": "Hubungi Kami",
+      "headingBefore": "Mari berdiskusi tentang",
+      "headingHighlight": "kebutuhan akuakultur Anda.",
+      "description": "Tim Crustea siap membantu menjawab pertanyaan Anda mengenai produk, layanan, maupun kebutuhan teknologi untuk mendukung operasional tambak.",
+      "contactItems": {
+        "office": {
+          "title": "Kantor Kami"
+        },
+        "whatsapp": {
+          "title": "WhatsApp"
+        },
+        "email": {
+          "title": "Email"
+        },
+        "hours": {
+          "title": "Jam Operasional",
+          "description": "Senin–Jumat, 09.00–17.00 WIB"
+        }
+      },
+      "form": {
+        "title": "Kirim Pesan",
+        "description": "Isi formulir berikut dan tim kami akan menghubungi Anda untuk membahas kebutuhan Anda.",
+        "name": "Nama",
+        "namePlaceholder": "Nama lengkap",
+        "email": "Email",
+        "emailPlaceholder": "nama@email.com",
+        "phone": "Nomor WhatsApp",
+        "phonePlaceholder": "08xxxxxxxxxx",
+        "subject": "Topik",
+        "subjectPlaceholder": "Pilih topik",
+        "message": "Pesan",
+        "messagePlaceholder": "Ceritakan kebutuhan atau pertanyaan Anda...",
+        "submit": "Kirim Pesan"
+      },
+      "subjects": {
+        "product": "Informasi Produk",
+        "service": "Layanan Crustea",
+        "partnership": "Kemitraan",
+        "consultation": "Konsultasi",
+        "other": "Lainnya"
+      },
+      "whatsappMessage": "Halo Tim Crustea,\n\nSaya ingin menghubungi Crustea.\n\nNama: {name}\nEmail: {email}\nWhatsApp: {phone}\n\nTopik: {subject}\n\nPesan:\n{message}\n\nTerima kasih."
+    },
+    "map": {
+      "eyebrow": "Lokasi Kami",
+      "headingBefore": "Temukan",
+      "headingHighlight": "Crustea Labs.",
+      "openMaps": "Buka di Google Maps",
+      "iframeTitle": "Lokasi Crustea Labs"
+    }
+  },
+
+  "Footer": {
+    "description": "Menghadirkan teknologi dan solusi terintegrasi untuk membantu pembudidaya meningkatkan produktivitas, efisiensi, dan keberlanjutan bisnis akuakultur.",
+    "addressLine1": "Ground Floor Crustea Labs",
+    "addressLine2": "Jl. Sanggung Timur No. 1, Jatingaleh, Semarang,",
+    "addressLine3": "Jatingaleh, Semarang, Jawa Tengah 50254",
+    "columns": {
+      "products": "Produk",
+      "services": "Layanan",
+      "company": "Perusahaan",
+      "resources": "Sumber Daya"
+    },
+    "links": {
+      "products": {
+        "hardware": "Hardware Teknologi",
+        "software": "Software",
+        "krasty": "Produk Olahan - Krasty",
+        "trading": "Trading",
+        "aquagrowth": "Aquagrowth",
+        "calculator": "Kalkulator Budidaya"
+      },
+      "services": {
+        "consultation": "Konsultasi & Konstruksi",
+        "ecoAerator": "Eco-Aerator",
+        "crusteaAio": "Crustea AIO",
+        "partnership": "Kemitraan & Pasar"
+      },
+      "company": {
+        "about": "Tentang Kami",
+        "partnership": "Kemitraan"
+      },
+      "resources": {
+        "news": "Berita",
+        "faq": "FAQ",
+        "terms": "Syarat & Ketentuan",
+        "privacy": "Kebijakan Privasi"
+      }
+    },
+    "copyright": "© 2026 PT Eco Karya Teknologi. Seluruh hak cipta dilindungi.",
+    "bottom": {
+      "privacy": "Privasi",
+      "terms": "Syarat & Ketentuan"
+    }
+  }
+}

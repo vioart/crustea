@@ -1,0 +1,940 @@
+{
+  "Header": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About Us",
+    "news": "News",
+    "contact": "Contact",
+    "contactUs": "Contact Us",
+    "contactUsLink": "Contact us",
+    "language": "Language",
+    "chooseLanguage": "Choose language",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "mainNavigation": "Main navigation",
+    "productSolutionTitle": "Crustea Aquaculture Solutions",
+    "productSolutionDescription": "Integrated technologies and solutions to support aquaculture operations and business needs.",
+    "learnMore": "Want to learn more?",
+    "productsList": {
+      "hardware": {
+        "title": "Aquaculture Hardware",
+        "description": "Hardware technology to support aquaculture operations."
+      },
+      "software": {
+        "title": "Software",
+        "description": "Software solutions to help manage business operations."
+      },
+      "processedProduct": {
+        "title": "Processed Products - Krasty",
+        "description": "Processed fishery products with distinctive flavors."
+      },
+      "trading": {
+        "title": "Trading",
+        "description": "Aquaculture product trading and distribution solutions."
+      },
+      "aquagrowth": {
+        "title": "Aquagrowth",
+        "description": "Solutions to support business growth and development."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "description": "Collaboration and partnership opportunities with Crustea."
+      },
+      "calculator": {
+        "title": "Aquaculture Calculator",
+        "description": "A calculation tool for aquaculture needs."
+      }
+    },
+    "companyLinks": {
+      "about": {
+        "title": "About Us",
+        "description": "Learn about Crustea, our journey, and our team."
+      },
+      "partnership": {
+        "title": "Partnership",
+        "description": "Collaboration and partnership opportunities with Crustea."
+      },
+      "terms": "Terms & Conditions",
+      "privacy": "Privacy Policy",
+      "faq": "FAQ"
+    }
+  },
+
+  "Home": {
+    "hero": {
+      "imageAlt": "Crustea aquaculture farming",
+      "eyebrow": "Integrated Aquaculture Solutions",
+      "titleLine1": "Aquaculture Technology",
+      "titleLine2": "for Sustainable",
+      "titleHighlight": "Farming",
+      "description": "We create solutions for shrimp farmers in Indonesia by developing technologies that improve pond productivity and operational efficiency.",
+      "exploreProducts": "Explore Products",
+      "contactUs": "Contact Us"
+    },
+    "imageSlider": {
+      "eyebrow": "Our Technology & Journey",
+      "titleBefore": "From Innovation",
+      "titleHighlight": "to Real-World Impact.",
+      "galleryLabel": "Gallery of Crustea's journey and achievements",
+      "items": {
+        "technology": {
+          "alt": "Crustea aquaculture technology",
+          "title": "Aquaculture Technology Innovation",
+          "category": "Technology"
+        },
+        "implementation": {
+          "alt": "Crustea technology implemented in the field",
+          "title": "Field Implementation",
+          "category": "Implementation"
+        },
+        "farmers": {
+          "alt": "The Crustea team supporting shrimp farmers",
+          "title": "Supporting Shrimp Farmers",
+          "category": "Field Work"
+        },
+        "collaboration": {
+          "alt": "The Crustea team developing aquaculture technology",
+          "title": "Collaboration & Development",
+          "category": "Crustea Team"
+        },
+        "innovation": {
+          "alt": "Crustea receiving an award for technological innovation",
+          "title": "Recognition for Innovation",
+          "category": "Achievements"
+        },
+        "impact": {
+          "alt": "Crustea's achievements in technology development",
+          "title": "Creating a Broader Impact",
+          "category": "Achievements"
+        }
+      }
+    },
+    "about": {
+      "imageAlt": "The Crustea team working with shrimp farmers in Indonesia",
+      "eyebrow": "Our Story",
+      "titleBefore": "We Are Committed to Improving",
+      "titleHighlight": "Shrimp Farmers' Productivity",
+      "titleAfter": "in Indonesia.",
+      "description": "Driven by our concern for Indonesian shrimp farmers facing high operational costs that affect productivity, we are committed to continuously delivering innovative technology solutions.",
+      "learnMore": "Discover Crustea"
+    },
+    "ourServices": {
+      "eyebrow": "Our Services",
+      "titleBefore": "Integrated solutions for",
+      "titleHighlight": "your aquaculture needs.",
+      "description": "From pond development to funding and market access, Crustea provides a range of services to support productivity, efficiency, and sustainability in aquaculture businesses.",
+      "items": {
+        "profitSharing": {
+          "title": "Profit-Sharing Projects & Pond Development",
+          "description": "We operate aquaculture projects through profit-sharing models, covering everything from pond construction to technology support and market access to create efficient and sustainable systems."
+        },
+        "operationalSupport": {
+          "title": "Consulting & Operational Support",
+          "description": "We provide guidance for shrimp and fish farming, from planning to implementation, including on-site and remote technology support focused on water quality, energy efficiency, and disease prevention."
+        },
+        "energyManagement": {
+          "title": "Energy Management & Optimization",
+          "description": "We provide systems to monitor, manage, and optimize energy use through efficient equipment, automation, and renewable energy to help reduce electricity costs without compromising productivity."
+        },
+        "sustainability": {
+          "title": "Sustainability & Empowerment",
+          "description": "We support efficient aquaculture trading and create value-added processed shrimp and fish products through women's empowerment, economic inclusion, and waste reduction."
+        },
+        "fundingPartners": {
+          "title": "Access to Funding Partners",
+          "description": "We provide tailored financial solutions for aquaculture projects, including access to resources for business expansion and operational optimization."
+        },
+        "marketAccess": {
+          "title": "Market Access",
+          "description": "We support the sale of high-quality shrimp, fish, and waste-based products to local markets and global export markets."
+        }
+      }
+    },
+    "featuredProducts": {
+      "eyebrow": "Aquaculture Solutions",
+      "titleBefore": "Technology That Addresses",
+      "titleHighlight": "Farming Challenges.",
+      "description": "Technology solutions designed to help farmers monitor water quality, improve aeration efficiency, and optimize energy use in aquaculture ponds.",
+      "viewAllProducts": "View All Products",
+      "viewDetails": "View Details",
+      "featuresLabel": "Features",
+      "items": {
+        "ebiiSystem": {
+          "category": "Water Quality Monitoring",
+          "description": "A water quality monitoring system with four key parameters to help farmers understand pond conditions.",
+          "highlights": ["pH", "DO", "Salinity", "Temperature"]
+        },
+        "ecoAerator": {
+          "category": "Renewable Energy",
+          "description": "Aeration technology powered by solar panels and an impeller, designed to produce smaller bubbles and increase oxygen levels.",
+          "highlights": ["Solar Panel", "Impeller", "Aeration Efficiency"]
+        },
+        "smartEnergy": {
+          "category": "Energy Management",
+          "description": "A solution that makes it easier to monitor and control aerator energy consumption through mobile devices.",
+          "highlights": [
+            "Energy Monitoring",
+            "Remote Control",
+            "Smartphone Control"
+          ]
+        }
+      },
+      "advantages": {
+        "production": {
+          "label": "Aquaculture Yield Potential",
+          "line1": "Up to",
+          "highlight": "200% larger shrimp",
+          "line2": "with improved quality"
+        },
+        "centerLabel": "Advantages",
+        "efficiency": {
+          "label": "Operational Efficiency",
+          "highlight": "60–80%",
+          "line1": "in operational",
+          "line2": "cost savings"
+        }
+      }
+    },
+    "howWeWork": {
+      "eyebrow": "How We Work",
+      "titleBefore": "From preparation to market,",
+      "titleHighlight": "we support every stage.",
+      "stepItemsLabel": "Activities for {title}",
+      "steps": {
+        "preparation": {
+          "phase": "Preparation",
+          "title": "Consultation & Construction",
+          "items": [
+            "Site survey & water quality assessment",
+            "Pond design and construction",
+            "Aeration and energy requirements planning"
+          ]
+        },
+        "installation": {
+          "phase": "Installation",
+          "title": "Eco-Aerator",
+          "items": [
+            "Solar panels + battery",
+            "Installation by technicians",
+            "Pond operator training"
+          ]
+        },
+        "farming": {
+          "phase": "Farming",
+          "title": "Crustea AIO",
+          "items": [
+            "DO, temperature & energy monitoring",
+            "Automated aerator",
+            "Early warning alerts"
+          ]
+        },
+        "postHarvest": {
+          "phase": "Post-Harvest",
+          "title": "Partnership & Market Access",
+          "items": [
+            "Profit-sharing partnerships",
+            "Harvest market access",
+            "Waste processing"
+          ]
+        }
+      }
+    },
+    "traction": {
+      "eyebrow": "Our Achievements",
+      "titleBefore": "Growing together with",
+      "titleHighlight": "Indonesia's aquaculture ecosystem.",
+      "description": "Crustea continues to grow through collaboration with farmers, partners, and stakeholders across the aquaculture ecosystem.",
+      "launchContextBefore": "These achievements were reached within",
+      "launchContextHighlight": "6 months of product launch.",
+      "items": {
+        "farmers": {
+          "label": "Farmers",
+          "description": "Across the Crustea ecosystem"
+        },
+        "regions": {
+          "label": "Regions",
+          "description": "Across multiple areas"
+        },
+        "awards": {
+          "label": "Awards",
+          "description": "National & international"
+        },
+        "partners": {
+          "label": "Partners",
+          "description": "National & international"
+        }
+      },
+      "funding": {
+        "label": "International Funding"
+      }
+    },
+    "ourImpact": {
+      "eyebrow": "Our Impact",
+      "titleBefore": "Creating impact for",
+      "titleHighlight": "more sustainable aquaculture.",
+      "description": "Our solutions focus not only on productivity, but also on efficiency, the environment, and empowerment across the aquaculture ecosystem.",
+      "sdgs": {
+        "eyebrow": "Sustainability",
+        "title": "Contributing to the SDGs",
+        "description": "Crustea's impact aligns with several United Nations Sustainable Development Goals.",
+        "galleryLabel": "Sustainable Development Goals gallery",
+        "items": {
+          "noPoverty": "SDG 1 - No Poverty",
+          "zeroHunger": "SDG 2 - Zero Hunger",
+          "cleanEnergy": "SDG 7 - Affordable and Clean Energy",
+          "climateAction": "SDG 13 - Climate Action",
+          "lifeBelowWater": "SDG 14 - Life Below Water"
+        }
+      },
+      "metrics": {
+        "shrimp": {
+          "label": "Larger, Higher-Quality Shrimp",
+          "description": "Improved shrimp size and quality through the implementation of aquaculture solutions."
+        },
+        "costs": {
+          "label": "Lower Operating Costs",
+          "description": "Operating cost efficiency through technology and optimized resource utilization."
+        },
+        "emissions": {
+          "label": "tCO₂e in GHG Emission Reductions",
+          "description": "Contributing to greenhouse gas emission reductions through sustainable aquaculture practices."
+        },
+        "women": {
+          "label": "Women in Management",
+          "description": "Women's involvement in management and empowerment across the Crustea ecosystem."
+        }
+      },
+      "note": "Impact figures are presented based on the data and metrics used by Crustea."
+    },
+    "testimonial": {
+      "eyebrow": "Farmers' Stories",
+      "imageAlt": "Testimonial from {name}",
+      "selectorLabel": "Choose a testimonial",
+      "selectTestimonial": "View testimonial from {name}",
+      "previous": "Previous testimonial",
+      "next": "Next testimonial",
+      "items": {
+        "sari": {
+          "name": "Sari Handayani",
+          "role": "Shrimp Farm Manager, Lampung",
+          "quote": "Since using Eco-Aerator, our electricity costs have dropped significantly while oxygen levels remain stable. The Crustea team did more than install the equipment—they continue to support us."
+        },
+        "andi": {
+          "name": "Andi Pratama",
+          "role": "Shrimp Farmer, Central Java",
+          "quote": "Crustea's technology helps us better understand pond conditions and make informed decisions throughout the farming process."
+        },
+        "rudi": {
+          "name": "Rudi Santoso",
+          "role": "Shrimp Farm Manager, East Java",
+          "quote": "What stands out is not only the technology itself, but also the support provided by the Crustea team throughout the farming process."
+        }
+      }
+    },
+    "latestNews": {
+      "eyebrow": "News & Insights",
+      "titleBefore": "The latest news about",
+      "titleHighlight": "Crustea.",
+      "viewAll": "View All News",
+      "loading": "Loading the latest news...",
+      "error": "News could not be loaded. Please try again later.",
+      "empty": "No news is available yet.",
+      "dateUnavailable": "Date unavailable",
+      "readMore": "Read Article"
+    },
+    "cta": {
+      "eyebrow": "Get Started with Crustea",
+      "titleBefore": "Ready to improve",
+      "titleHighlight": "your pond productivity?",
+      "description": "Discuss your pond's needs with the Crustea team and discover technology solutions tailored to your aquaculture operations.",
+      "whatsapp": "Chat on WhatsApp",
+      "email": "Send an Email",
+      "footer": "The Crustea team is ready to help with your questions and needs regarding our products and services."
+    }
+  },
+
+  "InnerHero": {
+    "breadcrumbLabel": "Breadcrumb navigation"
+  },
+
+  "About": {
+    "page": {
+      "title": "About Us",
+      "breadcrumb": {
+        "home": "Home",
+        "about": "About Us"
+      }
+    },
+    "story": {
+      "imageAlt": "The Crustea team working alongside shrimp farmers in Indonesia",
+      "eyebrow": "Our Story",
+      "titleBefore": "We Are Committed to Improving",
+      "titleHighlight": "the Productivity of Shrimp Farmers",
+      "titleAfter": "in Indonesia.",
+      "paragraph1": "Driven by our concern for Indonesian shrimp farmers who face high operational costs that affect productivity, we are committed to continuously delivering technological innovations as solutions.",
+      "paragraph2": "Through the development of aquaculture technology, Crustea strives to support farmers in sustainably improving pond productivity and operational efficiency."
+    },
+    "challenges": {
+      "eyebrow": "Challenges Faced by Farmers",
+      "titleBefore": "Various challenges continue to limit",
+      "titleHighlight": "aquaculture productivity.",
+      "description": "Farmers face various challenges in maintaining pond productivity, ranging from water quality management to high operational costs.",
+      "items": [
+        {
+          "value": "90%",
+          "title": "Farmers Facing Productivity Limitations",
+          "description": "Most farmers surveyed faced various conditions that limited aquaculture productivity."
+        },
+        {
+          "value": "70%",
+          "title": "Shrimp & Fish Mortality",
+          "description": "Shrimp and fish mortality is associated with uncontrolled dissolved oxygen levels."
+        },
+        {
+          "value": "IDR 100 Million",
+          "title": "High Fuel Costs",
+          "description": "High fuel costs are one of the major challenges in pond operations."
+        }
+      ],
+      "imageAlt": "Shrimp farmer carrying out aquaculture activities",
+      "imageCaption": "Operational challenges and water quality are important factors to consider when maintaining pond productivity.",
+      "sourceNote": "* Based on a survey conducted in 2021–2022."
+    },
+    "solution": {
+      "eyebrow": "Crustea Solutions",
+      "titleBefore": "From challenges to",
+      "titleHighlight": "technological solutions.",
+      "description": "Crustea provides technology to help farmers monitor water quality, improve aeration efficiency, and optimize energy consumption in aquaculture ponds.",
+      "items": [
+        {
+          "number": "01",
+          "name": "EBII System",
+          "category": "Water Quality Monitoring",
+          "description": "A water quality monitoring system that measures four key parameters to help farmers understand pond conditions."
+        },
+        {
+          "number": "02",
+          "name": "Eco-Aerator",
+          "category": "Renewable Energy",
+          "description": "An aeration technology combining solar panels and an impeller, designed to produce smaller bubbles and increase oxygen levels."
+        },
+        {
+          "number": "03",
+          "name": "Smart Energy",
+          "category": "Energy Management",
+          "description": "A solution that enables farmers to conveniently monitor and control aerator energy consumption using a smartphone."
+        }
+      ],
+      "imageAlt": "{name} - {category}",
+      "linkLabel": "Explore Technology",
+      "advantages": {
+        "productionLabel": "Aquaculture Yield Potential",
+        "productionValue": "200%",
+        "productionDescription": "larger, higher-quality shrimp",
+        "centerLabel": "Advantages",
+        "efficiencyLabel": "Operational Efficiency",
+        "efficiencyValue": "60–80%",
+        "efficiencyDescription": "operational cost savings"
+      }
+    },
+    "vision": {
+      "eyebrow": "Crustea's Vision",
+      "titleBefore": "Our",
+      "titleHighlight": "Vision",
+      "statementBefore": "Improving the productivity of shrimp farmers and strengthening food security through the implementation of",
+      "statementHighlight": "Eco-Aerator technology.",
+      "points": [
+        "Increasing productivity through precision Eco-Aerator systems.",
+        "Supporting sustainable food security for future generations.",
+        "Empowering shrimp farmers to adopt real-time technology."
+      ],
+      "imageAlt": "Smart farming technology for the future of aquaculture",
+      "imageTitleLine1": "Smart Farming",
+      "imageTitleLine2": "for a Better Future"
+    },
+    "mission": {
+      "eyebrow": "Crustea's Mission",
+      "titleBefore": "Our",
+      "titleHighlight": "Mission",
+      "description": "Pursuing our mission through innovation, sustainability, empowerment, and the distribution of appropriate technologies to support Indonesia's aquaculture ecosystem.",
+      "items": [
+        {
+          "title": "Innovation",
+          "description": "Creating practical technologies tailored to the needs of aquaculture farmers."
+        },
+        {
+          "title": "Sustainability",
+          "description": "Building strong, lasting relationships with our partners and customers."
+        },
+        {
+          "title": "Empowerment",
+          "description": "Developing a skilled workforce that upholds the highest standards of integrity."
+        },
+        {
+          "title": "Continuous Improvement",
+          "description": "Continuously improving and developing technology to meet evolving needs."
+        },
+        {
+          "title": "Distribution",
+          "description": "Ensuring a reliable supply chain and optimal productivity across the aquaculture and fisheries sectors."
+        },
+        {
+          "title": "Targeted Reach",
+          "description": "Distributing appropriate technologies equitably in line with national targets and needs."
+        }
+      ],
+      "closingStatement": "Together, building an innovative, sustainable, and impactful aquaculture ecosystem."
+    },
+    "values": {
+      "eyebrow": "Crustea's Core Values",
+      "titleBefore": "Values of",
+      "titleHighlight": "Crustea",
+      "description": "The principles that guide how we think, work, and grow together.",
+      "decorativeText": "VALUES",
+      "items": [
+        "Creative & Innovative",
+        "Respect",
+        "Humility",
+        "Skillful",
+        "Teamwork",
+        "Ethics & Integrity",
+        "Adaptive"
+      ]
+    },
+    "businessModel": {
+      "eyebrow": "Business Model",
+      "titleBefore": "Creating value through",
+      "titleHighlight": "aquaculture technology and services.",
+      "description": "Crustea develops a business model that connects farmers, public and private sectors, technology, services, and market access within a unified aquaculture ecosystem.",
+      "customers": {
+        "label": "Customers",
+        "title": "B2B",
+        "items": ["Pond Farmers", "Public / Private Sectors"]
+      },
+      "products": {
+        "label": "Products",
+        "title": "Technology",
+        "items": [
+          {
+            "title": "Direct Selling",
+            "description": "Direct sales of technology to customers."
+          },
+          {
+            "title": "Leasing",
+            "description": "Technology access through a leasing model."
+          },
+          {
+            "title": "PaaS / SaaS",
+            "description": "Platform-based and software technology services."
+          }
+        ]
+      },
+      "services": {
+        "label": "Services",
+        "title": "Other Revenue",
+        "items": [
+          {
+            "title": "Shrimp Trading & Processing Products"
+          },
+          {
+            "title": "Projects",
+            "description": "Aquaculture, Empowerment, Sustainability"
+          },
+          {
+            "title": "Consulting & Technical Assistance"
+          },
+          {
+            "title": "Technology Maintenance & Repair"
+          }
+        ]
+      },
+      "performance": {
+        "label": "Business Performance",
+        "items": [
+          {
+            "value": "200",
+            "unit": "ppm",
+            "label": "Production Capacity",
+            "description": "Per month"
+          },
+          {
+            "value": "$40M",
+            "unit": "",
+            "label": "Projected Revenue",
+            "description": "In 2030"
+          },
+          {
+            "value": "35%",
+            "unit": "Up to",
+            "label": "Gross Margin",
+            "description": ""
+          }
+        ]
+      },
+      "impact": {
+        "eyebrow": "Sustainability",
+        "title": "Our Impact",
+        "description": "The impact generated through the implementation of Crustea technology and the development of its aquaculture ecosystem.",
+        "sdgAlt": {
+          "sdg1": "SDG 1 - No Poverty",
+          "sdg2": "SDG 2 - Zero Hunger",
+          "sdg7": "SDG 7 - Affordable and Clean Energy",
+          "sdg14": "SDG 14 - Life Below Water",
+          "sdg13": "SDG 13 - Climate Action"
+        },
+        "metrics": [
+          {
+            "value": "200%",
+            "label": "Bigger & Higher-Quality Shrimp"
+          },
+          {
+            "value": "80%",
+            "label": "Operational Cost Savings"
+          },
+          {
+            "value": "23k",
+            "label": "GHG Emissions Reduction (tCO₂e)"
+          },
+          {
+            "value": "60%",
+            "label": "Women in Management"
+          }
+        ]
+      }
+    },
+    "businessEcosystem": {
+      "eyebrow": "Business Ecosystem",
+      "titleBefore": "Connecting every part of the",
+      "titleHighlight": "aquaculture ecosystem.",
+      "description": "Crustea builds an ecosystem connecting farmers, technology, financing, technical assistance, markets, and processing to create a more integrated aquaculture value chain.",
+      "supporting": {
+        "title": "Supporting Ecosystem"
+      },
+      "strategic": {
+        "title": "Strategic Support"
+      },
+      "core": {
+        "titleLine1": "Shrimp & Fish",
+        "titleLine2": "Cultivation"
+      },
+      "cultivationFlow": "Cultivation Flow",
+      "stages": {
+        "pre": "Pre-Cultivation",
+        "during": "During Cultivation",
+        "post": "Post-Cultivation"
+      },
+      "mobileFlow": {
+        "from": "Pre-Cultivation",
+        "to": "Post-Cultivation"
+      },
+      "downstream": {
+        "title": "Downstream"
+      },
+      "revenue": {
+        "title": "Revenue",
+        "indicator": "Revenue type: {type}",
+        "types": {
+          "daily": "Daily",
+          "monthly": "Monthly",
+          "quarterly": "Quarterly",
+          "yearly": "Yearly"
+        }
+      },
+      "items": {
+        "ecoTourism": "Eco-Tourism",
+        "workshop": "Workshop & Training",
+        "csrProjects": "CSR, Sustainability & Energy Transition Projects",
+        "empowerment": "Empowerment Programs",
+        "funding": "Funding & Financial Collaboration",
+        "revitalization": "Pond Revitalization & Consultation",
+        "equipment": "Eco & Mini Aerator, Solar Panel, EBII System, Smart Energy",
+        "maintenance": "Technology Maintenance & Farming Assistance",
+        "marketplace": "Marketplace",
+        "trading": "Trading: Local & Global Sales / Shipping",
+        "foodService": "Food & Beverage",
+        "foodProcessing": "Food Processing",
+        "preservation": "Preservation"
+      }
+    }
+  },
+
+  "Product": {
+    "page": {
+      "title": "Products",
+      "breadcrumb": {
+        "home": "Home",
+        "product": "Products"
+      }
+    },
+    "overview": {
+      "eyebrow": "Crustea Products",
+      "heading": "Discover solutions for",
+      "headingHighlight": "aquaculture.",
+      "description": "From hardware technology to digital solutions and processed products, explore Crustea products developed to support the aquaculture ecosystem.",
+      "categoryCount": "Product Categories",
+      "categoryNavigation": "Product categories",
+      "allProducts": "All Products",
+      "collection": "Product Collection",
+      "viewProduct": "View Product",
+      "viewAll": "View All",
+      "viewDetail": "View Details",
+      "loading": "Loading products...",
+      "loadError": "Products could not be loaded. Check the server connection and try again.",
+      "retry": "Try Again",
+      "noFeaturedProduct": "No featured product is currently available.",
+      "noImage": "Image unavailable",
+      "emptyCategory": "There are no products in this category yet.",
+      "categories": {
+        "hardware": {
+          "title": "Hardware Technology",
+          "shortTitle": "Hardware",
+          "description": "Hardware technology designed to support aquaculture operations and farming needs."
+        },
+        "software": {
+          "title": "Software",
+          "shortTitle": "Software",
+          "description": "Software solutions for the digitalization, monitoring, and management of aquaculture activities."
+        },
+        "processedProduct": {
+          "title": "Processed Products",
+          "shortTitle": "Processed Products",
+          "description": "Processed fishery products developed to deliver additional value."
+        }
+      }
+    },
+    "detail": {
+      "categories": {
+        "hardware": "Hardware Technology",
+        "software": "Software",
+        "processedProduct": "Processed Products"
+      },
+      "breadcrumb": "Breadcrumb",
+      "home": "Home",
+      "loading": "Loading product details...",
+      "notFoundTitle": "Product not found",
+      "notFoundDescription": "The product is unavailable or could not be loaded. Please try again.",
+      "backToProducts": "Back to Products",
+      "noImage": "Image unavailable",
+      "viewImage": "View image {number}",
+      "consultProduct": "Consult About This Product",
+      "whatsappMessage": "Hello Crustea, I am interested in the {product} product. I would like more information about it.",
+      "contactDescription": "Contact the Crustea team for product information and your aquaculture needs.",
+      "advantages": "Advantages",
+      "advantagesHeading": "Designed for Aquaculture Needs",
+      "productInformation": "Product Information",
+      "specifications": "Specifications"
+    }
+  },
+
+  "HardwareProducts": {
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "hero": {
+      "title": "Aquaculture Hardware"
+    },
+    "section": {
+      "title": "Aquaculture Hardware",
+      "description": "Equipment technology designed to support aquaculture operations and farming needs."
+    }
+  },
+
+  "SoftwareProducts": {
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "hero": {
+      "title": "Software"
+    },
+    "section": {
+      "title": "Software",
+      "description": "Software solutions to support digitalization, monitoring, and management of aquaculture operations."
+    }
+  },
+
+  "ProcessedProducts": {
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "hero": {
+      "title": "Processed Products"
+    },
+    "section": {
+      "title": "Processed Products",
+      "description": "Processed fishery products developed to create added value from aquaculture products."
+    }
+  },
+
+  "FAQ": {
+    "page": {
+      "title": "FAQ",
+      "breadcrumb": {
+        "home": "Home",
+        "faq": "FAQ"
+      }
+    },
+    "section": {
+      "eyebrow": "Help Center",
+      "headingBefore": "Frequently",
+      "headingHighlight": "asked questions.",
+      "description": "Find answers to common questions about Crustea's products, services, and partnership opportunities. If you cannot find the information you need, our team is ready to help.",
+      "categories": {
+        "all": "All",
+        "product": "Products",
+        "service": "Services",
+        "partnership": "Partnerships"
+      },
+      "loading": "Loading frequently asked questions...",
+      "errorTitle": "Unable to load FAQs",
+      "errorDescription": "Something went wrong while retrieving the data. Please try again shortly.",
+      "emptyTitle": "No questions found",
+      "emptyDescription": "There are no FAQs available for this category yet.",
+      "contact": {
+        "title": "Still have questions?",
+        "description": "Contact the Crustea team to discuss your needs with us.",
+        "button": "Contact Us"
+      }
+    }
+  },
+
+  "News": {
+    "page": {
+      "title": "News",
+      "breadcrumb": {
+        "home": "Home",
+        "news": "News"
+      }
+    },
+    "section": {
+      "loading": "Loading news...",
+      "errorTitle": "Unable to load news",
+      "errorDescription": "Something went wrong while loading news or categories. Please try again later.",
+      "emptyTitle": "No news found",
+      "emptyDescription": "Try another keyword or select a different category.",
+      "resetFilters": "Reset search",
+      "readMore": "Read Article",
+      "paginationLabel": "News pagination",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "searchTitle": "Search News",
+      "searchLabel": "Search news",
+      "searchPlaceholder": "Search news...",
+      "popularTitle": "Popular News",
+      "categoriesTitle": "Categories",
+      "noCategories": "No news categories available yet.",
+      "clearCategoryFilter": "Clear category filter"
+    }
+  },
+
+  "DetailNews": {
+    "breadcrumb": {
+      "home": "Home",
+      "news": "News"
+    }
+  },
+
+  "Contact": {
+    "page": {
+      "title": "Contact",
+      "breadcrumb": {
+        "home": "Home",
+        "contact": "Contact"
+      }
+    },
+    "section": {
+      "eyebrow": "Get in Touch",
+      "headingBefore": "Let's discuss",
+      "headingHighlight": "your aquaculture needs.",
+      "description": "The Crustea team is ready to answer your questions about our products, services, and technology solutions to support your aquaculture operations.",
+      "contactItems": {
+        "office": {
+          "title": "Our Office"
+        },
+        "whatsapp": {
+          "title": "WhatsApp"
+        },
+        "email": {
+          "title": "Email"
+        },
+        "hours": {
+          "title": "Business Hours",
+          "description": "Monday–Friday, 9:00 AM–5:00 PM WIB"
+        }
+      },
+      "form": {
+        "title": "Send a Message",
+        "description": "Fill out the form below, and our team will contact you to discuss your needs.",
+        "name": "Name",
+        "namePlaceholder": "Full name",
+        "email": "Email",
+        "emailPlaceholder": "name@email.com",
+        "phone": "WhatsApp Number",
+        "phonePlaceholder": "Enter your WhatsApp number",
+        "subject": "Subject",
+        "subjectPlaceholder": "Select a subject",
+        "message": "Message",
+        "messagePlaceholder": "Tell us about your needs or questions...",
+        "submit": "Send Message"
+      },
+      "subjects": {
+        "product": "Product Information",
+        "service": "Crustea Services",
+        "partnership": "Partnership",
+        "consultation": "Consultation",
+        "other": "Other"
+      },
+      "whatsappMessage": "Hello Crustea Team,\n\nI would like to contact Crustea.\n\nName: {name}\nEmail: {email}\nWhatsApp: {phone}\n\nSubject: {subject}\n\nMessage:\n{message}\n\nThank you."
+    },
+    "map": {
+      "eyebrow": "Our Location",
+      "headingBefore": "Find",
+      "headingHighlight": "Crustea Labs.",
+      "openMaps": "Open in Google Maps",
+      "iframeTitle": "Crustea Labs Location"
+    }
+  },
+
+  "Footer": {
+    "description": "Providing integrated technology and solutions to help aquaculture farmers improve productivity, efficiency, and the sustainability of their businesses.",
+    "addressLine1": "Ground Floor Crustea Labs",
+    "addressLine2": "Jl. Sanggung Timur No. 1, Jatingaleh, Semarang,",
+    "addressLine3": "Jatingaleh, Semarang, Central Java 50254",
+    "columns": {
+      "products": "Products",
+      "services": "Services",
+      "company": "Company",
+      "resources": "Resources"
+    },
+    "links": {
+      "products": {
+        "hardware": "Technology Hardware",
+        "software": "Software",
+        "krasty": "Processed Products - Krasty",
+        "trading": "Trading",
+        "aquagrowth": "Aquagrowth",
+        "calculator": "Aquaculture Calculator"
+      },
+      "services": {
+        "consultation": "Consulting & Construction",
+        "ecoAerator": "Eco-Aerator",
+        "crusteaAio": "Crustea AIO",
+        "partnership": "Partnerships & Markets"
+      },
+      "company": {
+        "about": "About Us",
+        "partnership": "Partnerships"
+      },
+      "resources": {
+        "news": "News",
+        "faq": "FAQ",
+        "terms": "Terms & Conditions",
+        "privacy": "Privacy Policy"
+      }
+    },
+    "copyright": "© 2026 PT Eco Karya Teknologi. All rights reserved.",
+    "bottom": {
+      "privacy": "Privacy",
+      "terms": "Terms & Conditions"
+    }
+  }
+}

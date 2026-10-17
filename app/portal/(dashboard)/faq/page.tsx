@@ -588,22 +588,24 @@ export default function FaqPage() {
                   </tr>
                 ) : error ? (
                   <tr>
-                    <td colSpan={5} className="px-5 py-12 text-center">
-                      <p className="text-sm font-medium text-red-500">
-                        {t.loadFailed}
-                      </p>
+                    <td colSpan={5} className="px-5 py-12">
+                      <div className="flex flex-col items-center justify-center text-center">
+                        <div className="mb-3 flex size-11 items-center justify-center rounded-full bg-red-50 text-red-500">
+                          <CircleAlert className="size-5" />
+                        </div>
 
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {error}
-                      </p>
+                        <p className="text-sm font-semibold text-foreground">
+                          {t.loadFailed}
+                        </p>
+
+                        <p className="mt-1 max-w-md text-sm leading-6 text-muted-foreground">
+                          {error}
+                        </p>
+                      </div>
                     </td>
                   </tr>
                 ) : paginatedFaqs.length > 0 ? (
                   paginatedFaqs.map((faq, index) => {
-                    /*
-                     * Bahasa yang ditampilkan mengikuti
-                     * language dari LanguageProvider.
-                     */
                     const question =
                       language === "id" ? faq.question_idn : faq.question_en;
 
@@ -770,13 +772,19 @@ export default function FaqPage() {
                 ) : (
                   <tr>
                     <td colSpan={5} className="px-5 py-12 text-center">
-                      <p className="text-sm font-medium text-foreground">
-                        {t.notFound}
-                      </p>
+                      <div className="flex flex-col items-center justify-center text-center">
+                        <div className="mb-3 flex size-11 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                          <Search className="size-5" />
+                        </div>
 
-                      <p className="mt-1 text-sm text-muted-foreground">
-                        {t.notFoundDescription}
-                      </p>
+                        <p className="text-sm font-medium text-foreground">
+                          {t.notFound}
+                        </p>
+
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          {t.notFoundDescription}
+                        </p>
+                      </div>
                     </td>
                   </tr>
                 )}

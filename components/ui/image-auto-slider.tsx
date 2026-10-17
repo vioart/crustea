@@ -1,3 +1,6 @@
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Waves } from "lucide-react";
 
@@ -8,50 +11,49 @@ type SliderImage = {
   category: string;
 };
 
-const images: SliderImage[] = [
-  {
-    src: "/img/produk3.png",
-    alt: "Teknologi akuakultur Crustea",
-    title: "Inovasi Teknologi Akuakultur",
-    category: "Teknologi",
-  },
-  {
-    src: "/img/lapangan.jpg",
-    alt: "Implementasi teknologi Crustea di lapangan",
-    title: "Implementasi di Lapangan",
-    category: "Implementasi",
-  },
-  {
-    src: "/img/mendampingi.jpg",
-    alt: "Tim Crustea mendampingi pembudidaya tambak",
-    title: "Mendampingi Pembudidaya",
-    category: "Lapangan",
-  },
-  {
-    src: "/img/awards5.png",
-    alt: "Tim Crustea mengembangkan teknologi akuakultur",
-    title: "Kolaborasi dan Pengembangan",
-    category: "Tim Crustea",
-  },
-  {
-    src: "/img/awards1.png",
-    alt: "Crustea menerima penghargaan atas inovasi teknologi",
-    title: "Apresiasi atas Inovasi",
-    category: "Pencapaian",
-  },
-  {
-    src: "/img/awards3.png",
-    alt: "Pencapaian Crustea dalam pengembangan teknologi",
-    title: "Mendorong Dampak yang Lebih Luas",
-    category: "Pencapaian",
-  },
-];
+export function ImageAutoSlider({ className }: { className?: string }) {
+  const t = useTranslations("Home.imageSlider");
+  const locale = useLocale();
 
-export function ImageAutoSlider({
-  className,
-}: {
-  className?: string;
-}) {
+  const images: SliderImage[] = [
+    {
+      src: "/img/produk3.png",
+      alt: t("items.technology.alt"),
+      title: t("items.technology.title"),
+      category: t("items.technology.category"),
+    },
+    {
+      src: "/img/lapangan.jpg",
+      alt: t("items.implementation.alt"),
+      title: t("items.implementation.title"),
+      category: t("items.implementation.category"),
+    },
+    {
+      src: "/img/mendampingi.jpg",
+      alt: t("items.farmers.alt"),
+      title: t("items.farmers.title"),
+      category: t("items.farmers.category"),
+    },
+    {
+      src: "/img/awards5.png",
+      alt: t("items.collaboration.alt"),
+      title: t("items.collaboration.title"),
+      category: t("items.collaboration.category"),
+    },
+    {
+      src: "/img/awards1.png",
+      alt: t("items.innovation.alt"),
+      title: t("items.innovation.title"),
+      category: t("items.innovation.category"),
+    },
+    {
+      src: "/img/awards3.png",
+      alt: t("items.impact.alt"),
+      title: t("items.impact.title"),
+      category: t("items.impact.category"),
+    },
+  ];
+
   const repeatedImages = [...images, ...images];
 
   return (
@@ -62,40 +64,42 @@ export function ImageAutoSlider({
         className,
       )}
     >
-      {/* =====================================================
-          SECTION HEADER
-      ===================================================== */}
+      {/* SECTION HEADER */}
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
         <div className="max-w-3xl">
-          {/* Eyebrow */}
           <p className="mb-4 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary">
             <Waves
               className="size-5 text-primary"
               strokeWidth={2}
               aria-hidden="true"
             />
-            Teknologi & Perjalanan Kami
+            {t("eyebrow")}
           </p>
 
-          {/* Heading */}
           <h2
             id="story-slider-title"
-            className="font-display text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-4xl lg:text-[42px]"
+            className="max-w-3xl font-display text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-4xl lg:text-[42px]"
           >
-            Dari Inovasi{" "}
-            <span className="text-primary">
-              hingga Dampak di Lapangan.
-            </span>
+            {locale === "en" ? (
+              <>
+                {t("titleBefore")}
+                <br />
+                <span className="text-primary">{t("titleHighlight")}</span>
+              </>
+            ) : (
+              <>
+                {t("titleBefore")}{" "}
+                <span className="text-primary">{t("titleHighlight")}</span>
+              </>
+            )}
           </h2>
         </div>
       </div>
 
-      {/* =====================================================
-          AUTO SLIDER
-      ===================================================== */}
+      {/* AUTO SLIDER */}
       <div
         className="relative mt-10 overflow-hidden"
-        aria-label="Galeri perjalanan dan pencapaian Crustea"
+        aria-label={t("galleryLabel")}
       >
         {/* Left Fade */}
         <div
@@ -120,7 +124,6 @@ export function ImageAutoSlider({
                 aria-hidden={isDuplicate}
                 className="group relative aspect-[16/10] w-[78vw] max-w-[380px] shrink-0 overflow-hidden rounded-[22px] bg-background sm:w-[42vw] lg:w-[28vw]"
               >
-                {/* Image */}
                 <img
                   src={image.src}
                   alt={isDuplicate ? "" : image.alt}
@@ -138,12 +141,10 @@ export function ImageAutoSlider({
 
                 {/* Caption */}
                 <figcaption className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                  {/* Category */}
                   <span className="mb-2 inline-flex rounded-full border border-white/20 bg-black/20 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-md">
                     {image.category}
                   </span>
 
-                  {/* Title */}
                   <p className="font-display text-md font-semibold leading-tight text-white sm:text-xl">
                     {image.title}
                   </p>

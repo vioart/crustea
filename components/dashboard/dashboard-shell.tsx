@@ -18,6 +18,7 @@ export default function DashboardShell({ children }: DashboardShellProps) {
         <DashboardSidebar
           open={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
+          onExpand={() => setSidebarOpen(true)}
         />
 
         <div

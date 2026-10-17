@@ -46,6 +46,16 @@ const translations = {
     translationResultError: "Hasil terjemahan tidak ditemukan.",
     translationError: "Gagal menerjemahkan. Silakan coba lagi.",
     createError: "Gagal menambahkan FAQ.",
+
+    requiredCategory: "Kategori wajib dipilih.",
+    requiredQuestionIDN:
+      "Pertanyaan Bahasa Indonesia wajib diisi.",
+    requiredQuestionEN:
+      "Pertanyaan Bahasa Inggris wajib diisi.",
+    requiredAnswerIDN:
+      "Jawaban Bahasa Indonesia wajib diisi.",
+    requiredAnswerEN:
+      "Jawaban Bahasa Inggris wajib diisi.",
   },
 
   en: {
@@ -82,6 +92,16 @@ const translations = {
     translationResultError: "Translation result not found.",
     translationError: "Failed to translate. Please try again.",
     createError: "Failed to add FAQ.",
+
+    requiredCategory: "Category is required.",
+    requiredQuestionIDN:
+      "Indonesian question is required.",
+    requiredQuestionEN:
+      "English question is required.",
+    requiredAnswerIDN:
+      "Indonesian answer is required.",
+    requiredAnswerEN:
+      "English answer is required.",
   },
 };
 
@@ -107,12 +127,20 @@ export default function FaqCreateModal({
   const [answerIDN, setAnswerIDN] = useState("");
   const [answerEN, setAnswerEN] = useState("");
 
-  const [translating, setTranslating] = useState<"question" | "answer" | null>(
-    null,
-  );
+  const [translating, setTranslating] = useState<
+    "question" | "answer" | null
+  >(null);
 
   const [translateError, setTranslateError] = useState("");
   const [saving, setSaving] = useState(false);
+
+  const [errors, setErrors] = useState({
+    category: "",
+    questionIDN: "",
+    questionEN: "",
+    answerIDN: "",
+    answerEN: "",
+  });
 
   const categoryOptions = [
     {
@@ -137,7 +165,10 @@ export default function FaqCreateModal({
     return null;
   }
 
-  const translateText = async (text: string, type: "question" | "answer") => {
+  const translateText = async (
+    text: string,
+    type: "question" | "answer",
+  ) => {
     if (!text.trim()) {
       return;
     }
@@ -179,8 +210,22 @@ export default function FaqCreateModal({
 
       if (type === "question") {
         setQuestionEN(data.translatedText);
+
+        if (errors.questionEN) {
+          setErrors((prev) => ({
+            ...prev,
+            questionEN: "",
+          }));
+        }
       } else {
         setAnswerEN(data.translatedText);
+
+        if (errors.answerEN) {
+          setErrors((prev) => ({
+            ...prev,
+            answerEN: "",
+          }));
+        }
       }
     } catch (error) {
       console.error("Translation error:", error);
@@ -191,16 +236,44 @@ export default function FaqCreateModal({
     }
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
 
-    if (
-      !category ||
-      !questionIDN.trim() ||
-      !questionEN.trim() ||
-      !answerIDN.trim() ||
-      !answerEN.trim()
-    ) {
+    const newErrors = {
+      category: "",
+      questionIDN: "",
+      questionEN: "",
+      answerIDN: "",
+      answerEN: "",
+    };
+
+    if (!category) {
+      newErrors.category = t.requiredCategory;
+    }
+
+    if (!questionIDN.trim()) {
+      newErrors.questionIDN = t.requiredQuestionIDN;
+    }
+
+    if (!questionEN.trim()) {
+      newErrors.questionEN = t.requiredQuestionEN;
+    }
+
+    if (!answerIDN.trim()) {
+      newErrors.answerIDN = t.requiredAnswerIDN;
+    }
+
+    if (!answerEN.trim()) {
+      newErrors.answerEN = t.requiredAnswerEN;
+    }
+
+    setErrors(newErrors);
+
+    const hasErrors = Object.values(newErrors).some(Boolean);
+
+    if (hasErrors) {
       return;
     }
 
@@ -242,7 +315,11 @@ export default function FaqCreateModal({
     } catch (error) {
       console.error("Create FAQ error:", error);
 
-      onError(error instanceof Error ? error.message : t.createError);
+      onError(
+        error instanceof Error
+          ? error.message
+          : t.createError,
+      );
     } finally {
       setSaving(false);
     }
@@ -257,10 +334,25 @@ export default function FaqCreateModal({
     setTranslating(null);
     setTranslateError("");
 
+    setErrors({
+      category: "",
+      questionIDN: "",
+      questionEN: "",
+      answerIDN: "",
+      answerEN: "",
+    });
+
     onClose();
   };
 
-  return (
+  const inputClass = (error: string) =>
+    `h-11 w-full rounded-lg border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-60 ${
+      error
+        ? "border-red-500 ring-2 ring-red-500/10 focus:border-red-500 focus:ring-2 focus:ring-red-500/10"
+        : "border-border focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+    }`;
+
+    return (
     <div
       className="fixed inset-0 z-[300] flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
       onClick={handleClose}
@@ -274,7 +366,10 @@ export default function FaqCreateModal({
           <div className="flex min-w-0 items-start gap-3.5">
             <div className="flex min-w-0 items-center gap-4">
               <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-dark">
-                <MessageCircleQuestionMark className="size-6" strokeWidth={2} />
+                <MessageCircleQuestionMark
+                  className="size-6"
+                  strokeWidth={2}
+                />
               </div>
 
               <div className="min-w-0">
@@ -292,7 +387,8 @@ export default function FaqCreateModal({
           <button
             type="button"
             onClick={handleClose}
-            className="ml-4 inline-flex size-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            disabled={saving}
+            className="ml-4 inline-flex size-9 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
             aria-label={t.close}
           >
             <X className="size-5" />
@@ -315,9 +411,23 @@ export default function FaqCreateModal({
                 <select
                   id="faq-category"
                   value={category}
-                  onChange={(event) => setCategory(event.target.value)}
+                  onChange={(event) => {
+                    setCategory(event.target.value);
+
+                    if (errors.category) {
+                      setErrors((prev) => ({
+                        ...prev,
+                        category: "",
+                      }));
+                    }
+                  }}
                   required
-                  className="h-11 w-full appearance-none rounded-lg border border-border bg-background px-3 pr-10 text-sm text-foreground outline-none transition-colors focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                  disabled={saving}
+                  className={`h-11 w-full appearance-none rounded-lg border bg-background px-3 pr-10 text-sm text-foreground outline-none transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${
+                    errors.category
+                      ? "border-red-500 ring-2 ring-red-500/10 focus:border-red-500 focus:ring-red-500/10"
+                      : "border-border focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                  }`}
                 >
                   {categoryOptions.map((option) => (
                     <option
@@ -332,6 +442,12 @@ export default function FaqCreateModal({
 
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
               </div>
+
+              {errors.category && (
+                <span className="mt-1.5 block text-xs font-medium text-red-500">
+                  {errors.category}
+                </span>
+              )}
             </div>
 
             {/* Question IDN */}
@@ -341,13 +457,20 @@ export default function FaqCreateModal({
                   htmlFor="faq-question-idn"
                   className="block text-sm font-semibold text-foreground"
                 >
-                  {t.questionIDN} <span className="text-red-500">*</span>
+                  {t.questionIDN}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
 
                 <button
                   type="button"
-                  onClick={() => translateText(questionIDN, "question")}
-                  disabled={!questionIDN.trim() || translating !== null}
+                  onClick={() =>
+                    translateText(questionIDN, "question")
+                  }
+                  disabled={
+                    !questionIDN.trim() ||
+                    translating !== null ||
+                    saving
+                  }
                   className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md bg-accent px-2.5 text-xs font-semibold text-brand-dark transition-colors hover:bg-accent/80 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {translating === "question" ? (
@@ -356,7 +479,9 @@ export default function FaqCreateModal({
                     <Sparkles className="size-3.5" />
                   )}
 
-                  {translating === "question" ? t.translating : t.translate}
+                  {translating === "question"
+                    ? t.translating
+                    : t.translate}
                 </button>
               </div>
 
@@ -364,11 +489,27 @@ export default function FaqCreateModal({
                 id="faq-question-idn"
                 type="text"
                 value={questionIDN}
-                onChange={(event) => setQuestionIDN(event.target.value)}
+                onChange={(event) => {
+                  setQuestionIDN(event.target.value);
+
+                  if (errors.questionIDN) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      questionIDN: "",
+                    }));
+                  }
+                }}
                 placeholder={t.questionIDNPlaceholder}
                 required
-                className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                disabled={saving}
+                className={inputClass(errors.questionIDN)}
               />
+
+              {errors.questionIDN && (
+                <span className="mt-1.5 block text-xs font-medium text-red-500">
+                  {errors.questionIDN}
+                </span>
+              )}
             </div>
 
             {/* Question EN */}
@@ -377,18 +518,35 @@ export default function FaqCreateModal({
                 htmlFor="faq-question-en"
                 className="mb-2 block text-sm font-semibold text-foreground"
               >
-                {t.questionEN} <span className="text-red-500">*</span>
+                {t.questionEN}{" "}
+                <span className="text-red-500">*</span>
               </label>
 
               <input
                 id="faq-question-en"
                 type="text"
                 value={questionEN}
-                onChange={(event) => setQuestionEN(event.target.value)}
+                onChange={(event) => {
+                  setQuestionEN(event.target.value);
+
+                  if (errors.questionEN) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      questionEN: "",
+                    }));
+                  }
+                }}
                 placeholder={t.questionENPlaceholder}
                 required
-                className="h-11 w-full rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                disabled={saving}
+                className={inputClass(errors.questionEN)}
               />
+
+              {errors.questionEN && (
+                <span className="mt-1.5 block text-xs font-medium text-red-500">
+                  {errors.questionEN}
+                </span>
+              )}
             </div>
 
             {/* Answer IDN */}
@@ -398,13 +556,20 @@ export default function FaqCreateModal({
                   htmlFor="faq-answer-idn"
                   className="block text-sm font-semibold text-foreground"
                 >
-                  {t.answerIDN} <span className="text-red-500">*</span>
+                  {t.answerIDN}{" "}
+                  <span className="text-red-500">*</span>
                 </label>
 
                 <button
                   type="button"
-                  onClick={() => translateText(answerIDN, "answer")}
-                  disabled={!answerIDN.trim() || translating !== null}
+                  onClick={() =>
+                    translateText(answerIDN, "answer")
+                  }
+                  disabled={
+                    !answerIDN.trim() ||
+                    translating !== null ||
+                    saving
+                  }
                   className="inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md bg-accent px-2.5 text-xs font-semibold text-brand-dark transition-colors hover:bg-accent/80 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {translating === "answer" ? (
@@ -413,19 +578,41 @@ export default function FaqCreateModal({
                     <Sparkles className="size-3.5" />
                   )}
 
-                  {translating === "answer" ? t.translating : t.translate}
+                  {translating === "answer"
+                    ? t.translating
+                    : t.translate}
                 </button>
               </div>
 
               <textarea
                 id="faq-answer-idn"
                 value={answerIDN}
-                onChange={(event) => setAnswerIDN(event.target.value)}
+                onChange={(event) => {
+                  setAnswerIDN(event.target.value);
+
+                  if (errors.answerIDN) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      answerIDN: "",
+                    }));
+                  }
+                }}
                 placeholder={t.answerIDNPlaceholder}
                 rows={4}
                 required
-                className="w-full resize-none rounded-lg border border-border bg-background px-3 py-3 text-sm leading-6 text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                disabled={saving}
+                className={`w-full resize-none rounded-lg border bg-background px-3 py-3 text-sm leading-6 text-foreground outline-none transition-colors placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-60 ${
+                  errors.answerIDN
+                    ? "border-red-500 ring-2 ring-red-500/10 focus:border-red-500 focus:ring-2 focus:ring-red-500/10"
+                    : "border-border focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                }`}
               />
+
+              {errors.answerIDN && (
+                <span className="mt-1.5 block text-xs font-medium text-red-500">
+                  {errors.answerIDN}
+                </span>
+              )}
             </div>
 
             {/* Answer EN */}
@@ -434,18 +621,39 @@ export default function FaqCreateModal({
                 htmlFor="faq-answer-en"
                 className="mb-2 block text-sm font-semibold text-foreground"
               >
-                {t.answerEN} <span className="text-red-500">*</span>
+                {t.answerEN}{" "}
+                <span className="text-red-500">*</span>
               </label>
 
               <textarea
                 id="faq-answer-en"
                 value={answerEN}
-                onChange={(event) => setAnswerEN(event.target.value)}
+                onChange={(event) => {
+                  setAnswerEN(event.target.value);
+
+                  if (errors.answerEN) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      answerEN: "",
+                    }));
+                  }
+                }}
                 placeholder={t.answerENPlaceholder}
                 rows={4}
                 required
-                className="w-full resize-none rounded-lg border border-border bg-background px-3 py-3 text-sm leading-6 text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                disabled={saving}
+                className={`w-full resize-none rounded-lg border bg-background px-3 py-3 text-sm leading-6 text-foreground outline-none transition-colors placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-60 ${
+                  errors.answerEN
+                    ? "border-red-500 ring-2 ring-red-500/10 focus:border-red-500 focus:ring-2 focus:ring-red-500/10"
+                    : "border-border focus:border-brand-dark focus:ring-2 focus:ring-brand-dark/10"
+                }`}
               />
+
+              {errors.answerEN && (
+                <span className="mt-1.5 block text-xs font-medium text-red-500">
+                  {errors.answerEN}
+                </span>
+              )}
             </div>
 
             {/* Translation Error */}
@@ -461,14 +669,15 @@ export default function FaqCreateModal({
             <button
               type="button"
               onClick={handleClose}
-              className="h-10 rounded-lg border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+              disabled={saving}
+              className="h-10 rounded-lg border border-border px-4 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:cursor-not-allowed disabled:opacity-50"
             >
               {t.cancel}
             </button>
 
             <button
               type="submit"
-              disabled={saving}
+              disabled={saving || translating !== null}
               className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-brand-dark px-5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark/90 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saving ? (

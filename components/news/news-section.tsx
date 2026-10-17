@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import {
   ArrowRight,
   CalendarDays,
@@ -10,193 +11,394 @@ import {
   Search,
 } from "lucide-react";
 
-/* ============================================================
-   TYPES
-============================================================ */
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const POSTS_PER_PAGE = 4;
 
-type NewsItem = {
+type ApiEnvelope<T> = {
+  data: T[] | T;
+};
+
+type ApiCategory = {
+  id: number;
+  slug?: string;
+  name?: string;
+  name_idn?: string;
+  name_en?: string;
+  title?: string;
+  title_idn?: string;
+  title_en?: string;
+  category_name_idn?: string;
+  category_name_en?: string;
+};
+
+type ApiNews = {
+  id: number;
+  slug: string;
+  title?: string;
+  title_idn?: string;
+  title_en?: string;
+  excerpt?: string;
+  excerpt_idn?: string;
+  excerpt_en?: string;
+  content_idn?: string;
+  content_en?: string;
+  thumbnail?: string;
+  image?: string;
+  created_at?: string;
+  published_at?: string;
+  date?: string;
+  category_id?: number;
+  news_category_id?: number;
+  category?: number | string | ApiCategory | null;
+  news_category?: ApiCategory | null;
+  category_name_idn?: string;
+  category_name_en?: string;
+};
+
+type NewsCard = {
+  id: number;
+  slug: string;
   title: string;
   excerpt: string;
   date: string;
   image: string;
-  href: string;
-  category: string;
+  categoryId: number | null;
+  categoryName: string;
 };
 
-type Topic = {
+type CategoryItem = {
+  id: number;
+  slug: string;
   label: string;
-  value: string;
 };
 
-/* ============================================================
-   NEWS DATA
-============================================================ */
+function unwrapData<T>(payload: ApiEnvelope<T> | T[]): T[] {
+  const data = Array.isArray(payload)
+    ? payload
+    : (payload as ApiEnvelope<T>)?.data;
 
-const news: NewsItem[] = [
-  {
-    title: "Cara Sukses Budidaya Udang Vaname dari Persiapan, Teknis Budidaya Hingga Panen!",
-    excerpt:
-      "Budidaya tambak udang vaname salah satu bisnis yang sangat menguntungkan, memiliki prospek yang bagus karena tingkat konsumsi terhadap udang vaname terus meningkat",
-    date: "2026-09-15",
-    image: "/img/berita/artikel1.webp",
-    href: "/berita/teknologi-akuakultur-berkelanjutan",
-    category: "Teknologi",
-  },
-  {
-    title: "Cara Agar Lingkungan Tambak Udang Tidak Tercemar",
-    excerpt:
-      "Pemanfaatan teknologi aerasi yang lebih efisien membantu pembudidaya mengelola kebutuhan oksigen sekaligus mengoptimalkan penggunaan energi.",
-    date: "2026-09-10",
-    image: "/img/berita/artikel2.webp",
-    href: "/berita/meningkatkan-efisiensi-tambak-dengan-eco-aerator",
-    category: "Energi",
-  },
-  {
-    title: "Bentuk Limbah pada Tambak Udang: Tantangan dan Solusi",
-    excerpt:
-      "Kualitas air menjadi salah satu faktor penting dalam keberhasilan budidaya. Pemantauan parameter air membantu pembudidaya mengambil keputusan dengan lebih tepat.",
-    date: "2026-09-05",
-    image: "/img/berita/artikel3.webp",
-    href: "/berita/menjaga-kualitas-air-budidaya-udang",
-    category: "Akuakultur",
-  },
-  {
-    title: "Fungsi Oksigen pada Tambak Udang: Kunci Kesuksesan Budidaya",
-    excerpt:
-      "Perkembangan teknologi membuka peluang baru untuk menciptakan proses budidaya yang lebih terukur, efisien, dan berkelanjutan.",
-    date: "2026-08-28",
-    image: "/img/berita/artikel4.webp",
-    href: "/berita/masa-depan-akuakultur-berbasis-teknologi",
-    category: "Teknologi",
-  },
-  {
-    title: "Berbagai Metode Mengukur Kualitas Air di Tambak Udang: Dari Manual hingga Teknologi IoT",
-    excerpt:
-      "Pemanfaatan energi terbarukan menjadi salah satu pendekatan untuk mengurangi ketergantungan terhadap energi konvensional dalam operasional tambak.",
-    date: "2026-08-20",
-    image: "/img/berita/artikel5.webp",
-    href: "/berita/energi-terbarukan-untuk-budidaya-tambak",
-    category: "Keberlanjutan",
-  },
-];
+  if (!data) return [];
+  return Array.isArray(data) ? data : [data];
+}
 
-/* ============================================================
-   TOPICS
-============================================================ */
+function getCategoryId(news: ApiNews): number | null {
+  if (typeof news.category_id === "number") return news.category_id;
+  if (typeof news.news_category_id === "number") {
+    return news.news_category_id;
+  }
 
-const topics: Topic[] = [
-  {
-    label: "Akuakultur",
-    value: "Akuakultur",
-  },
-  {
-    label: "Teknologi",
-    value: "Teknologi",
-  },
-  {
-    label: "Keberlanjutan",
-    value: "Keberlanjutan",
-  },
-  {
-    label: "Energi",
-    value: "Energi",
-  },
-];
+  if (typeof news.category === "number") return news.category;
 
-/* ============================================================
-   HELPERS
-============================================================ */
+  if (
+    news.category &&
+    typeof news.category === "object" &&
+    typeof news.category.id === "number"
+  ) {
+    return news.category.id;
+  }
 
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("id-ID", {
+  if (
+    news.news_category &&
+    typeof news.news_category.id === "number"
+  ) {
+    return news.news_category.id;
+  }
+
+  return null;
+}
+
+function getCategoryObject(news: ApiNews): ApiCategory | null {
+  if (news.category && typeof news.category === "object") {
+    return news.category;
+  }
+
+  if (news.news_category) {
+    return news.news_category;
+  }
+
+  return null;
+}
+
+function getCategoryName(
+  news: ApiNews,
+  categoryMap: Map<number, CategoryItem>,
+  locale: string,
+): string {
+  const categoryId = getCategoryId(news);
+  const matchedCategory = categoryId
+    ? categoryMap.get(categoryId)
+    : undefined;
+
+  if (matchedCategory) return matchedCategory.label;
+
+  const categoryObject = getCategoryObject(news);
+
+  if (locale === "en") {
+    return (
+      categoryObject?.name_en ||
+      categoryObject?.title_en ||
+      categoryObject?.category_name_en ||
+      news.category_name_en ||
+      categoryObject?.name ||
+      categoryObject?.title ||
+      (typeof news.category === "string" ? news.category : "") ||
+      ""
+    );
+  }
+
+  return (
+    categoryObject?.name_idn ||
+    categoryObject?.title_idn ||
+    categoryObject?.category_name_idn ||
+    news.category_name_idn ||
+    categoryObject?.name ||
+    categoryObject?.title ||
+    (typeof news.category === "string" ? news.category : "") ||
+    ""
+  );
+}
+
+function getImageUrl(image?: string): string {
+  if (!image) return "/img/about-us.webp";
+
+  if (/^https?:\/\//i.test(image)) return image;
+  if (image.startsWith("/")) {
+    if (image.startsWith("/uploads/") && API_BASE_URL) {
+      return `${API_BASE_URL.replace(/\/$/, "")}${image}`;
+    }
+
+    return image;
+  }
+
+  if (API_BASE_URL) {
+    return `${API_BASE_URL.replace(/\/$/, "")}/${image.replace(/^\/+/, "")}`;
+  }
+
+  return `/${image.replace(/^\/+/, "")}`;
+}
+
+function formatDate(date: string, locale: string): string {
+  const parsedDate = new Date(date);
+
+  if (Number.isNaN(parsedDate.getTime())) return date;
+
+  return new Intl.DateTimeFormat(locale === "en" ? "en-US" : "id-ID", {
     day: "numeric",
     month: "long",
     year: "numeric",
-  });
+    timeZone: "Asia/Jakarta",
+  }).format(parsedDate);
 }
 
-/* ============================================================
-   NEWS SECTION
-============================================================ */
+function normalizeNews(
+  item: ApiNews,
+  categories: Map<number, CategoryItem>,
+  locale: string,
+): NewsCard {
+  const title =
+    locale === "en"
+      ? item.title_en || item.title || item.title_idn || ""
+      : item.title_idn || item.title || item.title_en || "";
+
+  const content =
+    locale === "en"
+      ? item.excerpt_en || item.content_en || item.excerpt || item.content_idn || ""
+      : item.excerpt_idn || item.content_idn || item.excerpt || item.content_en || "";
+
+  const date = item.published_at || item.created_at || item.date || "";
+
+  return {
+    id: item.id,
+    slug: item.slug,
+    title,
+    excerpt: content.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(),
+    date,
+    image: getImageUrl(item.thumbnail || item.image),
+    categoryId: getCategoryId(item),
+    categoryName: getCategoryName(item, categories, locale),
+  };
+}
 
 export default function NewsSection() {
+  const t = useTranslations("News.section");
+  const locale = useLocale();
+
+  const [rawNews, setRawNews] = useState<ApiNews[]>([]);
+  const [rawCategories, setRawCategories] = useState<ApiCategory[]>([]);
   const [search, setSearch] = useState("");
-  const [activeTopic, setActiveTopic] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-  const postsPerPage = 4;
+  useEffect(() => {
+    const controller = new AbortController();
 
-  /* ==========================================================
-     SORT NEWS
-  ========================================================== */
+    async function fetchNewsAndCategories() {
+      if (!API_BASE_URL) {
+        setError(true);
+        setLoading(false);
+        return;
+      }
 
-  const sortedNews = useMemo(() => {
-    return [...news].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-    );
+      try {
+        setLoading(true);
+        setError(false);
+
+        const baseUrl = API_BASE_URL.replace(/\/$/, "");
+
+        const [newsResponse, categoriesResponse] = await Promise.all([
+          fetch(`${baseUrl}/api/news`, {
+            headers: { Accept: "application/json" },
+            signal: controller.signal,
+          }),
+          fetch(`${baseUrl}/api/news-categories`, {
+            headers: { Accept: "application/json" },
+            signal: controller.signal,
+          }),
+        ]);
+
+        if (!newsResponse.ok) {
+          throw new Error(`Failed to fetch news: ${newsResponse.status}`);
+        }
+
+        if (!categoriesResponse.ok) {
+          throw new Error(
+            `Failed to fetch categories: ${categoriesResponse.status}`,
+          );
+        }
+
+        const [newsPayload, categoriesPayload] = await Promise.all([
+          newsResponse.json(),
+          categoriesResponse.json(),
+        ]);
+
+        const newsData = unwrapData<ApiNews>(newsPayload);
+        const categoriesData = unwrapData<ApiCategory>(categoriesPayload);
+
+        setRawNews(
+          newsData.filter(
+            (item) =>
+              typeof item.id === "number" &&
+              typeof item.slug === "string",
+          ),
+        );
+
+        setRawCategories(
+          categoriesData.filter((item) => typeof item.id === "number"),
+        );
+      } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") return;
+
+        console.error("Failed to load news and categories:", err);
+        setError(true);
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void fetchNewsAndCategories();
+
+    return () => controller.abort();
   }, []);
 
-  /* ==========================================================
-     FILTER NEWS
-  ========================================================== */
+  const categories = useMemo<CategoryItem[]>(() => {
+    return rawCategories.map((category) => {
+      const label =
+        locale === "en"
+          ? category.name_en ||
+            category.title_en ||
+            category.category_name_en ||
+            category.name ||
+            category.title ||
+            ""
+          : category.name_idn ||
+            category.title_idn ||
+            category.category_name_idn ||
+            category.name ||
+            category.title ||
+            "";
+
+      return {
+        id: category.id,
+        slug: category.slug || String(category.id),
+        label,
+      };
+    });
+  }, [rawCategories, locale]);
+
+  const categoryMap = useMemo(
+    () => new Map(categories.map((category) => [category.id, category])),
+    [categories],
+  );
+
+  const news = useMemo(
+    () => rawNews.map((item) => normalizeNews(item, categoryMap, locale)),
+    [rawNews, categoryMap, locale],
+  );
+
+  const sortedNews = useMemo(
+    () =>
+      [...news].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+      ),
+    [news],
+  );
 
   const filteredNews = useMemo(() => {
-    const keyword = search.trim().toLowerCase();
+    const keyword = search.trim().toLocaleLowerCase(
+      locale === "en" ? "en-US" : "id-ID",
+    );
 
     return sortedNews.filter((item) => {
       const matchesSearch =
         !keyword ||
-        item.title.toLowerCase().includes(keyword) ||
-        item.excerpt.toLowerCase().includes(keyword) ||
-        item.category.toLowerCase().includes(keyword);
+        item.title.toLocaleLowerCase().includes(keyword) ||
+        item.excerpt.toLocaleLowerCase().includes(keyword) ||
+        item.categoryName.toLocaleLowerCase().includes(keyword);
 
-      const matchesTopic = !activeTopic || item.category === activeTopic;
+      const matchesCategory =
+        activeCategory === null || item.categoryId === activeCategory;
 
-      return matchesSearch && matchesTopic;
+      return matchesSearch && matchesCategory;
     });
-  }, [search, activeTopic, sortedNews]);
+  }, [sortedNews, search, activeCategory, locale]);
 
-  /* ==========================================================
-     PAGINATION
-  ========================================================== */
-
-  const totalPages = Math.ceil(filteredNews.length / postsPerPage);
+  const totalPages = Math.ceil(filteredNews.length / POSTS_PER_PAGE);
 
   const paginatedNews = filteredNews.slice(
-    (currentPage - 1) * postsPerPage,
-    currentPage * postsPerPage,
+    (currentPage - 1) * POSTS_PER_PAGE,
+    currentPage * POSTS_PER_PAGE,
   );
-
-  /* ==========================================================
-     POPULAR POSTS
-  ========================================================== */
 
   const popularPosts = sortedNews.slice(0, 4);
 
-  /* ==========================================================
-     TOPIC COUNTS
-  ========================================================== */
-
-  const topicCounts = topics.map((topic) => ({
-    ...topic,
-    count: news.filter((item) => item.category === topic.value).length,
-  }));
-
-  /* ==========================================================
-     SEARCH HANDLER
-  ========================================================== */
+  const categoryCounts = useMemo(
+    () =>
+      categories.map((category) => ({
+        ...category,
+        count: news.filter((item) => item.categoryId === category.id).length,
+      })),
+    [categories, news],
+  );
 
   function handleSearch(value: string) {
     setSearch(value);
     setCurrentPage(1);
   }
 
-  /* ==========================================================
-     TOPIC HANDLER
-  ========================================================== */
+  function handleCategory(categoryId: number) {
+    setActiveCategory((current) =>
+      current === categoryId ? null : categoryId,
+    );
+    setCurrentPage(1);
+  }
 
-  function handleTopic(topic: string) {
-    setActiveTopic((current) => (current === topic ? null : topic));
+  function resetFilters() {
+    setSearch("");
+    setActiveCategory(null);
     setCurrentPage(1);
   }
 
@@ -205,10 +407,7 @@ export default function NewsSection() {
       aria-labelledby="news-section-title"
       className="relative overflow-hidden bg-background"
     >
-      {/* =====================================================
-          DECORATIVE BACKGROUND
-      ===================================================== */}
-
+      {/* Decorative background */}
       <div
         className="pointer-events-none absolute -left-48 top-20 size-[420px] rounded-full bg-secondary/50 blur-3xl"
         aria-hidden="true"
@@ -220,26 +419,39 @@ export default function NewsSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-5 py-20 sm:py-24 lg:px-8 lg:py-28">
-        {/* ===================================================
-            MAIN CONTENT + SIDEBAR
-        =================================================== */}
-
         <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] lg:items-start lg:gap-12">
-          {/* =================================================
-              LEFT - NEWS
-          ================================================= */}
-
+          {/* News list */}
           <div>
-            {paginatedNews.length > 0 ? (
+            {loading ? (
+              <div
+                role="status"
+                className="rounded-[24px] border border-border bg-muted/50 px-6 py-16 text-center"
+              >
+                <p className="text-sm text-muted-foreground">
+                  {t("loading")}
+                </p>
+              </div>
+            ) : error ? (
+              <div
+                role="alert"
+                className="rounded-[24px] border border-border bg-muted/50 px-6 py-16 text-center"
+              >
+                <h3 className="font-display text-xl font-semibold text-foreground">
+                  {t("errorTitle")}
+                </h3>
+                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
+                  {t("errorDescription")}
+                </p>
+              </div>
+            ) : paginatedNews.length > 0 ? (
               <div className="grid gap-5 sm:grid-cols-2">
                 {paginatedNews.map((item) => (
                   <article
-                    key={item.href}
+                    key={item.id}
                     className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                   >
-                    {/* Image */}
                     <Link
-                      href={item.href}
+                      href={`/berita/${item.slug}`}
                       className="relative block aspect-[4/3] overflow-hidden bg-muted"
                     >
                       <img
@@ -251,51 +463,46 @@ export default function NewsSection() {
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                       />
 
-                      {/* Category */}
-                      <div className="absolute left-4 top-4">
-                        <span className="rounded-full bg-background/95 px-3 py-1.5 text-[11px] font-semibold text-brand-dark shadow-sm backdrop-blur-sm">
-                          {item.category}
-                        </span>
-                      </div>
+                      {item.categoryName && (
+                        <div className="absolute left-4 top-4">
+                          <span className="rounded-full bg-background/95 px-3 py-1.5 text-[11px] font-semibold text-brand-dark shadow-sm backdrop-blur-sm">
+                            {item.categoryName}
+                          </span>
+                        </div>
+                      )}
                     </Link>
 
-                    {/* Content */}
                     <div className="flex flex-1 flex-col p-6">
-                      {/* Date */}
                       <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
                         <CalendarDays
                           className="size-4 text-brand-secondary"
                           strokeWidth={2}
                           aria-hidden="true"
                         />
-
                         <time dateTime={item.date}>
-                          {formatDate(item.date)}
+                          {formatDate(item.date, locale)}
                         </time>
                       </div>
 
-                      {/* Title */}
                       <h3 className="mt-3 font-display text-xl font-semibold leading-tight tracking-tight text-foreground">
                         <Link
-                          href={item.href}
+                          href={`/berita/${item.slug}`}
                           className="transition-colors group-hover:text-brand-secondary"
                         >
                           {item.title}
                         </Link>
                       </h3>
 
-                      {/* Excerpt */}
                       <p className="mt-3 line-clamp-3 text-sm leading-6 text-muted-foreground">
                         {item.excerpt}
                       </p>
 
-                      {/* CTA */}
                       <div className="mt-auto pt-6">
                         <Link
-                          href={item.href}
+                          href={`/berita/${item.slug}`}
                           className="group/read inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:bg-brand-secondary"
                         >
-                          Baca Berita
+                          {t("readMore")}
                           <ArrowRight
                             className="size-4 transition-transform duration-300 group-hover/read:translate-x-1"
                             aria-hidden="true"
@@ -307,39 +514,31 @@ export default function NewsSection() {
                 ))}
               </div>
             ) : (
-              /* Empty State */
               <div className="rounded-[24px] border border-dashed border-border bg-muted/50 px-6 py-16 text-center">
                 <Search className="mx-auto size-8 text-brand-secondary" />
 
                 <h3 className="mt-4 font-display text-xl font-semibold text-foreground">
-                  Berita tidak ditemukan
+                  {t("emptyTitle")}
                 </h3>
 
                 <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-                  Coba gunakan kata kunci lain atau pilih topik yang berbeda.
+                  {t("emptyDescription")}
                 </p>
 
                 <button
                   type="button"
-                  onClick={() => {
-                    setSearch("");
-                    setActiveTopic(null);
-                    setCurrentPage(1);
-                  }}
+                  onClick={resetFilters}
                   className="mt-5 text-sm font-semibold text-brand-secondary transition-colors hover:text-brand-dark"
                 >
-                  Reset pencarian
+                  {t("resetFilters")}
                 </button>
               </div>
             )}
 
-            {/* =================================================
-                PAGINATION
-            ================================================= */}
-
-            {totalPages > 1 && (
+            {/* Pagination */}
+            {!loading && !error && totalPages > 1 && (
               <nav
-                aria-label="Pagination berita"
+                aria-label={t("paginationLabel")}
                 className="mt-10 flex items-center justify-center gap-2"
               >
                 <button
@@ -348,31 +547,30 @@ export default function NewsSection() {
                     setCurrentPage((page) => Math.max(1, page - 1))
                   }
                   disabled={currentPage === 1}
-                  aria-label="Halaman sebelumnya"
+                  aria-label={t("previousPage")}
                   className="flex size-10 items-center justify-center rounded-lg border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
                 >
                   <ChevronLeft className="size-4" />
                 </button>
 
-                {Array.from(
-                  { length: totalPages },
-                  (_, index) => index + 1,
-                ).map((page) => (
-                  <button
-                    key={page}
-                    type="button"
-                    onClick={() => setCurrentPage(page)}
-                    aria-current={currentPage === page ? "page" : undefined}
-                    className={[
-                      "flex size-10 items-center justify-center rounded-lg border text-sm font-semibold transition-colors",
-                      currentPage === page
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-background text-brand-dark hover:border-primary hover:bg-secondary",
-                    ].join(" ")}
-                  >
-                    {page}
-                  </button>
-                ))}
+                {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+                  (page) => (
+                    <button
+                      key={page}
+                      type="button"
+                      onClick={() => setCurrentPage(page)}
+                      aria-current={currentPage === page ? "page" : undefined}
+                      className={[
+                        "flex size-10 items-center justify-center rounded-lg border text-sm font-semibold transition-colors",
+                        currentPage === page
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-background text-brand-dark hover:border-primary hover:bg-secondary",
+                      ].join(" ")}
+                    >
+                      {page}
+                    </button>
+                  ),
+                )}
 
                 <button
                   type="button"
@@ -380,7 +578,7 @@ export default function NewsSection() {
                     setCurrentPage((page) => Math.min(totalPages, page + 1))
                   }
                   disabled={currentPage === totalPages}
-                  aria-label="Halaman berikutnya"
+                  aria-label={t("nextPage")}
                   className="flex size-10 items-center justify-center rounded-lg border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
                 >
                   <ChevronRight className="size-4" />
@@ -389,23 +587,17 @@ export default function NewsSection() {
             )}
           </div>
 
-          {/* =================================================
-              RIGHT - SIDEBAR
-          ================================================= */}
-
+          {/* Sidebar */}
           <aside className="space-y-5 lg:sticky lg:top-28">
-            {/* =================================================
-      SEARCH
-  ================================================= */}
-
+            {/* Search */}
             <div className="rounded-[24px] border border-border bg-card p-5 shadow-sm sm:p-6">
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                Cari Berita
+                {t("searchTitle")}
               </h3>
 
               <div className="mt-4">
                 <label htmlFor="news-search" className="sr-only">
-                  Cari berita
+                  {t("searchLabel")}
                 </label>
 
                 <div className="relative">
@@ -414,7 +606,7 @@ export default function NewsSection() {
                     type="search"
                     value={search}
                     onChange={(event) => handleSearch(event.target.value)}
-                    placeholder="Cari berita..."
+                    placeholder={t("searchPlaceholder")}
                     className="h-12 w-full rounded-xl border border-border bg-muted/40 pl-4 pr-12 text-sm text-foreground outline-none transition-all placeholder:text-muted-foreground focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/20"
                   />
 
@@ -426,22 +618,17 @@ export default function NewsSection() {
               </div>
             </div>
 
-            {/* =================================================
-                POPULAR POST
-            ================================================= */}
-
+            {/* Popular posts */}
             <div className="rounded-[24px] border border-border bg-card p-5 shadow-sm sm:p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                  Popular Post
-                </h3>
-              </div>
+              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
+                {t("popularTitle")}
+              </h3>
 
               <div className="mt-5 space-y-4">
                 {popularPosts.map((post) => (
-                  <article key={post.href} className="group flex gap-3">
+                  <article key={post.id} className="group flex gap-3">
                     <Link
-                      href={post.href}
+                      href={`/berita/${post.slug}`}
                       className="relative size-[76px] shrink-0 overflow-hidden rounded-xl border border-border bg-muted shadow-sm transition-shadow duration-300 group-hover:shadow-md"
                     >
                       <img
@@ -457,7 +644,7 @@ export default function NewsSection() {
                     <div className="min-w-0">
                       <h4 className="font-display text-sm font-semibold leading-5 text-foreground">
                         <Link
-                          href={post.href}
+                          href={`/berita/${post.slug}`}
                           className="transition-colors group-hover:text-brand-secondary"
                         >
                           {post.title}
@@ -468,7 +655,7 @@ export default function NewsSection() {
                         dateTime={post.date}
                         className="mt-1.5 block text-xs text-muted-foreground"
                       >
-                        {formatDate(post.date)}
+                        {formatDate(post.date, locale)}
                       </time>
                     </div>
                   </article>
@@ -476,75 +663,77 @@ export default function NewsSection() {
               </div>
             </div>
 
-            {/* =================================================
-      TOPICS
-  ================================================= */}
-
+            {/* Categories */}
             <div className="rounded-[24px] border border-border bg-card p-5 shadow-sm sm:p-6">
-              <div className="flex items-center justify-between">
-                <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                  Topik
-                </h3>
-              </div>
+              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
+                {t("categoriesTitle")}
+              </h3>
 
-              <div className="mt-5 overflow-hidden rounded-xl border border-border">
-                {topicCounts.map((topic, index) => {
-                  const isActive = activeTopic === topic.value;
+              {categories.length > 0 ? (
+                <div className="mt-5 overflow-hidden rounded-xl border border-border">
+                  {categoryCounts.map((category, index) => {
+                    const isActive = activeCategory === category.id;
 
-                  return (
-                    <button
-                      key={topic.value}
-                      type="button"
-                      onClick={() => handleTopic(topic.value)}
-                      className={[
-                        "group flex w-full items-center justify-between px-4 py-3.5 text-left text-sm transition-colors",
-                        index !== topicCounts.length - 1
-                          ? "border-b border-border"
-                          : "",
-                        isActive
-                          ? "bg-secondary text-brand-dark"
-                          : "bg-background text-foreground hover:bg-secondary/60",
-                      ].join(" ")}
-                    >
-                      <span className="flex items-center gap-2.5">
-                        <ArrowRight
-                          className={[
-                            "size-4 transition-transform duration-200",
-                            isActive
-                              ? "translate-x-1 text-brand-secondary"
-                              : "text-muted-foreground group-hover:translate-x-1 group-hover:text-brand-secondary",
-                          ].join(" ")}
-                          aria-hidden="true"
-                        />
-
-                        <span className="font-medium">{topic.label}</span>
-                      </span>
-
-                      <span
+                    return (
+                      <button
+                        key={category.id}
+                        type="button"
+                        aria-pressed={isActive}
+                        onClick={() => handleCategory(category.id)}
                         className={[
-                          "text-xs font-medium",
+                          "group flex w-full items-center justify-between px-4 py-3.5 text-left text-sm transition-colors",
+                          index !== categoryCounts.length - 1
+                            ? "border-b border-border"
+                            : "",
                           isActive
-                            ? "text-brand-secondary"
-                            : "text-muted-foreground",
+                            ? "bg-secondary text-brand-dark"
+                            : "bg-background text-foreground hover:bg-secondary/60",
                         ].join(" ")}
                       >
-                        ({topic.count})
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+                        <span className="flex items-center gap-2.5">
+                          <ArrowRight
+                            className={[
+                              "size-4 transition-transform duration-200",
+                              isActive
+                                ? "translate-x-1 text-brand-secondary"
+                                : "text-muted-foreground group-hover:translate-x-1 group-hover:text-brand-secondary",
+                            ].join(" ")}
+                            aria-hidden="true"
+                          />
 
-              {activeTopic && (
+                          <span className="font-medium">{category.label}</span>
+                        </span>
+
+                        <span
+                          className={[
+                            "text-xs font-medium",
+                            isActive
+                              ? "text-brand-secondary"
+                              : "text-muted-foreground",
+                          ].join(" ")}
+                        >
+                          ({category.count})
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                  {t("noCategories")}
+                </p>
+              )}
+
+              {activeCategory !== null && (
                 <button
                   type="button"
                   onClick={() => {
-                    setActiveTopic(null);
+                    setActiveCategory(null);
                     setCurrentPage(1);
                   }}
                   className="mt-4 text-xs font-semibold text-brand-secondary transition-colors hover:text-brand-dark"
                 >
-                  Hapus filter topik
+                  {t("clearCategoryFilter")}
                 </button>
               )}
             </div>

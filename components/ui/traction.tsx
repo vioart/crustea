@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import { Award, Globe2, Handshake, Sprout, Waves } from "lucide-react";
 
 type TractionItem = {
@@ -7,42 +10,42 @@ type TractionItem = {
   icon: typeof Sprout;
 };
 
-const tractionItems: TractionItem[] = [
-  {
-    number: "1.000+",
-    label: "Pembudidaya",
-    description: "Dalam ekosistem Crustea",
-    icon: Sprout,
-  },
-  {
-    number: "10+",
-    label: "Wilayah",
-    description: "Tersebar di berbagai daerah",
-    icon: Globe2,
-  },
-  {
-    number: "25+",
-    label: "Penghargaan",
-    description: "Nasional & internasional",
-    icon: Award,
-  },
-  {
-    number: "20+",
-    label: "Mitra",
-    description: "Nasional & internasional",
-    icon: Handshake,
-  },
-];
-
 export default function Traction() {
+  const t = useTranslations("Home.traction");
+
+  const tractionItems: TractionItem[] = [
+    {
+      number: "1.000+",
+      label: t("items.farmers.label"),
+      description: t("items.farmers.description"),
+      icon: Sprout,
+    },
+    {
+      number: "10+",
+      label: t("items.regions.label"),
+      description: t("items.regions.description"),
+      icon: Globe2,
+    },
+    {
+      number: "25+",
+      label: t("items.awards.label"),
+      description: t("items.awards.description"),
+      icon: Award,
+    },
+    {
+      number: "20+",
+      label: t("items.partners.label"),
+      description: t("items.partners.description"),
+      icon: Handshake,
+    },
+  ];
+
   return (
     <section
       aria-labelledby="traction-title"
       className="relative overflow-hidden bg-brand-dark text-white"
     >
-      {/* =====================================================
-          DECORATIVE BACKGROUND
-      ===================================================== */}
+      {/* Decorative background */}
       <div
         className="pointer-events-none absolute -right-40 -top-40 size-[420px] rounded-full bg-primary/10 blur-3xl"
         aria-hidden="true"
@@ -65,57 +68,45 @@ export default function Traction() {
         }}
       />
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
+      {/* Content */}
       <div className="relative mx-auto max-w-7xl px-5 py-20 sm:py-24 lg:px-8 lg:py-28">
-        {/* =================================================
-            HEADER
-        ================================================= */}
+        {/* Header */}
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <header className="max-w-3xl">
-            {/* Eyebrow */}
             <p className="mb-4 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-white/60">
               <Waves
                 className="size-5 text-primary"
                 strokeWidth={2}
                 aria-hidden="true"
               />
-              Pencapaian Kami
+              {t("eyebrow")}
             </p>
 
-            {/* Heading */}
             <h2
               id="traction-title"
               className="font-display text-3xl font-semibold leading-[1.08] tracking-tight sm:text-4xl lg:text-[42px]"
             >
-              Bertumbuh bersama{" "}
-              <span className="text-primary">
-                ekosistem akuakultur Indonesia.
-              </span>
+              {t("titleBefore")}{" "}
+              <span className="text-primary">{t("titleHighlight")}</span>
             </h2>
 
-            {/* Description */}
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/65 sm:text-[17px]">
-              Perjalanan Crustea terus berkembang melalui kolaborasi bersama
-              pembudidaya, mitra, dan berbagai pihak dalam ekosistem akuakultur.
+              {t("description")}
             </p>
           </header>
 
-          {/* Launch Context */}
+          {/* Launch context */}
           <div className="shrink-0 lg:pb-1">
             <p className="max-w-xs border-l-2 border-primary pl-4 text-sm leading-6 text-white/55">
-              Pencapaian ini diraih dalam{" "}
+              {t("launchContextBefore")}{" "}
               <span className="font-semibold text-white">
-                6 bulan sejak peluncuran produk.
+                {t("launchContextHighlight")}
               </span>
             </p>
           </div>
         </div>
 
-        {/* =================================================
-            TRACTION NUMBERS
-        ================================================= */}
+        {/* Traction numbers */}
         <div className="mt-14 border-y border-white/10">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4">
             {tractionItems.map((item, index) => {
@@ -127,11 +118,12 @@ export default function Traction() {
                   className={[
                     "group relative px-5 py-8 sm:px-7 sm:py-9",
                     index % 2 !== 0 ? "border-l border-white/10" : "",
-                    index >= 2 ? "border-t border-white/10 lg:border-t-0" : "",
+                    index >= 2
+                      ? "border-t border-white/10 lg:border-t-0"
+                      : "",
                     index > 0 ? "lg:border-l lg:border-white/10" : "",
                   ].join(" ")}
                 >
-                  {/* Icon */}
                   <div className="mb-7 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-primary transition-colors duration-300 group-hover:border-primary/30 group-hover:bg-primary group-hover:text-brand-dark">
                     <Icon
                       className="size-5"
@@ -140,17 +132,14 @@ export default function Traction() {
                     />
                   </div>
 
-                  {/* Number */}
                   <p className="font-display text-4xl font-semibold leading-none tracking-tight text-white sm:text-5xl">
                     {item.number}
                   </p>
 
-                  {/* Label */}
                   <h3 className="mt-3 text-base font-semibold text-white">
                     {item.label}
                   </h3>
 
-                  {/* Description */}
                   <p className="mt-1 text-sm leading-6 text-white/45">
                     {item.description}
                   </p>
@@ -160,9 +149,7 @@ export default function Traction() {
           </div>
         </div>
 
-        {/* =================================================
-            P4G / INTERNATIONAL FUNDER
-        ================================================= */}
+        {/* P4G / International funding */}
         <div className="mt-10 flex flex-col gap-5 rounded-[20px] border border-white/10 bg-white/[0.04] px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-7">
           <div className="flex items-center gap-4">
             <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-brand-dark">
@@ -175,7 +162,7 @@ export default function Traction() {
 
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/45">
-                Pendanaan Internasional
+                {t("funding.label")}
               </p>
 
               <h3 className="mt-1 font-display text-xl font-semibold text-white">

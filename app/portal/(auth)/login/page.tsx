@@ -134,7 +134,6 @@ export default function LoginPage() {
         router.replace("/portal");
       }, 1000);
     } catch (error) {
-      console.error("Login error:", error);
 
       toast.error(
         error instanceof Error

@@ -1,6 +1,8 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useLocale } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import {
   ArrowLeft,
   ArrowRight,
@@ -8,7 +10,6 @@ import {
   Mail,
   Share2,
 } from "lucide-react";
-
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 
 type NewsDetailProps = {
@@ -16,54 +17,259 @@ type NewsDetailProps = {
   category: string;
   date: string;
   image: string;
+  content: string;
+  slug?: string;
+  categoryId?: number | string | null;
 };
 
-const popularPosts = [
-  {
-    title: "Teknologi Akuakultur untuk Budidaya Berkelanjutan",
-    date: "15 September 2026",
-    image: "/img/berita/artikel1.webp",
-    href: "/berita/teknologi-akuakultur-berkelanjutan",
-  },
-  {
-    title: "Meningkatkan Efisiensi Tambak dengan Eco-Aerator",
-    date: "10 September 2026",
-    image: "/img/berita/artikel2.webp",
-    href: "/berita/meningkatkan-efisiensi-tambak-dengan-eco-aerator",
-  },
-  {
-    title: "Menjaga Kualitas Air untuk Budidaya Udang",
-    date: "5 September 2026",
-    image: "/img/berita/artikel3.webp",
-    href: "/berita/menjaga-kualitas-air-budidaya-udang",
-  },
-];
+type ApiNews = {
+  id?: number | string;
+  category_id?: number | string | null;
+  slug?: string;
+  thumbnail?: string | null;
+  title_idn?: string | null;
+  title_en?: string | null;
+  title?: string | null;
+  published_at?: string | null;
+  created_at?: string | null;
+  status?: string | null;
+};
 
-const topics = [
-  {
-    label: "Akuakultur",
-    count: 1,
-  },
-  {
-    label: "Teknologi",
-    count: 3,
-  },
-  {
-    label: "Keberlanjutan",
-    count: 2,
-  },
-  {
-    label: "Energi",
-    count: 2,
-  },
-];
+type ApiCategory = {
+  id?: number | string;
+  name?: string | null;
+  name_idn?: string | null;
+  name_en?: string | null;
+  title?: string | null;
+  title_idn?: string | null;
+  title_en?: string | null;
+  slug?: string | null;
+  news_count?: number | null;
+  total_news?: number | null;
+  count?: number | null;
+};
 
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("id-ID", {
+type ApiResponse<T> = {
+  data?: T | { data?: T };
+  items?: T;
+};
+
+type SidebarCategory = {
+  id: string;
+  label: string;
+  count: number | null;
+  slug: string;
+};
+
+type SidebarNews = {
+  id: string;
+  slug: string;
+  title: string;
+  date: string;
+  image: string;
+};
+
+const API_BASE = (
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+).replace(/\/+$/, "");
+
+function unwrapArray<T>(response: unknown): T[] {
+  if (Array.isArray(response)) {
+    return response as T[];
+  }
+
+  if (!response || typeof response !== "object") {
+    return [];
+  }
+
+  const result = response as ApiResponse<T[]>;
+
+  if (Array.isArray(result.data)) {
+    return result.data;
+  }
+
+  if (
+    result.data &&
+    typeof result.data === "object" &&
+    "data" in result.data &&
+    Array.isArray(result.data.data)
+  ) {
+    return result.data.data;
+  }
+
+  if (Array.isArray(result.items)) {
+    return result.items;
+  }
+
+  return [];
+}
+
+/**
+ * Mengubah path relatif dari backend menjadi URL absolut.
+ * Contoh:
+ * /uploads/news/content/image.png
+ * menjadi:
+ * http://localhost:8080/uploads/news/content/image.png
+ */
+function getImageUrl(path?: string | null): string {
+  if (!path) return "";
+
+  const trimmedPath = path.trim();
+
+  if (
+    /^(https?:)?\/\//i.test(trimmedPath) ||
+    /^(data|blob):/i.test(trimmedPath)
+  ) {
+    return trimmedPath.startsWith("//")
+      ? `${window.location.protocol}${trimmedPath}`
+      : trimmedPath;
+  }
+
+  return `${API_BASE}/${trimmedPath.replace(/^\/+/, "")}`;
+}
+
+/**
+ * Memperbaiki URL gambar yang terdapat di dalam HTML artikel.
+ * Gambar artikel tidak lagi mengambil path relatif dari frontend.
+ */
+
+function resolveContentImageUrls(html: string): string {
+  if (!html) return "";
+
+  return html.replace(/<img\b[^>]*>/gi, (imgTag) => {
+    let result = imgTag;
+
+    // Ubah URL gambar relatif menjadi URL backend.
+    result = result.replace(
+      /(\bsrc\s*=\s*)(["'])(.*?)\2/i,
+      (attribute, prefix: string, quote: string, source: string) => {
+        const src = source.trim();
+
+        if (
+          !src ||
+          /^(https?:)?\/\//i.test(src) ||
+          /^(data|blob):/i.test(src)
+        ) {
+          return attribute;
+        }
+
+        const absoluteUrl = `${API_BASE}/${src.replace(/^\/+/, "")}`;
+
+        return `${prefix}${quote}${absoluteUrl}${quote}`;
+      },
+    );
+
+    // Baca konfigurasi style gambar dari dashboard.
+    const containerStyleMatch = result.match(
+      /\bcontainerstyle\s*=\s*(["'])(.*?)\1/i,
+    );
+
+    const containerStyle = containerStyleMatch?.[2] ?? "";
+
+    // Ambil alignment dari margin atau text-align.
+    let alignment = "";
+
+    if (/margin\s*:\s*[^;]*\bauto\b/i.test(containerStyle)) {
+      alignment = "center";
+    } else {
+      const textAlign = containerStyle.match(
+        /text-align\s*:\s*(left|center|right)/i,
+      );
+
+      if (textAlign) {
+        alignment = textAlign[1].toLowerCase();
+      }
+    }
+
+    // Jika dashboard menyimpan pengaturan posisi, terapkan sebagai style.
+    if (alignment) {
+      const styleMatch = result.match(/\bstyle\s*=\s*(["'])(.*?)\1/i);
+      const existingStyle = styleMatch?.[2] ?? "";
+
+      const cleanedStyle = existingStyle
+        .replace(/(?:^|;)\s*text-align\s*:[^;]*/gi, "")
+        .replace(/(?:^|;)\s*margin-left\s*:[^;]*/gi, "")
+        .replace(/(?:^|;)\s*margin-right\s*:[^;]*/gi, "")
+        .trim()
+        .replace(/^;+|;+$/g, "");
+
+      const alignmentStyle =
+        alignment === "center"
+          ? "display: block; margin-left: auto; margin-right: auto;"
+          : alignment === "right"
+            ? "display: block; margin-left: auto; margin-right: 0;"
+            : "display: block; margin-left: 0; margin-right: auto;";
+
+      const nextStyle = [cleanedStyle, alignmentStyle]
+        .filter(Boolean)
+        .join(" ");
+
+      if (styleMatch) {
+        result = result.replace(
+          /\bstyle\s*=\s*(["'])(.*?)\1/i,
+          `style="${nextStyle}"`,
+        );
+      } else {
+        result = result.replace(/<img\b/i, `<img style="${nextStyle}"`);
+      }
+    }
+
+    return result;
+  });
+}
+
+function formatDate(date?: string | null, locale = "id"): string {
+  if (!date) return "";
+
+  const parsedDate = new Date(date);
+
+  if (Number.isNaN(parsedDate.getTime())) {
+    return date;
+  }
+
+  return parsedDate.toLocaleDateString(locale === "en" ? "en-US" : "id-ID", {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+}
+
+function getCategoryName(category: ApiCategory, locale: string): string {
+  if (locale === "en") {
+    return (
+      category.name_en ||
+      category.title_en ||
+      category.name ||
+      category.title ||
+      category.name_idn ||
+      category.title_idn ||
+      ""
+    );
+  }
+
+  return (
+    category.name_idn ||
+    category.title_idn ||
+    category.name ||
+    category.title ||
+    category.name_en ||
+    category.title_en ||
+    ""
+  );
+}
+
+function getNewsTitle(news: ApiNews, locale: string): string {
+  if (locale === "en") {
+    return news.title_en || news.title || news.title_idn || "";
+  }
+
+  return news.title_idn || news.title || news.title_en || "";
+}
+
+function getCategoryCount(category: ApiCategory): number | null {
+  const value = category.news_count ?? category.total_news ?? category.count;
+
+  return typeof value === "number" ? value : null;
 }
 
 export default function NewsDetail({
@@ -71,7 +277,186 @@ export default function NewsDetail({
   category,
   date,
   image,
+  content,
+  slug,
+  categoryId,
 }: NewsDetailProps) {
+  const locale = useLocale();
+
+  const [popularPosts, setPopularPosts] = useState<SidebarNews[]>([]);
+  const [categories, setCategories] = useState<SidebarCategory[]>([]);
+  const [loadingPopular, setLoadingPopular] = useState(true);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+
+  // URL gambar thumbnail artikel utama.
+  const featuredImage = getImageUrl(image);
+
+  // URL gambar di dalam konten artikel diarahkan ke backend.
+  const articleContent = resolveContentImageUrls(content || "");
+
+  // Berita terbaru dari API.
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchLatestNews() {
+      try {
+        const response = await fetch(`${API_BASE}/api/news`, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+          signal: controller.signal,
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error(`Gagal mengambil berita: ${response.status}`);
+        }
+
+        const result: unknown = await response.json();
+        const newsList = unwrapArray<ApiNews>(result);
+
+        const latestNews = newsList
+          .filter((news) => {
+            if (news.status) {
+              return news.status.toLowerCase() === "published";
+            }
+
+            return true;
+          })
+          .filter((news) => Boolean(news.slug))
+          .filter((news) => news.slug !== slug)
+          .sort((a, b) => {
+            const dateA = new Date(
+              a.published_at || a.created_at || 0,
+            ).getTime();
+
+            const dateB = new Date(
+              b.published_at || b.created_at || 0,
+            ).getTime();
+
+            return dateB - dateA;
+          })
+          .slice(0, 3)
+          .map((news) => ({
+            id: String(news.id ?? news.slug),
+            slug: news.slug || "",
+            title: getNewsTitle(news, locale),
+            date: formatDate(news.published_at || news.created_at, locale),
+            image: getImageUrl(news.thumbnail),
+          }))
+          .filter((news) => Boolean(news.title));
+
+        if (!controller.signal.aborted) {
+          setPopularPosts(latestNews);
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+          return;
+        }
+
+        console.error("Gagal memuat berita terbaru:", error);
+
+        if (!controller.signal.aborted) {
+          setPopularPosts([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoadingPopular(false);
+        }
+      }
+    }
+
+    fetchLatestNews();
+
+    return () => controller.abort();
+  }, [locale, slug]);
+
+  // Kategori dari API.
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function fetchCategories() {
+      try {
+        const response = await fetch(`${API_BASE}/api/news-categories`, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+          signal: controller.signal,
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error(`Gagal mengambil kategori: ${response.status}`);
+        }
+
+        const result: unknown = await response.json();
+        const categoryList = unwrapArray<ApiCategory>(result);
+
+        const mappedCategories = categoryList
+          .map((item) => ({
+            id: String(item.id ?? ""),
+            label: getCategoryName(item, locale),
+            count: getCategoryCount(item),
+            slug: item.slug || "",
+          }))
+          .filter((item) => item.id && item.label);
+
+        if (!controller.signal.aborted) {
+          setCategories(mappedCategories);
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+          return;
+        }
+
+        console.error("Gagal memuat kategori:", error);
+
+        if (!controller.signal.aborted) {
+          setCategories([]);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setLoadingCategories(false);
+        }
+      }
+    }
+
+    fetchCategories();
+
+    return () => controller.abort();
+  }, [locale]);
+
+  // URL untuk share diambil saat pengguna mengklik tombol.
+  function shareOnFacebook() {
+    const url = encodeURIComponent(window.location.href);
+
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  }
+
+  function shareOnLinkedIn() {
+    const url = encodeURIComponent(window.location.href);
+
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  }
+
+  function shareByEmail() {
+    const url = window.location.href;
+
+    window.location.href =
+      `mailto:info@crustea.id?subject=${encodeURIComponent(title)}` +
+      `&body=${encodeURIComponent(url)}`;
+  }
+
   return (
     <section className="relative overflow-hidden bg-background">
       {/* Decorative Background */}
@@ -85,172 +470,128 @@ export default function NewsDetail({
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto max-w-7xl px-5 pt-4 pb-12 sm:pt-5 sm:pb-16 lg:px-8 lg:pt-6 lg:pb-20">
+      <div className="relative mx-auto max-w-7xl px-5 pb-12 pt-4 sm:pb-16 sm:pt-5 lg:px-8 lg:pb-20 lg:pt-6">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(280px,1fr)] lg:items-start lg:gap-12">
-          {/* =================================================
-              ARTICLE
-          ================================================= */}
-
+          {/* ARTICLE */}
           <article className="min-w-0">
             {/* Featured Image */}
             <div className="overflow-hidden rounded-[24px] border border-border bg-muted shadow-sm">
-              <img
-                src={image}
-                alt={title}
-                width={1200}
-                height={800}
-                className="aspect-[16/9] h-full w-full object-cover"
-              />
+              {featuredImage ? (
+                <img
+                  src={featuredImage}
+                  alt={title}
+                  width={1200}
+                  height={800}
+                  fetchPriority="high"
+                  className="aspect-[16/9] h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex aspect-[16/9] items-center justify-center bg-muted text-sm text-muted-foreground">
+                  {locale === "en"
+                    ? "Image unavailable"
+                    : "Gambar berita tidak tersedia"}
+                </div>
+              )}
             </div>
 
             {/* Meta */}
-            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
-              <span className="rounded-full bg-secondary px-3 py-1.5 font-semibold text-brand-dark">
-                {category}
-              </span>
+            <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+              {category && (
+                <span className="rounded-full bg-secondary px-3 py-1.5 font-semibold text-brand-dark">
+                  {category}
+                </span>
+              )}
 
-              <span className="flex items-center gap-2">
-                <CalendarDays
-                  className="size-4 text-brand-secondary"
-                  strokeWidth={2}
-                  aria-hidden="true"
-                />
+              {date && (
+                <span className="flex items-center gap-2">
+                  <CalendarDays
+                    className="size-4 text-brand-secondary"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
 
-                <time dateTime={date}>{formatDate(date)}</time>
-              </span>
+                  <time dateTime={date}>{formatDate(date, locale)}</time>
+                </span>
+              )}
             </div>
 
             {/* Title */}
-            <h1 className="mt-5 font-display text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-4xl lg:text-[46px]">
+            <h1 className="mt-4 font-display text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-[46px]">
               {title}
             </h1>
 
-            {/* =================================================
-                ARTICLE CONTENT
-            ================================================= */}
+            {/* Article Content */}
+            <div
+              className="
+    article-content mt-6 max-w-none
+    text-[14px] leading-6 text-muted-foreground
 
-            <div className="mt-8 max-w-none">
-              {/* Intro */}
-              <p className="text-[14px] leading-7 text-muted-foreground">
-                Tambak adalah istilah dalam budidaya perairan. Tambak
-                didefinisikan sebagai sebuah area dengan luas tertentu dan
-                berisikan air sebagai media untuk budidaya perairan. Umumnya
-                tambak berlokasi di daerah pantai atau pesisir. Tambak juga
-                didefinisikan sebagai kolam buatan yang berlokasi di daerah
-                pasang surut dan difungsikan sebagai habitat buatan untuk hewan
-                air payau. Sebagian besar air yang ada di dalam tambak berasal
-                dari air tawar yang telah disiapkan, kemudian bercampur dengan
-                air laut sehingga menjadi air payau.
-              </p>
+    [&_p]:mb-4 [&_p]:mt-0
 
-              {/* Apa Itu Tambak Udang */}
-              <h2 className="mt-10 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Apa Itu Tambak Udang?
-              </h2>
+    [&_h1]:mb-3 [&_h1]:mt-7
+    [&_h1]:font-display [&_h1]:text-3xl
+    [&_h1]:font-semibold [&_h1]:leading-tight
+    [&_h1]:tracking-tight [&_h1]:text-foreground
 
-              <p className="mt-5 text-[14px] leading-7 text-muted-foreground">
-                Tambak udang sendiri memiliki arti suatu area atau lahan yang
-                dirancang khusus untuk budidaya udang. Tambak udang dapat
-                ditemukan di berbagai daerah pesisir atau rawa-rawa yang
-                memenuhi persyaratan untuk budidaya. Di Indonesia, udang menjadi
-                komoditas perikanan yang sering dibudidayakan karena tingginya
-                permintaan pasar.
-              </p>
+    [&_h2]:mb-3 [&_h2]:mt-7
+    [&_h2]:font-display [&_h2]:text-2xl
+    [&_h2]:font-semibold [&_h2]:leading-tight
+    [&_h2]:tracking-tight [&_h2]:text-foreground
 
-              <p className="mt-6 text-[14px] leading-7 text-muted-foreground">
-                Saat ini, Indonesia menempati peringkat keempat eksportir udang
-                terbesar di dunia, dibawah India, Ekuador dan Vietnam. Pada
-                tahun 2022 data ekspor udang Indonesia mencapai US$2,16 miliar
-                dengan volume 241.200 ton. Tingginya permintaan pasar menjadikan
-                budidaya udang memiliki perspektif ekonomi yang cerah.
-              </p>
+    [&_h3]:mb-2 [&_h3]:mt-5
+    [&_h3]:font-display [&_h3]:text-xl
+    [&_h3]:font-semibold [&_h3]:leading-snug
+    [&_h3]:text-foreground
 
-              {/* Supporting Image */}
-              <div className="my-10 overflow-hidden rounded-[20px] border border-border bg-muted shadow-sm">
-                <img
-                  src="/img/berita/artikel5.webp"
-                  alt="Aktivitas budidaya dan akuakultur"
-                  width={1200}
-                  height={800}
-                  loading="lazy"
-                  className="aspect-[16/9] w-full object-cover"
-                />
-              </div>
+    [&_a]:font-medium [&_a]:text-brand-secondary
+    [&_a]:underline [&_a]:underline-offset-4
+    [&_a:hover]:text-brand-dark
 
-              {/* Budidaya Udang Berkelanjutan */}
-              <h2 className="mt-10 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Budidaya Udang yang Berkelanjutan
-              </h2>
+    [&_strong]:font-semibold [&_strong]:text-foreground
+    [&_b]:font-semibold [&_b]:text-foreground
 
-              <p className="mt-5 text-[14px] leading-7 text-muted-foreground">
-                Namun, tujuan budidaya udang tidak hanya berfokus pada hasil
-                produksi saja. Perlu memperhatikan aspek-aspek ekologi dan
-                keseimbangan ekosistem untuk memproduksi udang secara efisien
-                dan berkelanjutan.
-              </p>
+    [&_ul]:mb-4 [&_ul]:mt-2 [&_ul]:list-disc
+    [&_ul]:space-y-1 [&_ul]:pl-6
 
-              <p className="mt-6 text-[14px] leading-7 text-muted-foreground">
-                Proses budidaya udang juga perlu melibatkan pemilihan lokasi
-                yang sesuai, pengelolaan kualitas air, pemberian pakan,
-                pemantauan kesehatan udang dan pemanenan secara terencana.
-              </p>
+    [&_ol]:mb-4 [&_ol]:mt-2 [&_ol]:list-decimal
+    [&_ol]:space-y-1 [&_ol]:pl-6
 
-              <p className="mt-6 text-[14px] leading-7 text-muted-foreground">
-                Setelah mengetahui istilah tambak udang dan potensi komoditas
-                udang di pasar global, tahukah kamu? Bahwa tingginya suatu
-                produksi hasil budidaya tidak selamanya diikuti oleh keuntungan
-                yang tinggi.
-              </p>
+    [&_li]:pl-1 [&_li]:leading-6
 
-              <p className="mt-6 text-[14px] leading-7 text-muted-foreground">
-                Target produksi udang masih dihadapkan pada berbagai tantangan,
-                salah satunya adalah lingkungan dan tingginya biaya operasional.
-                Namun, tidak perlu khawatir karena Crustea siap membantu dengan
-                berbagai solusi!
-              </p>
+    [&_blockquote]:my-5 [&_blockquote]:border-l-4
+    [&_blockquote]:border-primary [&_blockquote]:pl-4
+    [&_blockquote]:italic
 
-              {/* Crustea Solution */}
-              <h2 className="mt-10 font-display text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
-                Crustea sebagai Solusi Teknologi Akuakultur
-              </h2>
+    [&_img]:my-5 [&_img]:block
+    [&_img]:h-auto [&_img]:max-w-full
+    [&_img]:rounded-[20px] [&_img]:border
+    [&_img]:border-border [&_img]:shadow-sm
 
-              <p className="mt-5 text-[14px] leading-7 text-muted-foreground">
-                Crustea adalah perusahaan pengadaan teknologi yang berfokus di
-                bidang akuakultur. Kami berkontribusi menciptakan teknologi
-                berbasis IoT ramah lingkungan yang sesuai dengan kebutuhan
-                petambak di Indonesia untuk memaksimalkan produksi hasil tambak
-                serta meningkatkan produktivitas dan efisiensi dalam proses
-                menambak.
-              </p>
+    [&_figure]:my-5
 
-              <p className="mt-6 text-[14px] leading-7 text-muted-foreground">
-                Crustea juga memiliki alat Eco Aerator berbasis panel surya,
-                dengan menggunakan energi matahari menjadi listrik sehingga
-                dapat menekan tingginya biaya operasional.
-              </p>
+    [&_figcaption]:mt-2 [&_figcaption]:text-center
+    [&_figcaption]:text-xs [&_figcaption]:leading-5
+    [&_figcaption]:text-muted-foreground
 
-              {/* Closing */}
-              <p className="mt-6 text-[14px] leading-7 text-muted-foreground">
-                Tertarik untuk mempelajari lebih lanjut tentang bisnis tambak
-                udang? Ikuti terus informasi menarik lainnya di IG Crustea dan
-                bisa menghubungi langsung melalui WhatsApp:
-              </p>
+    [&_table]:my-5 [&_table]:w-full
+    [&_table]:border-collapse
 
-              <a
-                href="https://wa.me/6282140773592"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 inline-flex text-[14px] font-semibold text-brand-secondary transition-colors hover:text-brand-dark"
-              >
-                +62-821-4077-3592
-              </a>
-            </div>
+    [&_th]:border [&_th]:border-border
+    [&_th]:bg-muted [&_th]:p-3
+    [&_th]:text-left [&_th]:font-semibold
+    [&_th]:text-foreground
 
-            {/* =================================================
-                SHARE
-            ================================================= */}
+    [&_td]:border [&_td]:border-border [&_td]:p-3
 
-            <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-7">
+    [&_hr]:my-5 [&_hr]:border-border
+  "
+              dangerouslySetInnerHTML={{
+                __html: articleContent,
+              }}
+            />
+
+            {/* Share */}
+            <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
               <div className="flex items-center gap-2.5">
                 <Share2
                   className="size-4 text-brand-secondary"
@@ -259,51 +600,47 @@ export default function NewsDetail({
                 />
 
                 <span className="text-sm font-semibold text-foreground">
-                  Bagikan
+                  {locale === "en" ? "Share" : "Bagikan"}
                 </span>
               </div>
 
               <div className="flex items-center gap-2">
-                {/* Facebook */}
-                <a
-                  href="#"
+                <button
+                  type="button"
+                  onClick={shareOnFacebook}
                   aria-label="Bagikan ke Facebook"
                   className="flex size-9 items-center justify-center rounded-full border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary"
                 >
                   <FaFacebookF className="size-4" />
-                </a>
+                </button>
 
-                {/* LinkedIn */}
-                <a
-                  href="#"
+                <button
+                  type="button"
+                  onClick={shareOnLinkedIn}
                   aria-label="Bagikan ke LinkedIn"
                   className="flex size-9 items-center justify-center rounded-full border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary"
                 >
                   <FaLinkedinIn className="size-4" />
-                </a>
+                </button>
 
-                {/* Email */}
-                <a
-                  href="mailto:info@crustea.id"
+                <button
+                  type="button"
+                  onClick={shareByEmail}
                   aria-label="Bagikan melalui email"
                   className="flex size-9 items-center justify-center rounded-full border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary"
                 >
                   <Mail className="size-4" />
-                </a>
+                </button>
               </div>
             </div>
 
-            {/* =================================================
-                PREVIOUS / NEXT
-            ================================================= */}
-
+            {/* Previous / Next */}
             <nav
               aria-label="Navigasi berita"
-              className="mt-8 grid items-stretch gap-3 sm:grid-cols-2"
+              className="mt-7 grid items-stretch gap-3 sm:grid-cols-2"
             >
-              {/* Previous */}
               <Link
-                href="#"
+                href="/berita"
                 className="group flex h-full flex-col rounded-[20px] border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-md"
               >
                 <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
@@ -311,164 +648,157 @@ export default function NewsDetail({
                     className="size-4 shrink-0 transition-transform group-hover:-translate-x-1"
                     aria-hidden="true"
                   />
-                  Berita Sebelumnya
+                  {locale === "en" ? "Back to News" : "Kembali ke Berita"}
                 </div>
 
-                <p className="mt-3 line-clamp-2 min-h-10 font-display text-sm font-semibold leading-5 text-foreground transition-colors group-hover:text-brand-secondary">
-                  Meningkatkan Efisiensi Tambak dengan Eco-Aerator
+                <p className="mt-3 min-h-10 font-display text-sm font-semibold leading-5 text-foreground transition-colors group-hover:text-brand-secondary">
+                  {locale === "en"
+                    ? "Explore other articles"
+                    : "Jelajahi berita lainnya"}
                 </p>
               </Link>
 
-              {/* Next */}
               <Link
-                href="#"
+                href="/berita"
                 className="group flex h-full flex-col rounded-[20px] border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary hover:shadow-md"
               >
                 <div className="flex items-center justify-end gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
-                  Berita Berikutnya
+                  {locale === "en" ? "More News" : "Berita Lainnya"}
                   <ArrowRight
                     className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
                     aria-hidden="true"
                   />
                 </div>
 
-                <p className="mt-3 line-clamp-2 min-h-10 text-right font-display text-sm font-semibold leading-5 text-foreground transition-colors group-hover:text-brand-secondary">
-                  Menjaga Kualitas Air untuk Budidaya Udang
+                <p className="mt-3 min-h-10 text-right font-display text-sm font-semibold leading-5 text-foreground transition-colors group-hover:text-brand-secondary">
+                  {locale === "en"
+                    ? "Read the latest updates"
+                    : "Baca informasi terbaru"}
                 </p>
               </Link>
             </nav>
           </article>
 
-          {/* =================================================
-              SIDEBAR
-          ================================================= */}
+          {/* SIDEBAR */}
           <aside className="self-start space-y-5">
-            {/* =================================================
-                SEARCH
-            ================================================= */}
-
+            {/* Latest News from API */}
             <div className="rounded-[24px] border border-border bg-card p-5 shadow-sm sm:p-6">
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                Cari Berita
-              </h3>
-
-              <div className="relative mt-4">
-                <input
-                  type="search"
-                  placeholder="Cari berita..."
-                  className="h-12 w-full rounded-xl border border-border bg-muted/40 pl-4 pr-12 text-[14px] text-foreground outline-none transition-all placeholder:text-muted-foreground focus:border-primary focus:bg-background focus:ring-2 focus:ring-primary/20"
-                />
-
-                <SearchIcon />
-              </div>
-            </div>
-
-            {/* =================================================
-                POPULAR POST
-            ================================================= */}
-
-            <div className="rounded-[24px] border border-border bg-card p-5 shadow-sm sm:p-6">
-              <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                Popular Post
+                {locale === "en" ? "Latest News" : "Berita Terbaru"}
               </h3>
 
               <div className="mt-5 space-y-4">
-                {popularPosts.map((post) => (
-                  <article key={post.href} className="group flex gap-3">
-                    <Link
-                      href={post.href}
-                      className="relative size-[76px] shrink-0 overflow-hidden rounded-xl border border-black/10 bg-muted shadow-sm ring-1 ring-black/5 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md"
-                    >
-                      <img
-                        src={post.image}
-                        alt=""
-                        width={152}
-                        height={152}
-                        loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </Link>
+                {loadingPopular ? (
+                  <p className="text-sm text-muted-foreground">
+                    {locale === "en" ? "Loading news..." : "Memuat berita..."}
+                  </p>
+                ) : popularPosts.length > 0 ? (
+                  popularPosts.map((post) => (
+                    <article key={post.id} className="group flex gap-3">
+                      <Link
+                        href={`/berita/${post.slug}`}
+                        className="relative size-[76px] shrink-0 overflow-hidden rounded-xl border border-black/10 bg-muted shadow-sm ring-1 ring-black/5 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-md"
+                      >
+                        {post.image ? (
+                          <img
+                            src={post.image}
+                            alt={post.title}
+                            width={152}
+                            height={152}
+                            loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                        ) : (
+                          <div className="h-full w-full bg-muted" />
+                        )}
+                      </Link>
 
-                    <div className="min-w-0">
-                      <h4 className="font-display text-[14px] font-semibold leading-5 text-foreground">
-                        <Link
-                          href={post.href}
-                          className="transition-colors group-hover:text-brand-secondary"
-                        >
-                          {post.title}
-                        </Link>
-                      </h4>
+                      <div className="min-w-0">
+                        <h4 className="font-display text-[14px] font-semibold leading-5 text-foreground">
+                          <Link
+                            href={`/berita/${post.slug}`}
+                            className="transition-colors group-hover:text-brand-secondary"
+                          >
+                            {post.title}
+                          </Link>
+                        </h4>
 
-                      <time className="mt-1.5 block text-xs text-muted-foreground">
-                        {post.date}
-                      </time>
-                    </div>
-                  </article>
-                ))}
+                        {post.date && (
+                          <time className="mt-1.5 block text-xs text-muted-foreground">
+                            {post.date}
+                          </time>
+                        )}
+                      </div>
+                    </article>
+                  ))
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    {locale === "en"
+                      ? "No news available."
+                      : "Belum ada berita tersedia."}
+                  </p>
+                )}
               </div>
             </div>
 
-            {/* =================================================
-                TOPICS
-            ================================================= */}
-
+            {/* Categories from API */}
             <div className="rounded-[24px] border border-border bg-card p-5 shadow-sm sm:p-6">
               <h3 className="font-display text-xl font-semibold tracking-tight text-foreground">
-                Topik
+                {locale === "en" ? "Categories" : "Kategori"}
               </h3>
 
               <div className="mt-5 overflow-hidden rounded-xl border border-border">
-                {topics.map((topic, index) => (
-                  <Link
-                    key={topic.label}
-                    href={`/berita?topic=${topic.label}`}
-                    className={`group flex items-center justify-between px-4 py-3.5 text-[14px] transition-colors hover:bg-secondary ${
-                      index !== topics.length - 1
-                        ? "border-b border-border"
-                        : ""
-                    }`}
-                  >
-                    <span className="flex items-center gap-2.5">
-                      <ArrowRight
-                        className="size-4 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-brand-secondary"
-                        aria-hidden="true"
-                      />
+                {loadingCategories ? (
+                  <p className="px-4 py-3.5 text-sm text-muted-foreground">
+                    {locale === "en"
+                      ? "Loading categories..."
+                      : "Memuat kategori..."}
+                  </p>
+                ) : categories.length > 0 ? (
+                  categories.map((item, index) => (
+                    <Link
+                      key={item.id}
+                      href={`/berita?category=${encodeURIComponent(item.id)}`}
+                      className={`group flex items-center justify-between gap-3 px-4 py-3.5 text-[14px] transition-colors hover:bg-secondary ${
+                        index !== categories.length - 1
+                          ? "border-b border-border"
+                          : ""
+                      } ${
+                        categoryId != null && String(categoryId) === item.id
+                          ? "bg-secondary"
+                          : ""
+                      }`}
+                    >
+                      <span className="flex min-w-0 items-center gap-2.5">
+                        <ArrowRight
+                          className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-brand-secondary"
+                          aria-hidden="true"
+                        />
 
-                      <span className="font-medium text-foreground">
-                        {topic.label}
+                        <span className="truncate font-medium text-foreground">
+                          {item.label}
+                        </span>
                       </span>
-                    </span>
 
-                    <span className="text-xs font-medium text-muted-foreground">
-                      ({topic.count})
-                    </span>
-                  </Link>
-                ))}
+                      {item.count !== null && (
+                        <span className="shrink-0 text-xs font-medium text-muted-foreground">
+                          ({item.count})
+                        </span>
+                      )}
+                    </Link>
+                  ))
+                ) : (
+                  <p className="px-4 py-3.5 text-sm text-muted-foreground">
+                    {locale === "en"
+                      ? "No categories available."
+                      : "Belum ada kategori tersedia."}
+                  </p>
+                )}
               </div>
             </div>
           </aside>
         </div>
       </div>
     </section>
-  );
-}
-
-/* =================================================
-   SEARCH ICON
-================================================= */
-
-function SearchIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 text-brand-secondary"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      aria-hidden="true"
-    >
-      <circle cx="11" cy="11" r="7" />
-      <path d="m20 20-4-4" />
-    </svg>
   );
 }

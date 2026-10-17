@@ -67,16 +67,17 @@
   --sidebar-ring: #abc937;
 }
 
-
 /* =========================================================
    TAILWIND THEME
    ========================================================= */
 
 @theme inline {
   /* Fonts */
-  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono);
+  --font-sans:
+    "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", monospace;
 
   /* Radius */
   --radius-sm: calc(var(--radius) - 4px);
@@ -141,7 +142,6 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-
 /* =========================================================
    BASE
    ========================================================= */
@@ -168,7 +168,6 @@
   }
 }
 
-
 /* =========================================================
    CUSTOM UTILITIES
    ========================================================= */
@@ -192,13 +191,8 @@
 
   background-size: 64px 64px;
 
-  mask-image: linear-gradient(
-    to bottom,
-    black,
-    transparent 85%
-  );
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
 }
-
 
 /* =========================================================
    ACCESSIBILITY / REDUCED MOTION
@@ -239,7 +233,6 @@
   }
 }
 
-
 /* =========================================================
    SERVICES TIMELINE
    ========================================================= */
@@ -255,11 +248,8 @@
     top: -1.5rem;
     left: 2.4rem;
     right: 2.4rem;
-    border-top: 2px dashed color-mix(
-      in srgb,
-      var(--brand-primary) 80%,
-      transparent
-    );
+    border-top: 2px dashed
+      color-mix(in srgb, var(--brand-primary) 80%, transparent);
   }
 }
 
@@ -278,4 +268,204 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.07) inset !important;
   caret-color: white;
   transition: background-color 9999s ease-in-out 0s;
+}
+
+/* Style News */
+/* =========================================================
+   NEWS CONTENT EDITOR — TIPTAP
+   ========================================================= */
+
+.tiptap-editor {
+  min-height: 520px;
+  padding: 1.5rem;
+  outline: none;
+
+  font-size: 15px;
+  line-height: 1.8;
+  color: #05546a;
+
+  caret-color: #05546a;
+}
+
+/* PARAGRAPH */
+
+.tiptap-editor p {
+  margin: 0.75rem 0;
+  line-height: 1.85;
+}
+
+/* HEADINGS */
+
+.tiptap-editor h1 {
+  margin: 2rem 0 1rem;
+  color: #05546a;
+  font-size: 2rem;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.tiptap-editor h2 {
+  margin: 1.75rem 0 0.9rem;
+  color: #05546a;
+  font-size: 1.625rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.tiptap-editor h3 {
+  margin: 1.5rem 0 0.75rem;
+  color: #05546a;
+  font-size: 1.375rem;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
+/* LIST */
+
+.tiptap-editor ul {
+  margin: 1rem 0;
+  padding-left: 1.75rem;
+  list-style-type: disc;
+}
+
+.tiptap-editor ol {
+  margin: 1rem 0;
+  padding-left: 1.75rem;
+  list-style-type: decimal;
+}
+
+.tiptap-editor li {
+  margin: 0.25rem 0;
+  line-height: 1.8;
+}
+
+.tiptap-editor ul li p,
+.tiptap-editor ol li p {
+  margin: 0;
+}
+
+/* BLOCKQUOTE */
+
+.tiptap-editor blockquote {
+  margin: 1.5rem 0;
+  border-left: 4px solid #abc937;
+  border-radius: 0 0.75rem 0.75rem 0;
+  background: #f6f8f4;
+  padding: 1rem 1.25rem;
+  color: #658c64;
+}
+
+.tiptap-editor blockquote p {
+  margin: 0;
+}
+
+/* BOLD */
+
+.tiptap-editor strong {
+  color: #05546a;
+  font-weight: 700;
+}
+
+/* ITALIC */
+
+.tiptap-editor em {
+  font-style: italic;
+}
+
+/* UNDERLINE */
+
+.tiptap-editor u {
+  text-underline-offset: 3px;
+}
+
+/* LINK */
+
+.tiptap-editor a {
+  color: #658c64;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.tiptap-editor a:hover {
+  color: #05546a;
+}
+
+/* IMAGE */
+
+.tiptap-editor img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.5rem auto;
+  border-radius: 1rem;
+}
+
+/* IMAGE RESIZE */
+
+.tiptap-editor .image-resizer {
+  position: relative;
+}
+
+.tiptap-editor .image-resizer img {
+  margin: 0;
+  border-radius: 1rem;
+}
+
+.tiptap-editor .resize-trigger {
+  background: #abc937;
+  border: 2px solid #ffffff;
+}
+
+/* HORIZONTAL RULE */
+
+.tiptap-editor hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid #e4e9df;
+}
+
+/* INLINE CODE */
+
+.tiptap-editor code {
+  border-radius: 0.4rem;
+  background: #f1f5ed;
+  padding: 0.2rem 0.4rem;
+  color: #05546a;
+  font-size: 0.9em;
+}
+
+/* CODE BLOCK */
+
+.tiptap-editor pre {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  background: #05546a;
+  padding: 1rem 1.25rem;
+  color: #ffffff;
+}
+
+.tiptap-editor pre code {
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  font-size: 0.875rem;
+}
+
+/* EMPTY PARAGRAPH */
+
+.tiptap-editor > p:first-child:last-child {
+  min-height: 1.8em;
+}
+
+/* FOCUS */
+
+.tiptap-editor:focus {
+  outline: none;
+}
+
+.tiptap-editor.ProseMirror-focused {
+  outline: none;
 }

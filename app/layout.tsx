@@ -1,18 +1,9 @@
+
 import type { Metadata } from "next";
-import { Geist_Mono, Bricolage_Grotesque } from "next/font/google";
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/geist-mono";
 import { Toaster } from "sonner";
 import "./globals.css";
-
-const bricolageGrotesque = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Crustea",
@@ -27,9 +18,16 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${bricolageGrotesque.variable} ${geistMono.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className="h-full antialiased"
     >
-      <body className="min-h-full flex flex-col">
+      <body
+        className="min-h-full flex flex-col"
+        style={{
+          fontFamily:
+            '"Bricolage Grotesque Variable", sans-serif',
+        }}
+      >
         {children}
 
         <Toaster position="top-right" richColors />

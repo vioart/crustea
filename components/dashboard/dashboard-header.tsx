@@ -2,33 +2,45 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import {
-  Bell,
-  Check,
-  ChevronDown,
-  LogOut,
-  Menu,
-  Settings,
-  User,
-} from "lucide-react";
-import { clearAuth } from "@/lib/auth";
+import { useCallback, useEffect, useState } from "react";
+import { Bell, Check, ChevronDown, LogOut, Menu, Settings } from "lucide-react";
+
+import { clearAuth, getAuthToken } from "@/lib/auth";
 import { useLanguage } from "@/components/language/language-provider";
 
 type DashboardHeaderProps = {
   onMenuClick?: () => void;
 };
 
+type ApiUser = {
+  name?: string;
+  email?: string;
+  avatar?: string | null;
+  Name?: string;
+  Email?: string;
+  Avatar?: string | null;
+};
+
+type ApiResponse = {
+  data?: ApiUser;
+  message?: string;
+  error?: string;
+} & ApiUser;
+
+const API_BASE_URL = (
+  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080"
+).replace(/\/+$/, "");
+
 const languages = [
   {
     code: "id" as const,
     name: "Indonesia",
-    flag: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    flag: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Flag_of_Indonesia.svg",
   },
   {
     code: "en" as const,
     name: "English",
-    flag: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original",
+    flag: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg",
   },
 ];
 
@@ -37,8 +49,7 @@ const translations = {
     dashboard: "Dashboard",
     notification: "Notifikasi",
     selectLanguage: "Pilih bahasa",
-    profile: "Profil",
-    settings: "Pengaturan",
+    accountSettings: "Pengaturan Akun",
     logout: "Keluar",
     logoutTitle: "Keluar Dari Akun?",
     logoutDescription: "Apakah Anda yakin ingin keluar dari akun saat ini?",
@@ -49,8 +60,7 @@ const translations = {
     dashboard: "Dashboard",
     notification: "Notifications",
     selectLanguage: "Select language",
-    profile: "Profile",
-    settings: "Settings",
+    accountSettings: "Account Settings",
     logout: "Logout",
     logoutTitle: "Log Out of Account?",
     logoutDescription:
@@ -60,15 +70,140 @@ const translations = {
   },
 };
 
+function getInitials(name: string) {
+  return (
+    name
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join("") || "U"
+  );
+}
+
+function getAvatarUrl(avatar?: string | null) {
+  if (!avatar?.trim()) {
+    return "";
+  }
+
+  const value = avatar.trim();
+
+  // URL eksternal atau data URL.
+  if (
+    value.startsWith("http://") ||
+    value.startsWith("https://") ||
+    value.startsWith("data:")
+  ) {
+    return value;
+  }
+
+  // Path avatar dari backend, misalnya:
+  // /uploads/users/avatar.png
+  return `${API_BASE_URL}${value.startsWith("/") ? "" : "/"}${value}`;
+}
+
+function Avatar({
+  name,
+  src,
+  size = "small",
+}: {
+  name: string;
+  src: string;
+  size?: "small" | "large";
+}) {
+  const [failedSrc, setFailedSrc] = useState("");
+
+  const imageFailed = failedSrc === src;
+
+  const sizeClass = size === "large" ? "size-10 text-sm" : "size-8 text-xs";
+
+  return (
+    <div
+      className={`flex ${sizeClass} shrink-0 items-center justify-center overflow-hidden rounded-full bg-brand-dark font-semibold text-white`}
+    >
+      {src && !imageFailed ? (
+        <img
+          src={src}
+          alt={`Avatar ${name || "pengguna"}`}
+          className="size-full object-cover"
+          onError={() => setFailedSrc(src)}
+        />
+      ) : (
+        getInitials(name)
+      )}
+    </div>
+  );
+}
+
 export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
   const router = useRouter();
-
   const { language, setLanguage } = useLanguage();
   const t = translations[language];
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
+  const [userName, setUserName] = useState("");
+  const [userAvatar, setUserAvatar] = useState("");
+  const [userLoaded, setUserLoaded] = useState(false);
+
+  // Ambil profil terbaru dari API saat header dipasang.
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadUserProfile() {
+      const token = getAuthToken();
+
+      if (!token) {
+        setUserLoaded(true);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/account/me`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          throw new Error("Gagal mengambil informasi akun.");
+        }
+
+        const result: ApiResponse = await response.json();
+
+        // Backend membungkus user dengan { data: user }.
+        const user = result.data ?? result;
+
+        const name = user.name ?? user.Name ?? "";
+        const avatar = user.avatar ?? user.Avatar ?? "";
+
+        if (cancelled) return;
+
+        setUserName(name);
+        setUserAvatar(getAvatarUrl(avatar));
+      } catch (error) {
+        if (!cancelled) {
+          console.error("Gagal memuat profil header:", error);
+        }
+      } finally {
+        if (!cancelled) {
+          setUserLoaded(true);
+        }
+      }
+    }
+
+    void loadUserProfile();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleLanguageChange = (value: "id" | "en") => {
     setLanguage(value);
@@ -80,13 +215,11 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
     setLogoutModalOpen(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     clearAuth();
-
     setLogoutModalOpen(false);
-
     router.replace("/portal/login");
-  };
+  }, [router]);
 
   return (
     <>
@@ -119,7 +252,6 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
               aria-label={t.notification}
             >
               <Bell className="size-[18px]" />
-
               <span className="absolute right-2 top-2 size-1.5 rounded-full bg-primary" />
             </button>
 
@@ -203,16 +335,16 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                 className="flex items-center gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-muted"
                 aria-expanded={profileOpen}
                 aria-haspopup="menu"
-                aria-label="Buka menu profil"
+                aria-label="Buka menu akun"
               >
-                {/* Avatar */}
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand-dark text-xs font-semibold text-white">
-                  V
-                </div>
+                {/* Avatar dari API */}
+                <Avatar name={userName} src={userAvatar} />
 
                 {/* User Info */}
                 <div className="hidden text-left sm:block">
-                  <p className="text-xs font-semibold text-foreground">Vio</p>
+                  <p className="max-w-36 truncate text-xs font-semibold text-foreground">
+                    {userLoaded ? userName || "Pengguna" : "Memuat..."}
+                  </p>
 
                   <p className="text-[11px] text-muted-foreground">
                     Administrator
@@ -242,13 +374,11 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                     {/* Profile Header */}
                     <div className="border-b border-border px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-dark text-sm font-semibold text-white">
-                          V
-                        </div>
+                        <Avatar name={userName} src={userAvatar} size="large" />
 
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-foreground">
-                            Vio
+                            {userLoaded ? userName || "Pengguna" : "Memuat..."}
                           </p>
 
                           <p className="truncate text-xs text-muted-foreground">
@@ -261,23 +391,13 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                     {/* Navigation */}
                     <div className="p-2">
                       <Link
-                        href="/portal/profile"
-                        onClick={() => setProfileOpen(false)}
-                        className="group flex h-10 items-center gap-3 rounded-lg px-3 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-                      >
-                        <User className="size-[17px] text-muted-foreground transition-colors group-hover:text-foreground" />
-
-                        <span>{t.profile}</span>
-                      </Link>
-
-                      <Link
-                        href="/portal/settings"
+                        href="/portal/pengaturan"
                         onClick={() => setProfileOpen(false)}
                         className="group flex h-10 items-center gap-3 rounded-lg px-3 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       >
                         <Settings className="size-[17px] text-muted-foreground transition-colors group-hover:text-foreground" />
 
-                        <span>{t.settings}</span>
+                        <span>{t.accountSettings}</span>
                       </Link>
                     </div>
 
@@ -289,7 +409,6 @@ export default function DashboardHeader({ onMenuClick }: DashboardHeaderProps) {
                         className="group flex h-10 w-full items-center gap-3 rounded-lg px-3 text-[13px] font-medium text-red-500 transition-colors hover:bg-red-50 hover:text-red-600"
                       >
                         <LogOut className="size-[17px]" />
-
                         <span>{t.logout}</span>
                       </button>
                     </div>

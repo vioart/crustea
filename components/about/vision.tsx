@@ -1,31 +1,19 @@
+"use client";
+
 import { CheckCircle2, Eye, Waves } from "lucide-react";
-
-type VisionPoint = {
-  text: string;
-};
-
-const visionPoints: VisionPoint[] = [
-  {
-    text: "Meningkatkan produktivitas melalui sistem Eco-Aerator yang presisi.",
-  },
-  {
-    text: "Mendukung ketahanan pangan yang berkelanjutan untuk generasi mendatang.",
-  },
-  {
-    text: "Memberdayakan pembudidaya tambak yang adaptif terhadap teknologi real-time.",
-  },
-];
+import { useTranslations } from "next-intl";
 
 export default function Vision() {
+  const t = useTranslations("About.vision");
+
+  const visionPoints = t.raw("points") as string[];
+
   return (
     <section
       aria-labelledby="vision-title"
       className="relative overflow-hidden bg-secondary"
     >
-      {/* =====================================================
-          DECORATIVE BACKGROUND
-      ===================================================== */}
-
+      {/* DECORATIVE BACKGROUND */}
       <div
         className="pointer-events-none absolute -left-40 -top-40 size-[420px] rounded-full bg-primary/15 blur-3xl"
         aria-hidden="true"
@@ -36,17 +24,11 @@ export default function Vision() {
         aria-hidden="true"
       />
 
-      {/* =====================================================
-          CONTENT
-      ===================================================== */}
-
+      {/* CONTENT */}
       <div className="relative mx-auto max-w-7xl px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
         <div className="overflow-hidden rounded-[28px] border border-border bg-background shadow-sm">
           <div className="grid lg:grid-cols-[1fr_0.95fr]">
-            {/* =================================================
-                LEFT — VISION CONTENT
-            ================================================= */}
-
+            {/* LEFT — VISION CONTENT */}
             <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12 xl:p-14">
               {/* Eyebrow */}
               <p className="mb-5 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-brand-secondary">
@@ -55,7 +37,7 @@ export default function Vision() {
                   strokeWidth={2}
                   aria-hidden="true"
                 />
-                Visi Crustea
+                {t("eyebrow")}
               </p>
 
               {/* Title */}
@@ -63,23 +45,23 @@ export default function Vision() {
                 id="vision-title"
                 className="font-display text-4xl font-semibold leading-[1.02] tracking-tight text-foreground sm:text-5xl lg:text-[52px]"
               >
-                Our <span className="text-primary">Vision</span>
+                {t("titleBefore")}{" "}
+                <span className="text-primary">{t("titleHighlight")}</span>
               </h2>
 
               {/* Vision Statement */}
               <p className="mt-7 max-w-xl font-display text-xl font-medium leading-[1.35] tracking-tight text-foreground sm:text-2xl">
-                Meningkatkan produktivitas pembudidaya tambak dan ketahanan
-                pangan melalui penerapan{" "}
+                {t("statementBefore")}{" "}
                 <span className="text-brand-secondary">
-                  teknologi Eco-Aerator.
+                  {t("statementHighlight")}
                 </span>
               </p>
 
               {/* Vision Points */}
               <ul className="mt-8 space-y-4">
-                {visionPoints.map((point) => (
+                {visionPoints.map((point, index) => (
                   <li
-                    key={point.text}
+                    key={`${index}-${point}`}
                     className="flex items-start gap-3"
                   >
                     <CheckCircle2
@@ -89,21 +71,18 @@ export default function Vision() {
                     />
 
                     <span className="text-sm leading-6 text-muted-foreground sm:text-base">
-                      {point.text}
+                      {point}
                     </span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            {/* =================================================
-                RIGHT — IMAGE
-            ================================================= */}
-
+            {/* RIGHT — IMAGE */}
             <div className="relative min-h-[320px] lg:min-h-[520px]">
               <img
                 src="/img/visi.webp"
-                alt="Teknologi smart farming untuk masa depan akuakultur"
+                alt={t("imageAlt")}
                 width={1200}
                 height={900}
                 loading="lazy"
@@ -134,9 +113,9 @@ export default function Vision() {
                   </div>
 
                   <p className="mt-5 font-display text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:text-4xl">
-                    Smart Farming
+                    {t("imageTitleLine1")}
                     <br />
-                    for a Better Future
+                    {t("imageTitleLine2")}
                   </p>
                 </div>
               </div>

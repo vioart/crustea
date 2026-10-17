@@ -1,4 +1,7 @@
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { ChevronRight } from "lucide-react";
 
 type BreadcrumbItem = {
@@ -17,15 +20,15 @@ export default function InnerHero({
   breadcrumb,
   backgroundImage = "/img/bg-hero.webp",
 }: InnerHeroProps) {
+  const t = useTranslations("InnerHero");
+
   return (
     <div className="pt-18">
       <section
         aria-labelledby="inner-hero-title"
         className="relative flex min-h-[360px] items-center overflow-hidden sm:min-h-[400px] lg:min-h-[440px]"
       >
-        {/* =====================================================
-            BACKGROUND IMAGE
-        ===================================================== */}
+        {/* BACKGROUND IMAGE */}
         <img
           src={backgroundImage}
           alt=""
@@ -33,9 +36,7 @@ export default function InnerHero({
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        {/* =====================================================
-            OVERLAY
-        ===================================================== */}
+        {/* OVERLAY */}
         <div
           className="absolute inset-0 bg-black/50"
           aria-hidden="true"
@@ -46,12 +47,10 @@ export default function InnerHero({
           aria-hidden="true"
         />
 
-        {/* =====================================================
-            CONTENT
-        ===================================================== */}
+        {/* CONTENT */}
         <div className="relative mx-auto w-full max-w-7xl px-5 py-24 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
-            {/* Page Title */}
+            {/* PAGE TITLE */}
             <h1
               id="inner-hero-title"
               className="font-display text-4xl font-semibold leading-[1.05] tracking-tight text-primary sm:text-5xl lg:text-6xl"
@@ -59,9 +58,9 @@ export default function InnerHero({
               {title}
             </h1>
 
-            {/* Breadcrumb */}
+            {/* BREADCRUMB */}
             <nav
-              aria-label="Breadcrumb"
+              aria-label={t("breadcrumbLabel")}
               className="mt-5 flex justify-center"
             >
               <ol className="flex flex-wrap items-center justify-center gap-1.5 text-sm sm:text-base">
