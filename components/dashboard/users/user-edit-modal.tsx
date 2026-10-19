@@ -33,6 +33,7 @@ const translations = {
     requiredPassword: "Password baru wajib diisi.",
     requiredConfirmPassword: "Konfirmasi password wajib diisi.",
     passwordMismatch: "Konfirmasi password tidak cocok.",
+    requiredAvatar: "Avatar wajib diisi.",
 
     close: "Tutup modal",
     cancel: "Batal",
@@ -70,6 +71,7 @@ const translations = {
     requiredPassword: "New password is required.",
     requiredConfirmPassword: "Password confirmation is required.",
     passwordMismatch: "Password confirmation does not match.",
+    requiredAvatar: "Avatar is required.",
 
     close: "Close modal",
     cancel: "Cancel",
@@ -228,6 +230,11 @@ export default function UserEditModal({
       } else if (password !== confirmPassword) {
         newErrors.confirmPassword = "Konfirmasi password tidak cocok.";
       }
+    }
+
+    // VALIDASI AVATAR
+    if (!avatarFile && !user.avatar && !errors.avatar) {
+      newErrors.avatar = t.requiredAvatar;
     }
 
     setErrors(newErrors);
@@ -541,7 +548,7 @@ export default function UserEditModal({
                 htmlFor="user-edit-avatar"
                 className="mb-2 block text-sm font-semibold text-foreground"
               >
-                {t.avatar}
+                {t.avatar} <span className="text-red-500">*</span>
               </label>
 
               <div className="flex items-center gap-5">

@@ -39,6 +39,7 @@ const translations = {
     requiredPassword: "Password wajib diisi.",
     requiredConfirmPassword: "Konfirmasi password wajib diisi.",
     passwordMismatch: "Konfirmasi password tidak cocok.",
+    requiredAvatar: "Avatar wajib diisi.",
 
     invalidFile: "File avatar harus berupa gambar.",
     fileTooLarge: "Ukuran avatar maksimal 2 MB.",
@@ -76,6 +77,8 @@ const translations = {
     requiredPassword: "Password is required.",
     requiredConfirmPassword: "Password confirmation is required.",
     passwordMismatch: "Password confirmation does not match.",
+    requiredAvatar: "Avatar is required.",
+
     invalidFile: "Avatar file must be an image.",
     fileTooLarge: "Avatar size must not exceed 2 MB.",
   },
@@ -236,6 +239,11 @@ export default function UserCreateModal({
     } else if (password !== confirmPassword) {
       newErrors.confirmPassword = t.passwordMismatch;
     }
+
+    // VALIDASI AVATAR
+if (!avatarFile && !errors.avatar) {
+  newErrors.avatar = t.requiredAvatar;
+}
 
     setErrors(newErrors);
 
@@ -532,7 +540,7 @@ export default function UserCreateModal({
                 htmlFor="user-avatar"
                 className="mb-2 block text-sm font-semibold text-foreground"
               >
-                {t.avatar}
+                {t.avatar} <span className="text-red-500">*</span>
               </label>
 
               <div className="flex items-center gap-5">

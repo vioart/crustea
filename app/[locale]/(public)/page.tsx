@@ -1,4 +1,3 @@
-
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import WhatsAppBubble from "@/components/ui/buble-wa";
@@ -30,10 +29,7 @@ export default function Home() {
           className="absolute inset-0 h-full w-full object-cover"
         />
 
-        <div
-          className="absolute inset-0 bg-black/45"
-          aria-hidden="true"
-        />
+        <div className="absolute inset-0 bg-black/45" aria-hidden="true" />
 
         <div
           className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/35 to-transparent"
@@ -43,10 +39,7 @@ export default function Home() {
         <div className="relative mx-auto flex min-h-screen max-w-7xl items-center px-5 pt-20 lg:px-8">
           <div className="max-w-4xl text-white">
             <p className="mb-5 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-white/80">
-              <span
-                className="h-px w-8 bg-primary"
-                aria-hidden="true"
-              />
+              <span className="h-px w-8 bg-primary" aria-hidden="true" />
               {t("hero.eyebrow")}
             </p>
 
@@ -56,11 +49,7 @@ export default function Home() {
             >
               {t("hero.titleLine1")}
               <br />
-              {t("hero.titleLine2")}
-              <br />
-              <span className="text-primary">
-                {t("hero.titleHighlight")}
-              </span>
+              <span className="text-primary">{t("hero.titleHighlight")}</span>
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-7 text-white/80 sm:text-lg">
@@ -81,9 +70,7 @@ export default function Home() {
                 asChild
                 className="border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20 hover:text-white"
               >
-                <Link href="/kontak">
-                  {t("hero.contactUs")}
-                </Link>
+                <Link href="/kontak">{t("hero.contactUs")}</Link>
               </Button>
             </div>
           </div>

@@ -50,9 +50,9 @@
         "title": "Tentang Kami",
         "description": "Mengenal lebih dekat Crustea, perjalanan, dan tim kami."
       },
-      "partnership": {
-        "title": "Kemitraan",
-        "description": "Kolaborasi dan peluang kemitraan bersama Crustea."
+      "roadmap": {
+        "title": "Roadmap Sertifikasi",
+        "description": "Lihat tahapan dan target sertifikasi sistem manajemen Crustea."
       },
       "terms": "Syarat & Ketentuan",
       "privacy": "Kebijakan Privasi",
@@ -63,13 +63,12 @@
   "Home": {
     "hero": {
       "imageAlt": "Budidaya akuakultur Crustea",
-      "eyebrow": "Solusi Akuakultur Terintegrasi",
-      "titleLine1": "Teknologi Akuakultur",
-      "titleLine2": "untuk Budidaya",
-      "titleHighlight": "Berkelanjutan",
-      "description": "Menciptakan solusi bagi pembudidaya tambak di Indonesia melalui pengembangan berbagai teknologi untuk meningkatkan produktivitas dan efisiensi tambak.",
-      "exploreProducts": "Jelajahi Produk",
-      "contactUs": "Hubungi Kami"
+      "eyebrow": "Teknologi Akuakultur Indonesia",
+      "titleLine1": "Tambak Hemat Energi,",
+      "titleHighlight": "Panen Lebih Pasti",
+      "description": "Menghadirkan aerator tenaga surya, pemantauan kualitas air secara real-time, dan pendampingan langsung untuk membantu pembudidaya mengelola tambak lebih efisien, dari persiapan kolam hingga pemasaran hasil panen.",
+      "exploreProducts": "Lihat Produk",
+      "contactUs": "Konsultasi Gratis"
     },
     "imageSlider": {
       "eyebrow": "Teknologi & Perjalanan Kami",
@@ -99,7 +98,7 @@
         },
         "innovation": {
           "alt": "Crustea menerima penghargaan atas inovasi teknologi",
-          "title": "Apresiasi atas Inovasi",
+          "title": "1st Pitching Worldbank 2026",
           "category": "Pencapaian"
         },
         "impact": {
@@ -315,19 +314,19 @@
       "next": "Testimoni berikutnya",
       "items": {
         "sari": {
-          "name": "Ibu Sari Handayani",
+          "name": "Ibu Wahyuni",
           "role": "Pengelola tambak, Lampung",
-          "quote": "Sejak menggunakan Eco-Aerator, biaya listrik turun drastis dan kadar oksigen tetap stabil. Tim Crustea tidak hanya memasang alat—mereka terus mendampingi kami."
+          "quote": "Sejak menggunakan aerator Crustea, saya bisa mengontrol aerator, memantau kadar DO, dan melihat penggunaan listrik lewat aplikasi dari mana saja. Budidaya ikan nila jadi lebih praktis, efisien, dan mudah dipantau."
         },
         "andi": {
-          "name": "Bapak Andi Pratama",
+          "name": "Bapak Wahyudi",
           "role": "Pembudidaya udang, Jawa Tengah",
-          "quote": "Teknologi yang diberikan Crustea membantu kami lebih mudah memahami kondisi tambak dan mengambil keputusan selama proses budidaya."
+          "quote": "Teknologi Crustea membantu meningkatkan produktivitas budidaya kami. Dengan aplikasi, kami lebih mudah memantau kualitas air dan menentukan langkah tepat untuk mengoptimalkan budidaya."
         },
         "rudi": {
-          "name": "Bapak Rudi Santoso",
-          "role": "Pengelola tambak, Jawa Timur",
-          "quote": "Yang paling kami rasakan bukan hanya dari teknologinya, tetapi juga pendampingan dari tim Crustea selama proses budidaya berlangsung."
+          "name": "Bapak Rhiza Chalif",
+          "role": "Pengelola tambak, Jawa Tengah",
+          "quote": "Sebelumnya, saya menggunakan kincir air biasa. Setelah beralih ke Crustea Aerator Brush, suplai oksigen lebih optimal, kualitas air membaik, dan hasil panen meningkat."
         }
       }
     },
@@ -347,7 +346,7 @@
       "titleBefore": "Siap meningkatkan",
       "titleHighlight": "produktivitas tambak?",
       "description": "Konsultasikan kebutuhan tambak Anda bersama tim Crustea dan temukan solusi teknologi yang sesuai dengan kondisi budidaya Anda.",
-      "whatsapp": "Hubungi via WhatsApp",
+      "whatsapp": "Hub via WhatsApp",
       "email": "Kirim Email",
       "footer": "Tim Crustea siap membantu menjawab kebutuhan dan pertanyaan terkait produk maupun layanan kami."
     }
@@ -765,6 +764,309 @@
     }
   },
 
+  "AquaGrowth": {
+    "page": {
+      "title": "AquaGrowth",
+      "breadcrumb": {
+        "home": "Beranda",
+        "aquagrowth": "AquaGrowth"
+      }
+    },
+    "overview": {
+      "eyebrow": "Program Budidaya Berkelanjutan",
+      "title": "AquaGrowth Lestari",
+      "description": "Program budidaya ikan dan udang berkelanjutan yang dirancang profesional dengan teknologi modern untuk menghasilkan panen optimal berkualitas tinggi sekaligus menawarkan peluang investasi menjanjikan di sektor akuakultur yang terus tumbuh seiring meningkatnya permintaan global akan protein hewani.",
+      "objectives": {
+        "0": "Mengembangkan sistem budidaya ikan dan udang yang efisien dan ramah lingkungan melalui pendekatan teknologi dan manajemen modern.",
+        "1": "Menawarkan peluang investasi yang stabil dan menguntungkan di sektor akuakultur bagi para investor individu maupun institusi.",
+        "2": "Mendorong pertumbuhan ekonomi biru (blue economy) dengan menjadikan perairan sebagai sumber daya produktif dan berkelanjutan.",
+        "3": "Meningkatkan ketahanan pangan nasional dan ekspor hasil perikanan melalui produksi yang konsisten dan berkualitas ekspor."
+      }
+    },
+    "partnership": {
+      "eyebrow": "Kolaborasi AquaGrowth",
+      "title": "Skema Kerja Sama",
+      "description": "AquaGrowth membuka peluang kolaborasi antara petambak dan investor dalam ekosistem budidaya yang terencana, didukung teknologi, dan berorientasi pada hasil.",
+      "eligibilityTitle": "Kriteria Bergabung",
+      "benefitsTitle": "Manfaat Kerja Sama",
+      "pathways": {
+        "farmer": {
+          "label": "Jalur A",
+          "title": "Petambak",
+          "description": "Bergabung dalam program AquaGrowth untuk mengembangkan kegiatan budidaya dengan dukungan pengelolaan dan teknologi.",
+          "eligibility": {
+            "0": "Memiliki atau mengelola tambak yang dapat digunakan untuk kegiatan budidaya.",
+            "1": "Bersedia mengikuti standar operasional dan pendampingan program.",
+            "2": "Bersedia bekerja sama dalam pemantauan dan evaluasi siklus budidaya."
+          },
+          "benefits": {
+            "0": "Dukungan teknologi budidaya",
+            "1": "Pengelolaan lebih terarah",
+            "2": "Peluang pengembangan usaha"
+          }
+        },
+        "investor": {
+          "label": "Jalur B",
+          "title": "Investor",
+          "description": "Berpartisipasi dalam pendanaan operasional budidaya sesuai paket dan ketentuan kerja sama yang tersedia.",
+          "eligibility": {
+            "0": "Memilih paket investasi dan lokasi yang tersedia.",
+            "1": "Memahami ketentuan kerja sama, periode, dan pembagian hasil.",
+            "2": "Menyelesaikan proses administrasi serta pendanaan sesuai perjanjian."
+          },
+          "benefits": {
+            "0": "Pilihan lokasi dan paket",
+            "1": "Informasi siklus budidaya",
+            "2": "Potensi bagi hasil usaha"
+          }
+        }
+      },
+      "flow": {
+        "eyebrow": "Tahapan Program",
+        "title": "Alur Investasi",
+        "description": "Dari pemilihan paket hingga pembagian hasil, setiap tahapan mengikuti proses kerja sama dan siklus budidaya.",
+        "stages": {
+          "0": {
+            "title": "Pemilihan Paket",
+            "description": "Memilih lokasi dan paket investasi yang tersedia."
+          },
+          "1": {
+            "title": "Kesepakatan Kerja Sama",
+            "description": "Mempelajari dan menyepakati ketentuan kerja sama."
+          },
+          "2": {
+            "title": "Penandatanganan Perjanjian",
+            "description": "Menyelesaikan dokumen perjanjian para pihak."
+          },
+          "3": {
+            "title": "Pendanaan Operasional",
+            "description": "Melakukan transfer dana sesuai perjanjian."
+          },
+          "4": {
+            "title": "Pelaksanaan Budidaya",
+            "description": "Menjalankan siklus budidaya dan pemantauan."
+          },
+          "5": {
+            "title": "Panen dan Penjualan",
+            "description": "Melaksanakan panen dan proses penjualan hasil."
+          },
+          "6": {
+            "title": "Pembagian Hasil",
+            "description": "Menghitung dan membagikan hasil sesuai kesepakatan."
+          },
+          "7": {
+            "title": "Siklus Berikutnya",
+            "description": "Mengevaluasi hasil untuk menentukan kelanjutan program."
+          }
+        },
+        "cycleTitle": "Siklus Budidaya Berkelanjutan",
+        "cycleDescription": "Setelah evaluasi hasil, kerja sama dapat dilanjutkan ke siklus berikutnya sesuai kesepakatan para pihak.",
+        "cycleLabel": "Lanjut ke Siklus Berikutnya"
+      }
+    },
+    "investment": {
+      "eyebrow": "Paket & Lokasi",
+      "title": "Paket Investasi",
+      "description": "Jelajahi lokasi tambak AquaGrowth dan lihat informasi paket investasi berdasarkan wilayah yang dipilih.",
+      "mapTitle": "Peta Lokasi Tambak",
+      "mapSubtitle": "Pilih marker untuk melihat paket investasi",
+      "mapAccessibleLabel": "Peta interaktif lokasi program AquaGrowth",
+      "showAll": "Semua Lokasi",
+      "mapFootnote": "Marker menunjukkan perkiraan posisi wilayah, bukan koordinat tambak yang telah diverifikasi.",
+      "locationListTitle": "Pilih Wilayah",
+      "locations": "wilayah",
+      "selectedLocation": "Wilayah Terpilih",
+      "investmentPackage": "Informasi paket investasi",
+      "investmentAmount": "Nominal Investasi",
+      "investmentDisclaimer": "Nilai investasi mengikuti informasi paket pada materi program dan perlu dikonfirmasi sebelum penawaran resmi.",
+      "area": "Luas Tambak",
+      "pondCount": "Jumlah Kolam",
+      "ponds": "kolam",
+      "potentialProfit": "Potensi Profit",
+      "profitShare": "Profit Share",
+      "period": "Periode Budidaya",
+      "periodValue": "{period}",
+      "selectionHint": "Pilih wilayah lain melalui marker peta atau daftar lokasi untuk membandingkan informasi paket.",
+      "generalNote": "Potensi profit merupakan proyeksi yang tercantum dalam materi program, bukan jaminan hasil investasi."
+    }
+  },
+
+  "CultivationCalculator": {
+    "page": {
+      "title": "Kalkulator Budidaya",
+      "breadcrumb": {
+        "home": "Beranda",
+        "calculator": "Kalkulator Budidaya"
+      }
+    },
+    "intro": {
+      "eyebrow": "Kalkulator Budidaya",
+      "title": "Rencanakan Budidaya",
+      "titleHighlight": "dengan Lebih Terukur",
+      "description": "Pilih aerator dan masukkan data budidaya untuk mendapatkan estimasi awal biomassa, kebutuhan oksigen, dan jumlah alat berdasarkan parameter yang tersedia."
+    },
+    "aerator": {
+      "step": "01",
+      "title": "Pilih jenis aerator",
+      "description": "Pilih alat yang ingin kamu gunakan.",
+      "biomassCapacity": "Acuan biomassa",
+      "mini": {
+        "name": "Aerator Mini",
+        "subtitle": "Untuk kolam skala kecil",
+        "description": "Pilihan aerator mini untuk kebutuhan budidaya ikan nila pada kolam berukuran kecil.",
+        "note": "Data pembesaran ikan nila pada materi teknis."
+      },
+      "brush": {
+        "name": "Aerator Brush",
+        "subtitle": "Untuk pembesaran ikan",
+        "description": "Aerator brush dengan pemasangan sesuai SOP untuk mendukung budidaya dengan biomassa lebih besar.",
+        "note": "Kapasitas biomassa mengikuti rentang pada materi teknis."
+      },
+      "brushWeighted": {
+        "name": "Brush + Pemberat",
+        "subtitle": "Konfigurasi dengan pemberat",
+        "description": "Aerator brush dengan penambahan pemberat untuk konfigurasi budidaya yang memiliki acuan biomassa lebih besar.",
+        "note": "Kapasitas biomassa mengikuti rentang pada materi teknis."
+      },
+      "power": "Daya pada materi",
+      "oxygenOutput": "Output O₂ pada materi",
+      "perDevice": "Acuan biomassa per alat",
+      "capacityNote": "Data kapasitas mengikuti materi yang diberikan dan perlu diverifikasi sebelum digunakan sebagai rekomendasi operasional."
+    },
+    "form": {
+      "step": "02",
+      "title": "Data budidaya",
+      "description": "Masukkan data sesuai kondisi kolam.",
+      "methodTitle": "Metode perhitungan",
+      "pondMode": "Berdasarkan kolam",
+      "pondModeDescription": "Hitung biomassa dari data kolam dan ikan.",
+      "biomassMode": "Berdasarkan biomassa",
+      "biomassModeDescription": "Masukkan target berat total ikan.",
+      "area": {
+        "label": "Luas kolam",
+        "placeholder": "Contoh: 40",
+        "unit": "m²",
+        "hint": "Total luas kolam yang digunakan."
+      },
+      "density": {
+        "label": "Kepadatan tebar",
+        "placeholder": "Contoh: 35",
+        "unit": "ekor/m²",
+        "hint": "Jumlah ikan per meter persegi."
+      },
+      "averageWeight": {
+        "label": "Berat rata-rata ikan",
+        "placeholder": "Contoh: 200",
+        "unit": "gram/ekor",
+        "hint": "Berat rata-rata ikan pada kondisi atau fase budidaya yang ingin dihitung."
+      },
+      "targetBiomass": {
+        "label": "Target biomassa ikan",
+        "placeholder": "Contoh: 300",
+        "unit": "kg",
+        "hint": "Masukkan estimasi total berat ikan yang ingin ditampung."
+      },
+      "validation": "Isi semua data dengan angka yang valid dan lebih besar dari nol.",
+      "calculate": "Hitung Kebutuhan Aerator",
+      "reset": "Reset"
+    },
+    "result": {
+      "title": "Ringkasan kalkulasi",
+      "heading": "Hasil Budidaya",
+      "description": "Estimasi berdasarkan input dan acuan kapasitas alat.",
+      "emptyTitle": "Hasil akan muncul di sini",
+      "emptyDescription": "Pilih aerator, lengkapi data budidaya, lalu tekan tombol hitung untuk melihat hasil simulasi.",
+      "estimatedDevices": "Estimasi jumlah aerator",
+      "unit": "unit",
+      "basedOnCapacity": "Menggunakan kapasitas acuan {capacity} kg biomassa per alat.",
+      "estimatedFish": "Estimasi jumlah ikan",
+      "fishUnit": "ekor",
+      "targetBiomass": "Target biomassa",
+      "oxygenRequirement": "Estimasi kebutuhan oksigen",
+      "oxygenFormula": "Menggunakan acuan 700 mg O₂/kg/jam dari materi.",
+      "oxygenUnit": "g O₂/jam",
+      "technicalValidationTitle": "Perlu validasi teknis",
+      "technicalValidationDescription": "Hasil ini adalah estimasi matematis awal, bukan rekomendasi jumlah alat yang siap digunakan. Kapasitas aktual, konfigurasi kolam, dan faktor keamanan perlu dikonfirmasi oleh tim teknis."
+    },
+    "technicalNotes": {
+      "title": "Catatan perhitungan",
+      "biomass": "Biomassa dihitung dari jumlah ikan dikalikan berat rata-rata ikan.",
+      "devices": "Estimasi jumlah alat menggunakan pembulatan ke atas berdasarkan batas bawah kapasitas biomassa pada materi.",
+      "oxygen": "Kebutuhan oksigen dihitung dengan acuan 700 mg O₂/kg/jam sesuai materi yang diberikan.",
+      "limitations": "Perhitungan belum memperhitungkan faktor keamanan, kondisi air, kedalaman kolam, distribusi oksigen, atau konfigurasi aktual aerator.",
+      "general": "Perhitungan menggunakan data acuan pada materi Aerator Mini, Aerator Brush, dan Brush + Pemberat. Output oksigen setiap alat dan kapasitas operasional masih perlu diverifikasi.",
+      "outputDisclaimer": "Angka output oksigen ditampilkan sesuai materi yang diberikan dan belum diverifikasi terhadap spesifikasi alat."
+    }
+  },
+
+  "Roadmap": {
+    "page": {
+      "title": "Roadmap Sertifikasi",
+      "breadcrumb": {
+        "home": "Beranda",
+        "roadmap": "Roadmap Sertifikasi"
+      }
+    },
+    "content": {
+      "eyebrow": "Komitmen terhadap Standar Internasional",
+      "headingBefore": "Membangun Standar",
+      "headingHighlight": "yang Lebih Baik",
+      "description": "Crustea berkomitmen untuk membangun sistem manajemen yang mendukung kualitas, kelestarian lingkungan, serta keselamatan dan kesehatan kerja melalui tahapan sertifikasi yang terencana.",
+      "step": "TAHAP {number}",
+      "target": "Target",
+      "status": {
+        "progress": "Sedang Berjalan",
+        "planned": "Direncanakan"
+      },
+      "milestones": {
+        "documentation": {
+          "title": "Dokumentasi Sistem",
+          "description": "Menyusun kebijakan, ruang lingkup, prosedur, daftar risiko, dan dokumen pendukung untuk sistem manajemen terintegrasi."
+        },
+        "internalAudit": {
+          "title": "Audit Internal",
+          "description": "Mengevaluasi kesiapan sistem manajemen berdasarkan persyaratan ketiga standar ISO yang menjadi sasaran."
+        },
+        "certificationAudit": {
+          "title": "Audit Sertifikasi",
+          "description": "Merencanakan audit Tahap 1 dan Tahap 2 bersama lembaga sertifikasi yang terakreditasi."
+        },
+        "certificate": {
+          "title": "Penerbitan Sertifikat",
+          "description": "Tahap akhir yang ditargetkan setelah proses audit sertifikasi berhasil diselesaikan dan seluruh persyaratan terpenuhi."
+        }
+      },
+      "timelineEnd": "Menuju peningkatan berkelanjutan",
+      "standards": {
+        "eyebrow": "Fokus Sertifikasi",
+        "heading": "Standar yang Dituju",
+        "description": "Tiga standar internasional yang menjadi acuan dalam pengembangan sistem manajemen Crustea.",
+        "items": {
+          "quality": {
+            "title": "Manajemen Mutu",
+            "description": "Mendukung konsistensi proses, kualitas produk dan layanan, serta peningkatan kepuasan pelanggan."
+          },
+          "environment": {
+            "title": "Manajemen Lingkungan",
+            "description": "Mendorong pengelolaan dampak lingkungan dan penerapan praktik operasional yang lebih bertanggung jawab."
+          },
+          "safety": {
+            "title": "Keselamatan dan Kesehatan Kerja",
+            "description": "Mendukung pengelolaan risiko kerja serta terciptanya lingkungan kerja yang aman dan sehat."
+          }
+        }
+      },
+      "commitment": {
+        "eyebrow": "Komitmen Crustea",
+        "headingBefore": "Membangun Sistem yang",
+        "headingHighlight": "Terukur dan Berkelanjutan",
+        "description": "Roadmap ini menjadi panduan perjalanan Crustea dalam memperkuat tata kelola, meningkatkan kualitas operasional, dan membangun kepercayaan melalui proses yang terencana."
+      },
+      "asOf": "Status roadmap per",
+      "reportingPeriod": "Oktober 2026"
+    }
+  },
+
   "FAQ": {
     "page": {
       "title": "FAQ",
@@ -793,6 +1095,190 @@
         "title": "Masih punya pertanyaan?",
         "description": "Hubungi tim Crustea dan diskusikan kebutuhan Anda bersama kami.",
         "button": "Hubungi Kami"
+      }
+    }
+  },
+
+  "Terms": {
+    "page": {
+      "title": "Syarat & Ketentuan",
+      "breadcrumb": {
+        "home": "Beranda",
+        "terms": "Syarat & Ketentuan"
+      }
+    },
+    "content": {
+      "intro": {
+        "eyebrow": "Ketentuan Penggunaan",
+        "heading": "Ketentuan penggunaan website Crustea.",
+        "description": "Syarat & Ketentuan ini menjelaskan aturan umum yang berlaku ketika Anda mengakses dan menggunakan website Crustea. Dengan menggunakan website ini, Anda diharapkan menggunakan seluruh informasi dan layanan yang tersedia secara bertanggung jawab.",
+        "lastUpdated": "Terakhir diperbarui: September 2026"
+      },
+      "tableOfContents": "Daftar Isi",
+      "sections": {
+        "websiteUsage": {
+          "title": "Penggunaan Website",
+          "paragraph1": "Website Crustea disediakan sebagai sarana informasi mengenai perusahaan, produk, layanan, kegiatan, dan solusi yang dikembangkan oleh Crustea di bidang akuakultur.",
+          "paragraph2": "Dengan mengakses dan menggunakan website ini, Anda dianggap telah memahami dan menyetujui Syarat & Ketentuan yang berlaku. Anda diharapkan menggunakan website secara wajar, bertanggung jawab, dan sesuai dengan hukum yang berlaku di Republik Indonesia."
+        },
+        "websiteInformation": {
+          "title": "Informasi Website",
+          "paragraph1": "Informasi yang tersedia di website Crustea disediakan untuk tujuan informasi umum. Kami berupaya menjaga agar informasi yang ditampilkan tetap relevan dan akurat.",
+          "paragraph2": "Namun, informasi mengenai produk, layanan, spesifikasi, fitur, program, kegiatan, maupun informasi perusahaan dapat berubah dari waktu ke waktu tanpa pemberitahuan sebelumnya.",
+          "paragraph3": "Informasi yang terdapat di website ini tidak selalu mencerminkan seluruh detail atau kondisi terbaru dari produk dan layanan Crustea. Untuk informasi lebih lanjut, Anda dapat menghubungi tim Crustea melalui kontak yang tersedia di website."
+        },
+        "intellectualProperty": {
+          "title": "Kekayaan Intelektual",
+          "paragraph1": "Seluruh atau sebagian konten yang terdapat dalam website Crustea, termasuk namun tidak terbatas pada nama perusahaan, logo, merek, desain, teks, foto, ilustrasi, video, grafik, dan materi lainnya, merupakan milik Crustea atau digunakan berdasarkan hak dan izin yang sah.",
+          "paragraph2": "Konten tersebut tidak boleh disalin, direproduksi, dimodifikasi, didistribusikan, dipublikasikan, atau digunakan untuk tujuan komersial tanpa memperoleh izin tertulis dari pihak yang memiliki hak atas konten tersebut.",
+          "paragraph3": "Penggunaan konten untuk tujuan yang melanggar hukum atau merugikan Crustea tidak diperbolehkan."
+        },
+        "permittedUse": {
+          "title": "Penggunaan yang Diperbolehkan",
+          "paragraph1": "Pengguna dapat mengakses dan menggunakan website Crustea untuk memperoleh informasi mengenai perusahaan, produk, layanan, dan aktivitas Crustea selama penggunaan tersebut dilakukan secara sah.",
+          "listIntro": "Pengguna tidak diperbolehkan untuk:",
+          "items": [
+            "Menggunakan website untuk tujuan yang melanggar hukum atau peraturan yang berlaku.",
+            "Mencoba memperoleh akses tanpa izin ke sistem, server, atau bagian lain dari website.",
+            "Melakukan tindakan yang dapat mengganggu, merusak, atau membebani operasional website.",
+            "Menggunakan konten website dengan cara yang dapat menyesatkan atau memberikan kesan adanya hubungan, dukungan, atau persetujuan dari Crustea tanpa izin.",
+            "Menggunakan website untuk tujuan yang dapat merugikan Crustea atau pihak lain."
+          ]
+        },
+        "thirdPartyLinks": {
+          "title": "Tautan Pihak Ketiga",
+          "paragraph1": "Website Crustea dapat menyediakan tautan menuju website, platform, layanan, atau media sosial milik pihak ketiga, termasuk namun tidak terbatas pada WhatsApp, Instagram, LinkedIn, atau layanan lainnya.",
+          "paragraph2": "Tautan tersebut disediakan untuk memudahkan pengguna memperoleh informasi atau berkomunikasi dengan Crustea. Crustea tidak mengontrol seluruh konten, kebijakan, keamanan, atau praktik dari website dan layanan pihak ketiga tersebut.",
+          "paragraph3": "Penggunaan layanan pihak ketiga tunduk pada syarat dan kebijakan yang ditetapkan oleh masing-masing penyedia layanan."
+        },
+        "websiteAvailability": {
+          "title": "Ketersediaan Website",
+          "paragraph1": "Crustea berupaya menjaga agar website dapat diakses dan berfungsi dengan baik. Namun, kami tidak menjamin bahwa website akan selalu tersedia, bebas dari gangguan, atau dapat diakses tanpa adanya kesalahan.",
+          "paragraph2": "Website dapat mengalami gangguan sementara karena pemeliharaan, pembaruan sistem, masalah teknis, gangguan jaringan, atau kondisi lain di luar kendali Crustea."
+        },
+        "disclaimer": {
+          "title": "Penafian",
+          "paragraph1": "Informasi dalam website ini disediakan dengan itikad baik sebagai informasi umum. Meskipun Crustea berupaya menjaga keakuratan dan relevansi informasi, kami tidak menjamin bahwa seluruh informasi selalu lengkap, akurat, atau bebas dari kesalahan pada setiap waktu.",
+          "paragraph2": "Penggunaan informasi yang tersedia di website menjadi tanggung jawab pengguna. Untuk kebutuhan yang memerlukan informasi teknis, operasional, atau penjelasan lebih lanjut, pengguna disarankan untuk menghubungi Crustea secara langsung."
+        },
+        "changes": {
+          "title": "Perubahan Syarat & Ketentuan",
+          "paragraph1": "Crustea dapat memperbarui atau mengubah Syarat & Ketentuan ini dari waktu ke waktu untuk menyesuaikan dengan perkembangan website, layanan, kegiatan perusahaan, maupun ketentuan hukum yang berlaku.",
+          "paragraph2": "Perubahan akan dipublikasikan melalui halaman ini dan berlaku sejak tanggal yang tercantum pada versi terbaru Syarat & Ketentuan.",
+          "paragraph3": "Dengan tetap menggunakan website setelah adanya perubahan, pengguna dianggap telah membaca dan memahami ketentuan yang telah diperbarui."
+        },
+        "contact": {
+          "title": "Hubungi Kami",
+          "description": "Jika Anda memiliki pertanyaan mengenai Syarat & Ketentuan ini atau mengenai penggunaan website Crustea, Anda dapat menghubungi kami melalui informasi berikut:",
+          "emailLabel": "Email:",
+          "whatsappLabel": "WhatsApp:"
+        }
+      }
+    }
+  },
+
+  "PrivacyPolicy": {
+    "page": {
+      "title": "Kebijakan Privasi",
+      "breadcrumb": {
+        "home": "Beranda",
+        "privacy": "Kebijakan Privasi"
+      }
+    },
+    "content": {
+      "intro": {
+        "eyebrow": "Privasi & Keamanan",
+        "heading": "Kami menghargai privasi Anda.",
+        "description": "Kebijakan Privasi ini menjelaskan bagaimana Crustea mengelola informasi yang dikumpulkan melalui situs dan layanan kami. Kami berkomitmen untuk menggunakan informasi secara bertanggung jawab dan menjaga keamanan data pengguna.",
+        "lastUpdated": "Terakhir diperbarui: September 2026"
+      },
+      "tableOfContents": "Daftar Isi",
+      "sections": {
+        "introduction": {
+          "title": "Pendahuluan",
+          "paragraph1": "Kebijakan Privasi ini menjelaskan bagaimana PT Eco Karya Teknologi (\"Crustea\", \"kami\", atau \"perusahaan\") mengumpulkan, menggunakan, menyimpan, dan melindungi informasi ketika Anda mengakses atau menggunakan situs web dan layanan Crustea.",
+          "paragraph2": "Kami menghargai privasi setiap pengguna dan berkomitmen untuk mengelola informasi pribadi secara bertanggung jawab sesuai dengan ketentuan hukum dan peraturan yang berlaku."
+        },
+        "collectedInformation": {
+          "title": "Informasi yang Kami Kumpulkan",
+          "description": "Informasi yang dapat kami kumpulkan bergantung pada bagaimana Anda berinteraksi dengan situs dan layanan kami.",
+          "directTitle": "Informasi yang Anda berikan secara langsung",
+          "directItems": [
+            "Nama lengkap",
+            "Alamat email",
+            "Nomor telepon atau WhatsApp",
+            "Nama perusahaan atau organisasi",
+            "Informasi kebutuhan produk atau layanan",
+            "Informasi lain yang Anda sampaikan melalui formulir kontak"
+          ],
+          "automaticTitle": "Informasi yang dikumpulkan secara otomatis",
+          "automaticItems": [
+            "Alamat IP",
+            "Jenis perangkat",
+            "Sistem operasi dan browser",
+            "Halaman yang dikunjungi",
+            "Waktu dan durasi kunjungan",
+            "Informasi penggunaan situs lainnya"
+          ]
+        },
+        "dataUsage": {
+          "title": "Tujuan Penggunaan Data",
+          "description": "Informasi yang kami kumpulkan dapat digunakan untuk berbagai tujuan yang berkaitan dengan penyediaan dan pengembangan layanan Crustea.",
+          "items": [
+            "Merespons pertanyaan dan permintaan Anda.",
+            "Memberikan informasi mengenai produk dan layanan.",
+            "Memproses permintaan konsultasi atau kemitraan.",
+            "Meningkatkan kualitas produk, layanan, dan pengalaman pengguna.",
+            "Menganalisis penggunaan situs untuk pengembangan lebih lanjut.",
+            "Menjaga keamanan dan mencegah penyalahgunaan situs.",
+            "Memenuhi kewajiban hukum dan peraturan yang berlaku."
+          ]
+        },
+        "cookies": {
+          "title": "Cookies dan Analytics",
+          "paragraph1": "Situs Crustea dapat menggunakan cookies dan teknologi serupa untuk membantu meningkatkan pengalaman pengguna, memahami bagaimana situs digunakan, serta mengoptimalkan performa situs.",
+          "paragraph2": "Cookies dapat digunakan untuk menyimpan preferensi tertentu, memahami pola penggunaan, dan membantu kami melakukan analisis terhadap performa situs.",
+          "paragraph3": "Anda dapat mengatur atau menonaktifkan cookies melalui pengaturan browser yang digunakan. Namun, beberapa bagian situs mungkin tidak berfungsi secara optimal apabila cookies dinonaktifkan."
+        },
+        "thirdParties": {
+          "title": "Pihak Ketiga",
+          "paragraph1": "Dalam menjalankan operasional situs dan layanan, kami dapat menggunakan layanan dari pihak ketiga yang membantu menyediakan fungsi tertentu, seperti analitik, hosting, komunikasi, keamanan, atau layanan teknologi lainnya.",
+          "paragraph2": "Pihak ketiga tersebut hanya dapat mengakses informasi sejauh yang diperlukan untuk menjalankan layanan yang diberikan kepada kami dan diharapkan menangani informasi sesuai dengan ketentuan yang berlaku.",
+          "paragraph3": "Kami tidak menjual informasi pribadi pengguna kepada pihak ketiga untuk tujuan pemasaran."
+        },
+        "storageSecurity": {
+          "title": "Penyimpanan dan Keamanan",
+          "paragraph1": "Kami menerapkan langkah-langkah teknis dan organisasi yang wajar untuk membantu melindungi informasi yang kami kelola dari akses, penggunaan, perubahan, pengungkapan, atau penghancuran yang tidak sah.",
+          "paragraph2": "Informasi hanya disimpan selama diperlukan untuk memenuhi tujuan pengumpulannya, menyediakan layanan, memenuhi kewajiban hukum, atau menyelesaikan perselisihan.",
+          "paragraph3": "Meskipun kami berupaya menjaga keamanan informasi, tidak ada metode transmisi atau penyimpanan data elektronik yang dapat dijamin sepenuhnya aman."
+        },
+        "userRights": {
+          "title": "Hak Pengguna",
+          "description": "Tergantung pada ketentuan hukum yang berlaku, pengguna dapat memiliki hak tertentu terkait informasi pribadinya.",
+          "items": [
+            "Meminta informasi mengenai data pribadi yang kami miliki tentang Anda.",
+            "Meminta koreksi terhadap informasi yang tidak akurat.",
+            "Meminta penghapusan informasi dalam kondisi yang diperbolehkan oleh hukum.",
+            "Menarik persetujuan terhadap penggunaan data tertentu apabila pemrosesan didasarkan pada persetujuan.",
+            "Mengajukan pertanyaan atau keberatan mengenai penggunaan informasi pribadi."
+          ],
+          "closing": "Untuk menggunakan hak tersebut, Anda dapat menghubungi kami melalui informasi kontak yang tersedia pada bagian akhir kebijakan ini."
+        },
+        "externalLinks": {
+          "title": "Tautan Pihak Ketiga",
+          "paragraph1": "Situs Crustea dapat menyediakan tautan menuju situs, platform, atau layanan pihak ketiga.",
+          "paragraph2": "Kebijakan Privasi ini hanya berlaku untuk situs dan layanan yang dikelola oleh Crustea. Kami tidak bertanggung jawab atas praktik privasi, keamanan, maupun konten yang terdapat pada situs pihak ketiga.",
+          "paragraph3": "Kami menyarankan Anda membaca kebijakan privasi dari setiap situs pihak ketiga yang Anda kunjungi."
+        },
+        "policyChanges": {
+          "title": "Perubahan Kebijakan Privasi",
+          "paragraph1": "Kami dapat memperbarui Kebijakan Privasi ini dari waktu ke waktu untuk menyesuaikan dengan perubahan layanan, teknologi, kebutuhan operasional, maupun ketentuan hukum yang berlaku.",
+          "paragraph2": "Setiap perubahan akan dipublikasikan pada halaman ini dengan tanggal pembaruan yang sesuai. Kami menyarankan pengguna untuk meninjau halaman ini secara berkala."
+        },
+        "contact": {
+          "title": "Hubungi Kami",
+          "description": "Jika Anda memiliki pertanyaan, permintaan, atau keluhan mengenai Kebijakan Privasi ini maupun bagaimana kami menangani informasi pribadi, silakan hubungi kami melalui:"
+        }
       }
     }
   },
@@ -897,8 +1383,8 @@
   "Footer": {
     "description": "Menghadirkan teknologi dan solusi terintegrasi untuk membantu pembudidaya meningkatkan produktivitas, efisiensi, dan keberlanjutan bisnis akuakultur.",
     "addressLine1": "Ground Floor Crustea Labs",
-    "addressLine2": "Jl. Sanggung Timur No. 1, Jatingaleh, Semarang,",
-    "addressLine3": "Jatingaleh, Semarang, Jawa Tengah 50254",
+    "addressLine2": "Jl. Sanggung Timur No. 1, Jatingaleh,",
+    "addressLine3": "Semarang, Jawa Tengah 50254",
     "columns": {
       "products": "Produk",
       "services": "Layanan",
@@ -915,10 +1401,7 @@
         "calculator": "Kalkulator Budidaya"
       },
       "services": {
-        "consultation": "Konsultasi & Konstruksi",
-        "ecoAerator": "Eco-Aerator",
-        "crusteaAio": "Crustea AIO",
-        "partnership": "Kemitraan & Pasar"
+        "consultation": "Konsultasi & Konstruksi"
       },
       "company": {
         "about": "Tentang Kami",

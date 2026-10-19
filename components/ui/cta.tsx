@@ -18,7 +18,7 @@ export default function CTASection() {
         <div className="relative overflow-hidden rounded-[28px]">
           {/* BACKGROUND IMAGE */}
           <img
-            src="/img/bg-hero.webp"
+            src="/img/cta.jpg"
             alt=""
             className="absolute inset-0 h-full w-full object-cover"
             aria-hidden="true"

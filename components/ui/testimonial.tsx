@@ -20,19 +20,19 @@ export default function Testimonial() {
       name: t("items.sari.name"),
       role: t("items.sari.role"),
       quote: t("items.sari.quote"),
-      image: "/img/testimoni.webp",
+      image: "/img/testimoni/testimoni1.webp",
     },
     {
       name: t("items.andi.name"),
       role: t("items.andi.role"),
       quote: t("items.andi.quote"),
-      image: "/img/testimoni2.webp",
+      image: "/img/testimoni/testimoni2.webp",
     },
     {
       name: t("items.rudi.name"),
       role: t("items.rudi.role"),
       quote: t("items.rudi.quote"),
-      image: "/img/testimoni3.webp",
+      image: "/img/testimoni/testimoni3.webp",
     },
   ];
 

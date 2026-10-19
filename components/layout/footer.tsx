@@ -14,21 +14,16 @@ const productLinks = [
   { key: "hardware", href: "/produk/hardware-teknologi" },
   { key: "software", href: "/produk/software" },
   { key: "krasty", href: "/produk/krasty" },
-  { key: "trading", href: "/produk/trading" },
   { key: "aquagrowth", href: "/produk/aquagrowth" },
   { key: "calculator", href: "/produk/kalkulator-budidaya" },
 ] as const;
 
 const serviceLinks = [
   { key: "consultation", href: "/kontak" },
-  { key: "ecoAerator", href: "/produk/eco-aerator" },
-  { key: "crusteaAio", href: "/produk/crustea-aio" },
-  { key: "partnership", href: "/produk/kemitraan" },
 ] as const;
 
 const companyLinks = [
   { key: "about", href: "/tentang-kami" },
-  { key: "partnership", href: "/produk/kemitraan" },
 ] as const;
 
 const resourceLinks = [
@@ -71,7 +66,7 @@ export default function Footer() {
               aria-label="Crustea"
             >
               <img
-                src="/logo-white.svg"
+                src="/logo-white.png"
                 alt="Crustea"
                 className="h-13 w-auto object-contain"
               />

@@ -344,7 +344,7 @@ export default function LoginPage() {
           </form>
 
           {/* Register */}
-          <div className="mt-6 text-center">
+          {/* <div className="mt-6 text-center">
             <p className="text-[12px] text-white/55">
               Belum memiliki akun?{" "}
               <Link
@@ -354,7 +354,7 @@ export default function LoginPage() {
                 Daftar
               </Link>
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </main>

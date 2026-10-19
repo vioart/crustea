@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from "react";
@@ -21,6 +20,7 @@ import {
   ShoppingCart,
   Sprout,
   Users,
+  Route,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -52,6 +52,10 @@ export default function Header() {
 
   const [open, setOpen] = React.useState(false);
   const [languageOpen, setLanguageOpen] = React.useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] =
+    React.useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] =
+    React.useState(false);
 
   const chooseLanguage = (value: "id" | "en") => {
     setLanguageOpen(false);
@@ -94,22 +98,10 @@ export default function Header() {
       icon: Package,
     },
     {
-      title: t("productsList.trading.title"),
-      href: "/produk/trading",
-      description: t("productsList.trading.description"),
-      icon: ShoppingCart,
-    },
-    {
       title: t("productsList.aquagrowth.title"),
       href: "/produk/aquagrowth",
       description: t("productsList.aquagrowth.description"),
       icon: Sprout,
-    },
-    {
-      title: t("productsList.partnership.title"),
-      href: "/produk/kemitraan",
-      description: t("productsList.partnership.description"),
-      icon: Handshake,
     },
     {
       title: t("productsList.calculator.title"),
@@ -127,10 +119,10 @@ export default function Header() {
       icon: Users,
     },
     {
-      title: t("companyLinks.partnership.title"),
-      href: "/produk/kemitraan",
-      description: t("companyLinks.partnership.description"),
-      icon: Handshake,
+      title: t("companyLinks.roadmap.title"),
+      href: "/roadmap-sertifikasi",
+      description: t("companyLinks.roadmap.description"),
+      icon: Route,
     },
   ];
 
@@ -163,15 +155,34 @@ export default function Header() {
         )}
       >
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 lg:px-8">
-          <Link href="/" className="flex items-center" aria-label="Crustea">
+          {/* Logo: transisi dari putih ke logo normal */}
+          <Link
+            href="/"
+            className="grid items-center"
+            aria-label="Crustea"
+          >
+            <img
+              src="/logo-white.png"
+              alt="Crustea logo"
+              aria-hidden={isSolid}
+              className={cn(
+                "col-start-1 row-start-1 h-9 w-auto object-contain transition-opacity duration-300",
+                isSolid ? "opacity-0" : "opacity-100",
+              )}
+            />
+
             <img
               src="/logo.svg"
               alt="Crustea logo"
-              className="h-9 w-auto object-contain transition-opacity duration-300"
+              aria-hidden={!isSolid}
+              className={cn(
+                "col-start-1 row-start-1 h-9 w-auto object-contain transition-opacity duration-300",
+                isSolid ? "opacity-100" : "opacity-0",
+              )}
             />
           </Link>
 
-          {/* Navigasi desktop */}
+          {/* Navigasi desktop: tidak diubah */}
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -190,7 +201,6 @@ export default function Header() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              {/* Dropdown produk */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn(
@@ -240,7 +250,6 @@ export default function Header() {
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
-              {/* Dropdown tentang kami */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger
                   className={cn(
@@ -351,7 +360,9 @@ export default function Header() {
                     )}
                   >
                     Indonesia
-                    <span className="text-xs text-muted-foreground">ID</span>
+                    <span className="text-xs text-muted-foreground">
+                      ID
+                    </span>
                   </Button>
 
                   <Button
@@ -364,7 +375,9 @@ export default function Header() {
                     )}
                   >
                     English
-                    <span className="text-xs text-muted-foreground">EN</span>
+                    <span className="text-xs text-muted-foreground">
+                      EN
+                    </span>
                   </Button>
                 </div>
               )}
@@ -402,6 +415,7 @@ export default function Header() {
           className="flex flex-1 flex-col overflow-y-auto px-5 pb-5 pt-28"
           aria-label={t("mainNavigation")}
         >
+          {/* Beranda */}
           <Link
             href="/"
             onClick={() => setOpen(false)}
@@ -410,47 +424,93 @@ export default function Header() {
             {t("home")}
           </Link>
 
-          <p className="mb-3 mt-8 text-xs font-semibold uppercase text-muted-foreground">
-            {t("products")}
-          </p>
+          {/* Dropdown Produk: tanpa margin tambahan */}
+          <div className="border-b border-border">
+            <button
+              type="button"
+              onClick={() =>
+                setMobileProductsOpen((current) => !current)
+              }
+              className="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-foreground"
+              aria-expanded={mobileProductsOpen}
+              aria-controls="mobile-products-submenu"
+            >
+              <span>{t("products")}</span>
 
-          {productLinks.map((link) => (
-            <MobileLink
-              key={link.href}
-              item={link}
-              onClick={() => setOpen(false)}
-            />
-          ))}
+              <ChevronDown
+                className={cn(
+                  "size-4 shrink-0 transition-transform duration-200",
+                  mobileProductsOpen && "rotate-180",
+                )}
+              />
+            </button>
 
-          <p className="mb-3 mt-8 text-xs font-semibold uppercase text-muted-foreground">
-            {t("about")}
-          </p>
+            {mobileProductsOpen && (
+              <div id="mobile-products-submenu" className="pb-2 pl-2">
+                {productLinks.map((link) => (
+                  <MobileLink
+                    key={link.href}
+                    item={link}
+                    onClick={() => setOpen(false)}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
 
-          {companyLinks.map((link) => (
-            <MobileLink
-              key={link.href}
-              item={link}
-              onClick={() => setOpen(false)}
-            />
-          ))}
+          {/* Dropdown Tentang Kami */}
+          <div className="border-b border-border">
+            <button
+              type="button"
+              onClick={() =>
+                setMobileAboutOpen((current) => !current)
+              }
+              className="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-foreground"
+              aria-expanded={mobileAboutOpen}
+              aria-controls="mobile-about-submenu"
+            >
+              <span>{t("about")}</span>
 
-          {companyLinks2.map((link) => (
-            <MobileLink
-              key={link.href}
-              item={link}
-              onClick={() => setOpen(false)}
-              compact
-            />
-          ))}
+              <ChevronDown
+                className={cn(
+                  "size-4 shrink-0 transition-transform duration-200",
+                  mobileAboutOpen && "rotate-180",
+                )}
+              />
+            </button>
 
+            {mobileAboutOpen && (
+              <div id="mobile-about-submenu" className="pb-2 pl-2">
+                {companyLinks.map((link) => (
+                  <MobileLink
+                    key={link.href}
+                    item={link}
+                    onClick={() => setOpen(false)}
+                  />
+                ))}
+
+                {companyLinks2.map((link) => (
+                  <MobileLink
+                    key={link.href}
+                    item={link}
+                    onClick={() => setOpen(false)}
+                    compact
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Berita: tinggi dan padding konsisten */}
           <Link
             href="/berita"
             onClick={() => setOpen(false)}
-            className="mt-8 flex items-center border-b border-border py-4 text-sm font-semibold text-foreground"
+            className="flex items-center border-b border-border py-4 text-sm font-semibold text-foreground"
           >
             {t("news")}
           </Link>
 
+          {/* Kontak: tinggi dan padding konsisten */}
           <Link
             href="/kontak"
             onClick={() => setOpen(false)}

@@ -29,7 +29,7 @@ const products: Omit<Product, "category" | "description" | "highlights">[] = [
   {
     number: "01",
     name: "EBII System",
-    image: "/img/ebii-system.webp",
+    image: "/img/produk/ebii.png",
     icon: Gauge,
     href: "/produk/software/ebii-system",
     translationKey: "ebiiSystem",
@@ -37,7 +37,7 @@ const products: Omit<Product, "category" | "description" | "highlights">[] = [
   {
     number: "02",
     name: "Eco-Aerator",
-    image: "/img/eco-aerator.webp",
+    image: "/img/produk/eco-aerator.png",
     icon: Leaf,
     href: "/produk/hardware-teknologi/eco-aerator",
     translationKey: "ecoAerator",
@@ -45,7 +45,7 @@ const products: Omit<Product, "category" | "description" | "highlights">[] = [
   {
     number: "03",
     name: "Smart Energy",
-    image: "/img/smart-energy.webp",
+    image: "/img/produk/smart-energy.png",
     icon: Smartphone,
     href: "/produk/hardware-teknologi/smart-energy",
     translationKey: "smartEnergy",

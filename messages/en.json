@@ -48,11 +48,11 @@
     "companyLinks": {
       "about": {
         "title": "About Us",
-        "description": "Learn about Crustea, our journey, and our team."
+        "description": "Get to know Crustea, our journey, and our team."
       },
-      "partnership": {
-        "title": "Partnership",
-        "description": "Collaboration and partnership opportunities with Crustea."
+      "roadmap": {
+        "title": "Certification Roadmap",
+        "description": "Explore the milestones and targets for Crustea's management system certification."
       },
       "terms": "Terms & Conditions",
       "privacy": "Privacy Policy",
@@ -63,13 +63,12 @@
   "Home": {
     "hero": {
       "imageAlt": "Crustea aquaculture farming",
-      "eyebrow": "Integrated Aquaculture Solutions",
-      "titleLine1": "Aquaculture Technology",
-      "titleLine2": "for Sustainable",
-      "titleHighlight": "Farming",
-      "description": "We create solutions for shrimp farmers in Indonesia by developing technologies that improve pond productivity and operational efficiency.",
+      "eyebrow": "Indonesian Aquaculture Technology",
+      "titleLine1": "Energy-Efficient Ponds,",
+      "titleHighlight": "More Reliable Harvests",
+      "description": "Providing solar-powered aerators, real-time water quality monitoring, and hands-on support to help farmers manage their ponds more efficiently, from pond preparation to harvest marketing.",
       "exploreProducts": "Explore Products",
-      "contactUs": "Contact Us"
+      "contactUs": "Free Consultation"
     },
     "imageSlider": {
       "eyebrow": "Our Technology & Journey",
@@ -99,7 +98,7 @@
         },
         "innovation": {
           "alt": "Crustea receiving an award for technological innovation",
-          "title": "Recognition for Innovation",
+          "title": "1st Pitching Worldbank 2026",
           "category": "Achievements"
         },
         "impact": {
@@ -315,19 +314,19 @@
       "next": "Next testimonial",
       "items": {
         "sari": {
-          "name": "Sari Handayani",
-          "role": "Shrimp Farm Manager, Lampung",
-          "quote": "Since using Eco-Aerator, our electricity costs have dropped significantly while oxygen levels remain stable. The Crustea team did more than install the equipment—they continue to support us."
+          "name": "Mrs. Wahyuni",
+          "role": "Farm Manager, Lampung",
+          "quote": "Since using Crustea aerators, I can control the aerator, monitor DO levels, and track electricity consumption through the app from anywhere. Tilapia farming has become more practical, efficient, and easier to monitor."
         },
         "andi": {
-          "name": "Andi Pratama",
+          "name": "Mr. Wahyudi",
           "role": "Shrimp Farmer, Central Java",
-          "quote": "Crustea's technology helps us better understand pond conditions and make informed decisions throughout the farming process."
+          "quote": "Crustea technology has helped improve our farming productivity. With the app, we can monitor water quality more easily and make informed decisions to optimize our farming operations."
         },
         "rudi": {
-          "name": "Rudi Santoso",
-          "role": "Shrimp Farm Manager, East Java",
-          "quote": "What stands out is not only the technology itself, but also the support provided by the Crustea team throughout the farming process."
+          "name": "Mr. Rhiza Chalif",
+          "role": "Farm Manager, Central Java",
+          "quote": "I used to rely on conventional paddlewheel aerators. After switching to the Crustea Aerator Brush, oxygen supply improved, water quality got better, and harvest yields increased."
         }
       }
     },
@@ -765,6 +764,309 @@
     }
   },
 
+  "AquaGrowth": {
+    "page": {
+      "title": "AquaGrowth",
+      "breadcrumb": {
+        "home": "Home",
+        "aquagrowth": "AquaGrowth"
+      }
+    },
+    "overview": {
+      "eyebrow": "Sustainable Aquaculture Program",
+      "title": "AquaGrowth Lestari",
+      "description": "A professionally designed sustainable fish and shrimp farming program that uses modern technology to achieve optimal, high-quality harvests while offering promising investment opportunities in the aquaculture sector, which continues to grow alongside increasing global demand for animal protein.",
+      "objectives": {
+        "0": "Develop efficient and environmentally friendly fish and shrimp farming systems through modern technology and management practices.",
+        "1": "Offer stable and profitable investment opportunities in aquaculture for individual and institutional investors.",
+        "2": "Promote blue economy growth by making aquatic resources productive and sustainable.",
+        "3": "Strengthen national food security and seafood exports through consistent production that meets export-quality standards."
+      }
+    },
+    "partnership": {
+      "eyebrow": "AquaGrowth Collaboration",
+      "title": "Partnership Model",
+      "description": "AquaGrowth creates collaboration opportunities between farmers and investors through a planned aquaculture ecosystem supported by technology and focused on results.",
+      "eligibilityTitle": "Participation Criteria",
+      "benefitsTitle": "Partnership Benefits",
+      "pathways": {
+        "farmer": {
+          "label": "Path A",
+          "title": "Farmers",
+          "description": "Join the AquaGrowth program to develop aquaculture activities with operational support and technology.",
+          "eligibility": {
+            "0": "Own or manage a pond suitable for aquaculture activities.",
+            "1": "Be willing to follow the program's operational standards and guidance.",
+            "2": "Be willing to participate in monitoring and evaluation throughout the farming cycle."
+          },
+          "benefits": {
+            "0": "Aquaculture technology support",
+            "1": "More structured operations",
+            "2": "Business development opportunities"
+          }
+        },
+        "investor": {
+          "label": "Path B",
+          "title": "Investors",
+          "description": "Participate in aquaculture operational funding according to the available investment packages and partnership terms.",
+          "eligibility": {
+            "0": "Choose an available investment package and location.",
+            "1": "Understand the partnership terms, period, and profit-sharing arrangement.",
+            "2": "Complete the administrative and funding process according to the agreement."
+          },
+          "benefits": {
+            "0": "Location and package options",
+            "1": "Aquaculture cycle information",
+            "2": "Potential business profit sharing"
+          }
+        }
+      },
+      "flow": {
+        "eyebrow": "Program Stages",
+        "title": "Investment Process",
+        "description": "From package selection to profit distribution, each stage follows the partnership process and aquaculture cycle.",
+        "stages": {
+          "0": {
+            "title": "Package Selection",
+            "description": "Choose an available investment package and location."
+          },
+          "1": {
+            "title": "Partnership Agreement",
+            "description": "Review and agree to the partnership terms."
+          },
+          "2": {
+            "title": "Agreement Signing",
+            "description": "Complete the agreement documents between the parties."
+          },
+          "3": {
+            "title": "Operational Funding",
+            "description": "Transfer funds according to the agreement."
+          },
+          "4": {
+            "title": "Aquaculture Operations",
+            "description": "Carry out the farming cycle and monitoring."
+          },
+          "5": {
+            "title": "Harvest and Sales",
+            "description": "Harvest and sell the aquaculture products."
+          },
+          "6": {
+            "title": "Profit Distribution",
+            "description": "Calculate and distribute returns according to the agreement."
+          },
+          "7": {
+            "title": "Next Cycle",
+            "description": "Evaluate the results to determine whether the program continues."
+          }
+        },
+        "cycleTitle": "Sustainable Aquaculture Cycle",
+        "cycleDescription": "After evaluating the results, the partnership may continue into the next cycle subject to the parties' agreement.",
+        "cycleLabel": "Continue to Next Cycle"
+      }
+    },
+    "investment": {
+      "eyebrow": "Packages & Locations",
+      "title": "Investment Packages",
+      "description": "Explore AquaGrowth pond locations and view investment package information for each selected region.",
+      "mapTitle": "Pond Location Map",
+      "mapSubtitle": "Select a marker to view an investment package",
+      "mapAccessibleLabel": "Interactive map of AquaGrowth program locations",
+      "showAll": "All Locations",
+      "mapFootnote": "Markers show approximate regional positions, not verified pond coordinates.",
+      "locationListTitle": "Select a Region",
+      "locations": "regions",
+      "selectedLocation": "Selected Region",
+      "investmentPackage": "Investment package information",
+      "investmentAmount": "Investment Amount",
+      "investmentDisclaimer": "Investment values follow the program materials and should be confirmed before any official offer.",
+      "area": "Pond Area",
+      "pondCount": "Number of Ponds",
+      "ponds": "ponds",
+      "potentialProfit": "Potential Profit",
+      "profitShare": "Profit Share",
+      "period": "Farming Period",
+      "periodValue": "{period}",
+      "selectionHint": "Select another region using the map marker or location list to compare package information.",
+      "generalNote": "Potential profit figures are projections stated in the program materials and are not guaranteed investment returns."
+    }
+  },
+
+  "CultivationCalculator": {
+    "page": {
+      "title": "Cultivation Calculator",
+      "breadcrumb": {
+        "home": "Home",
+        "calculator": "Cultivation Calculator"
+      }
+    },
+    "intro": {
+      "eyebrow": "Cultivation Calculator",
+      "title": "Plan Your Cultivation",
+      "titleHighlight": "with Greater Precision",
+      "description": "Select an aerator and enter your cultivation data to estimate biomass, oxygen requirements, and equipment quantities based on the available parameters."
+    },
+    "aerator": {
+      "step": "01",
+      "title": "Choose an Aerator",
+      "description": "Select the equipment you want to use.",
+      "biomassCapacity": "Reference biomass capacity",
+      "mini": {
+        "name": "Mini Aerator",
+        "subtitle": "For small-scale ponds",
+        "description": "A mini aerator option for tilapia farming in smaller ponds.",
+        "note": "Reference data for tilapia grow-out from the technical materials."
+      },
+      "brush": {
+        "name": "Brush Aerator",
+        "subtitle": "For fish grow-out",
+        "description": "A brush aerator installed according to the applicable SOP to support higher-biomass farming.",
+        "note": "Biomass capacity is based on the range provided in the technical materials."
+      },
+      "brushWeighted": {
+        "name": "Brush + Weight",
+        "subtitle": "Weighted configuration",
+        "description": "A brush aerator with an added weight for a configuration with a higher reference biomass capacity.",
+        "note": "Biomass capacity is based on the range provided in the technical materials."
+      },
+      "power": "Power listed in the materials",
+      "oxygenOutput": "O₂ output listed in the materials",
+      "perDevice": "Reference biomass per unit",
+      "capacityNote": "Capacity figures are based on the supplied materials and must be verified before being used as operational recommendations."
+    },
+    "form": {
+      "step": "02",
+      "title": "Cultivation Data",
+      "description": "Enter data that reflects your pond conditions.",
+      "methodTitle": "Calculation method",
+      "pondMode": "Based on pond data",
+      "pondModeDescription": "Calculate biomass from pond and fish data.",
+      "biomassMode": "Based on biomass",
+      "biomassModeDescription": "Enter the target total fish biomass.",
+      "area": {
+        "label": "Pond area",
+        "placeholder": "e.g. 40",
+        "unit": "m²",
+        "hint": "Total area of the pond being used."
+      },
+      "density": {
+        "label": "Stocking density",
+        "placeholder": "e.g. 35",
+        "unit": "fish/m²",
+        "hint": "Number of fish per square meter."
+      },
+      "averageWeight": {
+        "label": "Average fish weight",
+        "placeholder": "e.g. 200",
+        "unit": "g/fish",
+        "hint": "Average fish weight at the cultivation stage being calculated."
+      },
+      "targetBiomass": {
+        "label": "Target fish biomass",
+        "placeholder": "e.g. 300",
+        "unit": "kg",
+        "hint": "Enter the estimated total weight of fish to be supported."
+      },
+      "validation": "Enter valid numbers greater than zero in all required fields.",
+      "calculate": "Calculate Aerator Requirements",
+      "reset": "Reset"
+    },
+    "result": {
+      "title": "Calculation Summary",
+      "heading": "Cultivation Results",
+      "description": "Estimates based on your inputs and the equipment capacity references.",
+      "emptyTitle": "Your results will appear here",
+      "emptyDescription": "Choose an aerator, complete the cultivation data, and select calculate to view the simulation results.",
+      "estimatedDevices": "Estimated number of aerators",
+      "unit": "units",
+      "basedOnCapacity": "Based on a reference capacity of {capacity} kg of biomass per unit.",
+      "estimatedFish": "Estimated number of fish",
+      "fishUnit": "fish",
+      "targetBiomass": "Target biomass",
+      "oxygenRequirement": "Estimated oxygen requirement",
+      "oxygenFormula": "Based on the reference value of 700 mg O₂/kg/hour from the supplied materials.",
+      "oxygenUnit": "g O₂/hour",
+      "technicalValidationTitle": "Technical validation required",
+      "technicalValidationDescription": "This is an initial mathematical estimate, not a finalized equipment recommendation. Actual capacity, pond configuration, and safety factors must be confirmed by the technical team."
+    },
+    "technicalNotes": {
+      "title": "Calculation Notes",
+      "biomass": "Biomass is calculated by multiplying the number of fish by their average weight.",
+      "devices": "The estimated number of units is rounded up using the lower bound of the biomass capacity range in the supplied materials.",
+      "oxygen": "Oxygen requirements are calculated using the reference value of 700 mg O₂/kg/hour from the supplied materials.",
+      "limitations": "The calculation does not yet account for safety factors, water conditions, pond depth, oxygen distribution, or the actual aerator configuration.",
+      "general": "The calculation uses reference data from the Mini Aerator, Brush Aerator, and Brush + Weight materials. Oxygen output and operating capacity still require verification.",
+      "outputDisclaimer": "Oxygen output figures are shown as provided in the supplied materials and have not been verified against the equipment specifications."
+    }
+  },
+
+  "Roadmap": {
+    "page": {
+      "title": "Certification Roadmap",
+      "breadcrumb": {
+        "home": "Home",
+        "roadmap": "Certification Roadmap"
+      }
+    },
+    "content": {
+      "eyebrow": "Commitment to International Standards",
+      "headingBefore": "Building",
+      "headingHighlight": "Higher Standards",
+      "description": "Crustea is committed to building a management system that supports quality, environmental sustainability, and occupational health and safety through a structured certification process.",
+      "step": "STAGE {number}",
+      "target": "Target",
+      "status": {
+        "progress": "In Progress",
+        "planned": "Planned"
+      },
+      "milestones": {
+        "documentation": {
+          "title": "System Documentation",
+          "description": "Establishing policies, scope, procedures, risk registers, and supporting documentation for the integrated management system."
+        },
+        "internalAudit": {
+          "title": "Internal Audit",
+          "description": "Evaluating management system readiness against the requirements of all three targeted ISO standards."
+        },
+        "certificationAudit": {
+          "title": "Certification Audit",
+          "description": "Planning Stage 1 and Stage 2 audits with an accredited certification body."
+        },
+        "certificate": {
+          "title": "Certificate Issuance",
+          "description": "The final targeted stage following successful completion of the certification audit and fulfillment of all applicable requirements."
+        }
+      },
+      "timelineEnd": "Toward continuous improvement",
+      "standards": {
+        "eyebrow": "Certification Focus",
+        "heading": "Targeted Standards",
+        "description": "Three international standards guiding the development of Crustea's management system.",
+        "items": {
+          "quality": {
+            "title": "Quality Management",
+            "description": "Supporting consistent processes, product and service quality, and continuous improvement in customer satisfaction."
+          },
+          "environment": {
+            "title": "Environmental Management",
+            "description": "Encouraging environmental impact management and more responsible operational practices."
+          },
+          "safety": {
+            "title": "Occupational Health and Safety",
+            "description": "Supporting workplace risk management and the creation of a safe and healthy working environment."
+          }
+        }
+      },
+      "commitment": {
+        "eyebrow": "Crustea's Commitment",
+        "headingBefore": "Building a",
+        "headingHighlight": "Measurable and Sustainable System",
+        "description": "This roadmap guides Crustea in strengthening governance, improving operational quality, and building trust through a structured process."
+      },
+      "asOf": "Roadmap status as of",
+      "reportingPeriod": "October 2026"
+    }
+  },
+
   "FAQ": {
     "page": {
       "title": "FAQ",
@@ -793,6 +1095,190 @@
         "title": "Still have questions?",
         "description": "Contact the Crustea team to discuss your needs with us.",
         "button": "Contact Us"
+      }
+    }
+  },
+
+  "Terms": {
+    "page": {
+      "title": "Terms & Conditions",
+      "breadcrumb": {
+        "home": "Home",
+        "terms": "Terms & Conditions"
+      }
+    },
+    "content": {
+      "intro": {
+        "eyebrow": "Terms of Use",
+        "heading": "Terms governing the use of the Crustea website.",
+        "description": "These Terms & Conditions outline the general rules that apply when you access and use the Crustea website. By using this website, you are expected to use all available information and services responsibly.",
+        "lastUpdated": "Last updated: September 2026"
+      },
+      "tableOfContents": "Table of Contents",
+      "sections": {
+        "websiteUsage": {
+          "title": "Website Usage",
+          "paragraph1": "The Crustea website provides information about the company, products, services, activities, and solutions developed by Crustea in the aquaculture sector.",
+          "paragraph2": "By accessing and using this website, you are deemed to have understood and agreed to these Terms & Conditions. You are expected to use the website reasonably, responsibly, and in accordance with the applicable laws of the Republic of Indonesia."
+        },
+        "websiteInformation": {
+          "title": "Website Information",
+          "paragraph1": "Information available on the Crustea website is provided for general informational purposes. We strive to ensure that the information presented remains relevant and accurate.",
+          "paragraph2": "However, information regarding products, services, specifications, features, programs, activities, and the company may change from time to time without prior notice.",
+          "paragraph3": "Information on this website may not always reflect every detail or the latest conditions of Crustea's products and services. For further information, you may contact the Crustea team through the contact details available on the website."
+        },
+        "intellectualProperty": {
+          "title": "Intellectual Property",
+          "paragraph1": "All or part of the content on the Crustea website, including but not limited to the company name, logos, trademarks, designs, text, photographs, illustrations, videos, graphics, and other materials, is owned by Crustea or used under valid rights and permissions.",
+          "paragraph2": "Such content may not be copied, reproduced, modified, distributed, published, or used for commercial purposes without written permission from the party holding the relevant rights.",
+          "paragraph3": "Using website content for unlawful purposes or in a manner that harms Crustea is prohibited."
+        },
+        "permittedUse": {
+          "title": "Permitted Use",
+          "paragraph1": "Users may access and use the Crustea website to obtain information about the company, products, services, and activities, provided such use is lawful.",
+          "listIntro": "Users are not permitted to:",
+          "items": [
+            "Use the website for purposes that violate applicable laws or regulations.",
+            "Attempt to gain unauthorized access to the website's systems, servers, or other areas.",
+            "Take actions that may disrupt, damage, or place excessive load on website operations.",
+            "Use website content in a misleading manner or imply an unauthorized relationship, endorsement, or approval by Crustea.",
+            "Use the website for purposes that may harm Crustea or other parties."
+          ]
+        },
+        "thirdPartyLinks": {
+          "title": "Third-Party Links",
+          "paragraph1": "The Crustea website may provide links to third-party websites, platforms, services, or social media, including but not limited to WhatsApp, Instagram, LinkedIn, and other services.",
+          "paragraph2": "These links are provided to help users obtain information or communicate with Crustea. Crustea does not control all content, policies, security measures, or practices of such third-party websites and services.",
+          "paragraph3": "The use of third-party services is subject to the terms and policies established by each respective service provider."
+        },
+        "websiteAvailability": {
+          "title": "Website Availability",
+          "paragraph1": "Crustea strives to keep the website accessible and functioning properly. However, we do not guarantee that the website will always be available, uninterrupted, or free from errors.",
+          "paragraph2": "The website may experience temporary disruptions due to maintenance, system updates, technical issues, network interruptions, or other circumstances beyond Crustea's control."
+        },
+        "disclaimer": {
+          "title": "Disclaimer",
+          "paragraph1": "Information on this website is provided in good faith for general informational purposes. Although Crustea strives to maintain accurate and relevant information, we do not guarantee that all information will always be complete, accurate, or error-free.",
+          "paragraph2": "Users are responsible for how they use the information available on this website. For technical or operational needs, or further clarification, users are encouraged to contact Crustea directly."
+        },
+        "changes": {
+          "title": "Changes to These Terms & Conditions",
+          "paragraph1": "Crustea may update or amend these Terms & Conditions from time to time to reflect changes to the website, services, company activities, or applicable legal requirements.",
+          "paragraph2": "Changes will be published on this page and will take effect from the date specified in the latest version of these Terms & Conditions.",
+          "paragraph3": "By continuing to use the website after changes have been made, users are deemed to have read and understood the updated terms."
+        },
+        "contact": {
+          "title": "Contact Us",
+          "description": "If you have any questions about these Terms & Conditions or the use of the Crustea website, you may contact us using the following information:",
+          "emailLabel": "Email:",
+          "whatsappLabel": "WhatsApp:"
+        }
+      }
+    }
+  },
+
+  "PrivacyPolicy": {
+    "page": {
+      "title": "Privacy Policy",
+      "breadcrumb": {
+        "home": "Home",
+        "privacy": "Privacy Policy"
+      }
+    },
+    "content": {
+      "intro": {
+        "eyebrow": "Privacy & Security",
+        "heading": "We value your privacy.",
+        "description": "This Privacy Policy explains how Crustea manages information collected through our website and services. We are committed to using information responsibly and protecting user data.",
+        "lastUpdated": "Last updated: September 2026"
+      },
+      "tableOfContents": "Table of Contents",
+      "sections": {
+        "introduction": {
+          "title": "Introduction",
+          "paragraph1": "This Privacy Policy explains how PT Eco Karya Teknologi (\"Crustea\", \"we\", \"us\", or the \"Company\") collects, uses, stores, and protects information when you access or use Crustea's website and services.",
+          "paragraph2": "We value every user's privacy and are committed to managing personal information responsibly in accordance with applicable laws and regulations."
+        },
+        "collectedInformation": {
+          "title": "Information We Collect",
+          "description": "The information we may collect depends on how you interact with our website and services.",
+          "directTitle": "Information you provide directly",
+          "directItems": [
+            "Full name",
+            "Email address",
+            "Phone number or WhatsApp number",
+            "Company or organization name",
+            "Product or service requirements",
+            "Other information you submit through contact forms"
+          ],
+          "automaticTitle": "Information collected automatically",
+          "automaticItems": [
+            "IP address",
+            "Device type",
+            "Operating system and browser",
+            "Pages visited",
+            "Visit time and duration",
+            "Other website usage information"
+          ]
+        },
+        "dataUsage": {
+          "title": "How We Use Information",
+          "description": "The information we collect may be used for purposes related to providing and improving Crustea's services.",
+          "items": [
+            "Responding to your questions and requests.",
+            "Providing information about products and services.",
+            "Processing consultation or partnership requests.",
+            "Improving the quality of our products, services, and user experience.",
+            "Analyzing website usage for further development.",
+            "Maintaining website security and preventing misuse.",
+            "Complying with applicable laws and regulations."
+          ]
+        },
+        "cookies": {
+          "title": "Cookies and Analytics",
+          "paragraph1": "Crustea's website may use cookies and similar technologies to improve the user experience, understand how the website is used, and optimize website performance.",
+          "paragraph2": "Cookies may be used to store certain preferences, understand usage patterns, and help us analyze website performance.",
+          "paragraph3": "You can manage or disable cookies through your browser settings. However, some parts of the website may not function optimally if cookies are disabled."
+        },
+        "thirdParties": {
+          "title": "Third Parties",
+          "paragraph1": "To operate our website and services, we may use third-party providers that support specific functions, such as analytics, hosting, communication, security, or other technology services.",
+          "paragraph2": "These third parties may access information only to the extent necessary to provide services to us and are expected to handle information in accordance with applicable requirements.",
+          "paragraph3": "We do not sell users' personal information to third parties for marketing purposes."
+        },
+        "storageSecurity": {
+          "title": "Data Storage and Security",
+          "paragraph1": "We implement reasonable technical and organizational measures to help protect the information we manage from unauthorized access, use, alteration, disclosure, or destruction.",
+          "paragraph2": "Information is retained only for as long as necessary to fulfill the purposes for which it was collected, provide services, meet legal obligations, or resolve disputes.",
+          "paragraph3": "Although we strive to protect information, no method of electronic transmission or storage can be guaranteed to be completely secure."
+        },
+        "userRights": {
+          "title": "User Rights",
+          "description": "Depending on applicable law, users may have certain rights regarding their personal information.",
+          "items": [
+            "Request information about the personal data we hold about you.",
+            "Request corrections to inaccurate information.",
+            "Request deletion of information where permitted by law.",
+            "Withdraw consent to certain data uses when processing is based on consent.",
+            "Submit questions or objections regarding the use of personal information."
+          ],
+          "closing": "To exercise these rights, you can contact us using the contact information provided at the end of this policy."
+        },
+        "externalLinks": {
+          "title": "Third-Party Links",
+          "paragraph1": "Crustea's website may provide links to third-party websites, platforms, or services.",
+          "paragraph2": "This Privacy Policy applies only to websites and services operated by Crustea. We are not responsible for the privacy practices, security, or content of third-party websites.",
+          "paragraph3": "We recommend reviewing the privacy policy of each third-party website you visit."
+        },
+        "policyChanges": {
+          "title": "Changes to This Privacy Policy",
+          "paragraph1": "We may update this Privacy Policy from time to time to reflect changes in our services, technology, operational needs, or applicable legal requirements.",
+          "paragraph2": "Any changes will be published on this page with an appropriate update date. We recommend that users review this page periodically."
+        },
+        "contact": {
+          "title": "Contact Us",
+          "description": "If you have any questions, requests, or complaints regarding this Privacy Policy or how we handle personal information, please contact us using the details below:"
+        }
       }
     }
   },
@@ -897,8 +1383,8 @@
   "Footer": {
     "description": "Providing integrated technology and solutions to help aquaculture farmers improve productivity, efficiency, and the sustainability of their businesses.",
     "addressLine1": "Ground Floor Crustea Labs",
-    "addressLine2": "Jl. Sanggung Timur No. 1, Jatingaleh, Semarang,",
-    "addressLine3": "Jatingaleh, Semarang, Central Java 50254",
+    "addressLine2": "Jl. Sanggung Timur No. 1, Jatingaleh",
+    "addressLine3": "Semarang, Central Java 50254",
     "columns": {
       "products": "Products",
       "services": "Services",
@@ -915,10 +1401,7 @@
         "calculator": "Aquaculture Calculator"
       },
       "services": {
-        "consultation": "Consulting & Construction",
-        "ecoAerator": "Eco-Aerator",
-        "crusteaAio": "Crustea AIO",
-        "partnership": "Partnerships & Markets"
+        "consultation": "Consulting & Construction"
       },
       "company": {
         "about": "About Us",

@@ -13,13 +13,13 @@ import { useTranslations } from "next-intl";
 const solutionIcons = [Gauge, Leaf, Smartphone];
 
 const solutionImages = [
-  "/img/ebii-system.webp",
-  "/img/eco-aerator.webp",
-  "/img/smart-energy.webp",
+  "/img/produk/ebii.png",
+  "/img/produk/eco-aerator.png",
+  "/img/produk/smart-energy.png",
 ];
 
 const solutionLinks = [
-  "/produk/hardware-teknologi",
+  "/produk/software",
   "/produk/hardware-teknologi",
   "/produk/hardware-teknologi",
 ];
