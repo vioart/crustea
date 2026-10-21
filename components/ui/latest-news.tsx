@@ -258,11 +258,7 @@ export default function LatestNews() {
           .filter((item): item is NewsItem => item !== null)
           .sort((a, b) => getTimestamp(b.date) - getTimestamp(a.date))
           .slice(0, 3);
-
-        console.info(
-          `[LatestNews] Data API: ${apiItems.length}, berita ditampilkan: ${latestNews.length}`,
-        );
-
+          
         setNews(latestNews);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") {
