@@ -6,7 +6,6 @@ import WhatsAppBubble from "@/components/ui/buble-wa";
 
 import AquaGrowthOverview from "@/components/aquagrowth/overview";
 import AquaGrowthPartnership from "@/components/aquagrowth/partnership";
-import AquaGrowthInvestment from "@/components/aquagrowth/investment";
 
 export default async function AquaGrowthPage() {
   const t = await getTranslations("AquaGrowth.page");
@@ -28,7 +27,6 @@ export default async function AquaGrowthPage() {
 
       <AquaGrowthOverview />
       <AquaGrowthPartnership />
-      <AquaGrowthInvestment />
 
       <CTASection />
       <WhatsAppBubble />

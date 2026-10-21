@@ -11,9 +11,9 @@ import {
 import { ArrowUpRight, Mail, MapPin, Waves } from "lucide-react";
 
 const productLinks = [
-  { key: "hardware", href: "/produk/hardware-teknologi" },
-  { key: "software", href: "/produk/software" },
-  { key: "krasty", href: "/produk/krasty" },
+  { key: "aquaculture-technology", href: "/produk/teknologi-budidaya" },
+  { key: "akuatur", href: "/produk/akuatur" },
+  { key: "krasty-trading", href: "/produk/krasty-trading" },
   { key: "aquagrowth", href: "/produk/aquagrowth" },
   { key: "calculator", href: "/produk/kalkulator-budidaya" },
 ] as const;

@@ -16,33 +16,25 @@
     "learnMore": "Ingin mengetahui lebih lanjut?",
     "contactUsLink": "Hubungi kami",
     "productsList": {
-      "hardware": {
-        "title": "Hardware Teknologi",
-        "description": "Teknologi perangkat untuk mendukung kebutuhan akuakultur."
+      "technology": {
+        "title": "Teknologi Budidaya",
+        "description": "Teknologi terintegrasi untuk mendukung operasional budidaya."
       },
-      "software": {
-        "title": "Software",
-        "description": "Solusi perangkat lunak untuk membantu pengelolaan bisnis."
+      "akuatur": {
+        "title": "Akuatur",
+        "description": "Wisata edukatif berbasis komunitas dan budaya pesisir."
       },
       "processedProduct": {
-        "title": "Produk Olahan - Krasty",
-        "description": "Produk olahan hasil perikanan dengan cita rasa khas."
-      },
-      "trading": {
-        "title": "Trading",
-        "description": "Solusi perdagangan dan distribusi produk akuakultur."
+        "title": "Krasty & Trading",
+        "description": "Produk olahan perikanan dan perdagangan hasil akuakultur."
       },
       "aquagrowth": {
         "title": "Aquagrowth",
-        "description": "Solusi untuk mendukung pertumbuhan dan pengembangan usaha."
-      },
-      "partnership": {
-        "title": "Kemitraan",
-        "description": "Peluang kolaborasi dan kemitraan bersama Crustea."
+        "description": "Solusi untuk pertumbuhan dan pengembangan usaha."
       },
       "calculator": {
         "title": "Kalkulator Budidaya",
-        "description": "Alat bantu perhitungan untuk kebutuhan budidaya."
+        "description": "Perhitungan praktis untuk kebutuhan budidaya."
       }
     },
     "companyLinks": {
@@ -404,28 +396,11 @@
       "titleBefore": "Dari tantangan menuju",
       "titleHighlight": "solusi teknologi.",
       "description": "Crustea menghadirkan teknologi untuk membantu pembudidaya dalam memantau kualitas air, meningkatkan efisiensi aerasi, dan mengoptimalkan penggunaan energi di tambak.",
-      "items": [
-        {
-          "number": "01",
-          "name": "EBII System",
-          "category": "Pemantauan Kualitas Air",
-          "description": "Sistem pemantauan kualitas air dengan empat parameter utama untuk membantu memahami kondisi tambak."
-        },
-        {
-          "number": "02",
-          "name": "Eco-Aerator",
-          "category": "Energi Terbarukan",
-          "description": "Teknologi aerasi dengan solar panel dan impeller yang dirancang untuk menghasilkan gelembung lebih kecil dan kadar oksigen lebih tinggi."
-        },
-        {
-          "number": "03",
-          "name": "Smart Energy",
-          "category": "Manajemen Energi",
-          "description": "Solusi untuk memantau dan mengontrol penggunaan energi pada aerator dengan mudah melalui smartphone."
-        }
-      ],
-      "imageAlt": "{name} - {category}",
-      "linkLabel": "Lihat Teknologi",
+      "linkLabel": "Lihat Detail",
+      "noImage": "Gambar tidak tersedia",
+      "emptyDescription": "Belum ada produk teknologi yang tersedia saat ini.",
+      "errorDescription": "Produk belum dapat dimuat. Silakan coba kembali.",
+      "retryLabel": "Coba Lagi",
       "advantages": {
         "productionLabel": "Potensi Hasil Budidaya",
         "productionValue": "200%",
@@ -667,9 +642,9 @@
     },
     "overview": {
       "eyebrow": "Produk Crustea",
-      "heading": "Temukan solusi untuk kebutuhan",
+      "heading": "Temukan solusi untuk",
       "headingHighlight": "akuakultur.",
-      "description": "Dari teknologi perangkat hingga solusi digital dan produk olahan, jelajahi berbagai produk yang dikembangkan Crustea untuk mendukung ekosistem akuakultur.",
+      "description": "Mulai dari teknologi akuakultur hingga produk Krasty dan solusi trading, jelajahi berbagai produk Crustea yang dikembangkan untuk mendukung ekosistem akuakultur.",
       "categoryCount": "Kategori Produk",
       "categoryNavigation": "Kategori produk",
       "allProducts": "Semua Produk",
@@ -678,46 +653,61 @@
       "viewAll": "Lihat Semua",
       "viewDetail": "Lihat Detail",
       "loading": "Memuat produk...",
-      "loadError": "Produk belum dapat dimuat. Periksa koneksi ke server dan coba lagi.",
+      "loadError": "Produk tidak dapat dimuat. Periksa koneksi server dan coba lagi.",
       "retry": "Coba Lagi",
       "noFeaturedProduct": "Belum ada produk unggulan yang tersedia.",
       "noImage": "Gambar tidak tersedia",
       "emptyCategory": "Belum ada produk dalam kategori ini.",
+      "searchPlaceholder": "Cari produk...",
+      "searchLabel": "Cari produk",
+      "showingProducts": "Menampilkan",
+      "productCount": "produk",
+      "clearSearch": "Hapus pencarian",
+      "productNotFound": "Produk tidak ditemukan",
+      "noProducts": "Belum ada produk",
+      "searchEmpty": "Tidak ada produk yang sesuai dengan pencarian \"{search}\".",
+      "categoryEmpty": "Belum ada produk yang tersedia dalam kategori ini.",
+      "showAllProducts": "Lihat Semua Produk",
+      "previousPage": "Halaman sebelumnya",
+      "nextPage": "Halaman berikutnya",
+      "pageNumber": "Halaman {number}",
+      "pagination": "Halaman produk",
+      "productImageAlt": "Gambar produk {product}",
       "categories": {
-        "hardware": {
-          "title": "Hardware Teknologi",
-          "shortTitle": "Hardware",
-          "description": "Teknologi perangkat untuk mendukung kebutuhan operasional dan budidaya akuakultur."
+        "technology": {
+          "title": "Teknologi Akuakultur",
+          "shortTitle": "Teknologi",
+          "description": "Solusi teknologi terintegrasi untuk mendukung pemantauan akuakultur, operasional, dan kebutuhan budidaya."
         },
-        "software": {
-          "title": "Software",
-          "shortTitle": "Software",
-          "description": "Solusi perangkat lunak untuk membantu digitalisasi, pemantauan, dan pengelolaan aktivitas akuakultur."
+        "krasty": {
+          "title": "Krasty",
+          "shortTitle": "Krasty",
+          "description": "Produk Krasty yang memberikan nilai tambah dan mendukung ekosistem akuakultur."
         },
-        "processedProduct": {
-          "title": "Produk Olahan",
-          "shortTitle": "Produk Olahan",
-          "description": "Produk olahan hasil perikanan yang dikembangkan untuk menghadirkan nilai tambah."
+        "trading": {
+          "title": "Trading",
+          "shortTitle": "Trading",
+          "description": "Solusi perdagangan produk perikanan untuk mendukung kebutuhan bisnis akuakultur."
         }
       }
     },
     "detail": {
-      "categories": {
-        "hardware": "Hardware Teknologi",
-        "software": "Software",
-        "processedProduct": "Produk Olahan"
-      },
-      "breadcrumb": "Breadcrumb",
+      "breadcrumb": "Navigasi breadcrumb",
       "home": "Beranda",
+      "categories": {
+        "technology": "Teknologi Akuakultur",
+        "krasty": "Krasty",
+        "trading": "Trading"
+      },
       "loading": "Memuat detail produk...",
       "notFoundTitle": "Produk tidak ditemukan",
-      "notFoundDescription": "Produk tidak tersedia atau gagal dimuat. Silakan coba kembali.",
+      "notFoundDescription": "Produk tidak tersedia atau gagal dimuat. Silakan coba lagi.",
       "backToProducts": "Kembali ke Produk",
       "noImage": "Gambar tidak tersedia",
       "viewImage": "Lihat gambar {number}",
-      "consultProduct": "Konsultasikan Produk",
-      "whatsappMessage": "Halo Crustea, saya tertarik dengan produk {product}. Saya ingin mendapatkan informasi lebih lanjut mengenai produk tersebut.",
-      "contactDescription": "Hubungi tim Crustea untuk informasi produk dan kebutuhan budidaya Anda.",
+      "consultProduct": "Konsultasikan Produk Ini",
+      "whatsappMessage": "Halo Crustea, saya tertarik dengan produk {product}. Saya ingin mendapatkan informasi lebih lanjut.",
+      "contactDescription": "Hubungi tim Crustea untuk informasi produk dan kebutuhan akuakultur Anda.",
       "advantages": "Keunggulan",
       "advantagesHeading": "Dirancang untuk Kebutuhan Akuakultur",
       "productInformation": "Informasi Produk",
@@ -725,42 +715,54 @@
     }
   },
 
-  "HardwareProducts": {
+  "TechnologyProducts": {
     "breadcrumb": {
       "home": "Beranda"
     },
     "hero": {
-      "title": "Hardware Teknologi"
+      "title": "Teknologi Budidaya"
     },
     "section": {
-      "title": "Hardware Teknologi",
-      "description": "Teknologi perangkat untuk mendukung kebutuhan operasional dan budidaya akuakultur."
+      "title": "Teknologi Budidaya",
+      "description": "Teknologi terintegrasi untuk mendukung pemantauan dan operasional budidaya akuakultur."
     }
   },
 
-  "SoftwareProducts": {
+  "KrastyTradingProducts": {
     "breadcrumb": {
       "home": "Beranda"
     },
     "hero": {
-      "title": "Software"
+      "title": "Krasty & Trading"
     },
-    "section": {
-      "title": "Software",
-      "description": "Solusi perangkat lunak untuk membantu digitalisasi, pemantauan, dan pengelolaan aktivitas akuakultur."
+    "krasty": {
+      "title": "Krasty",
+      "description": "Produk Krasty untuk mendukung kebutuhan budidaya akuakultur."
+    },
+    "trading": {
+      "title": "Trading",
+      "description": "Solusi perdagangan hasil perikanan untuk mendukung kebutuhan bisnis akuakultur."
     }
   },
 
-  "ProcessedProducts": {
-    "breadcrumb": {
-      "home": "Beranda"
-    },
-    "hero": {
-      "title": "Produk Olahan"
-    },
-    "section": {
-      "title": "Produk Olahan",
-      "description": "Produk olahan hasil perikanan yang dikembangkan untuk menghadirkan nilai tambah dari hasil akuakultur."
+  "Akuatur": {
+    "page": {
+      "title": "Akuatur",
+      "breadcrumb": {
+        "home": "Beranda",
+        "akuatur": "Akuatur"
+      },
+      "status": "Segera Hadir",
+      "heading": "Akuatur sedang kami",
+      "headingHighlight": "persiapkan untuk Anda.",
+      "description": "Akuatur merupakan program produk Crustea yang sedang dalam tahap pengembangan. Kami tengah menyiapkan pengalaman dan inovasi teknologi akuakultur untuk mendukung kegiatan budidaya yang lebih efektif dan berkelanjutan. Nantikan kehadiran Akuatur dalam waktu dekat!",
+      "features": {
+        "sustainable": "Akuakultur Berkelanjutan",
+        "innovation": "Inovasi Teknologi",
+        "comingSoon": "Dalam Pengembangan"
+      },
+      "contactButton": "Hubungi Kami",
+      "footerNote": "Ikuti perkembangan terbaru Akuatur bersama Crustea."
     }
   },
 
@@ -1393,10 +1395,9 @@
     },
     "links": {
       "products": {
-        "hardware": "Hardware Teknologi",
-        "software": "Software",
-        "krasty": "Produk Olahan - Krasty",
-        "trading": "Trading",
+        "aquaculture-technology": "Teknologi Budidaya",
+        "akuatur": "Akuatur",
+        "krasty-trading": "Krasty & Trading",
         "aquagrowth": "Aquagrowth",
         "calculator": "Kalkulator Budidaya"
       },

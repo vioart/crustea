@@ -1,38 +1,292 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import {
-  ArrowUpRight,
-  Gauge,
-  Leaf,
-  Smartphone,
-  Waves,
-} from "lucide-react";
-import { useTranslations } from "next-intl";
+import { ArrowRight, ArrowUpRight, Waves } from "lucide-react";
 
-const solutionIcons = [Gauge, Leaf, Smartphone];
+import { Button } from "@/components/ui/button";
 
-const solutionImages = [
-  "/img/produk/ebii.png",
-  "/img/produk/eco-aerator.png",
-  "/img/produk/smart-energy.png",
-];
+const API_BASE = (
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+).replace(/\/+$/, "");
 
-const solutionLinks = [
-  "/produk/software",
-  "/produk/hardware-teknologi",
-  "/produk/hardware-teknologi",
-];
+const PRODUCTS_LIMIT = 3;
+const MAX_DESCRIPTION_LENGTH = 150;
+
+type ProductImage = {
+  file_url?: string;
+  image_url?: string;
+  image?: string;
+  url?: string;
+  path?: string;
+};
+
+type ApiProduct = {
+  id: number | string;
+  slug: string;
+  category?: string | { slug?: string } | null;
+  category_slug?: string;
+  name_idn?: string;
+  name_en?: string;
+  name?: string;
+  description_idn?: string;
+  description_en?: string;
+  description?: string;
+  image?: string;
+  thumbnail?: string;
+  images?: ProductImage[];
+  created_at?: string;
+  is_active?: boolean;
+  status?: string;
+};
+
+type ApiResponse = {
+  data?:
+    | ApiProduct[]
+    | {
+        products?: ApiProduct[];
+        data?: ApiProduct[];
+      };
+  products?: ApiProduct[];
+  items?: ApiProduct[];
+};
+
+type SolutionProduct = {
+  id: string;
+  number: string;
+  name: string;
+  description: string;
+  image: string;
+  href: string;
+};
+
+function unwrapProducts(response: unknown): ApiProduct[] {
+  if (Array.isArray(response)) {
+    return response as ApiProduct[];
+  }
+
+  if (!response || typeof response !== "object") {
+    return [];
+  }
+
+  const result = response as ApiResponse;
+
+  if (Array.isArray(result.data)) {
+    return result.data;
+  }
+
+  if (result.data && !Array.isArray(result.data)) {
+    if (Array.isArray(result.data.products)) {
+      return result.data.products;
+    }
+
+    if (Array.isArray(result.data.data)) {
+      return result.data.data;
+    }
+  }
+
+  if (Array.isArray(result.products)) {
+    return result.products;
+  }
+
+  if (Array.isArray(result.items)) {
+    return result.items;
+  }
+
+  return [];
+}
+
+function getCategorySlug(product: ApiProduct): string {
+  const category =
+    typeof product.category === "string"
+      ? product.category
+      : product.category?.slug || "";
+
+  return (product.category_slug || category)
+    .toLowerCase()
+    .trim()
+    .replaceAll("-", "_")
+    .replaceAll(" ", "_");
+}
+
+function getImageUrl(path?: string): string {
+  if (!path) return "";
+
+  const value = path.trim();
+
+  if (/^https?:\/\//i.test(value)) {
+    return value;
+  }
+
+  if (value.startsWith("//")) {
+    return `https:${value}`;
+  }
+
+  return `${API_BASE}/${value.replace(/^\/+/, "")}`;
+}
+
+function getProductImage(product: ApiProduct): string {
+  const firstImage = product.images?.[0];
+
+  const imagePath =
+    firstImage?.file_url ||
+    firstImage?.image_url ||
+    firstImage?.image ||
+    firstImage?.url ||
+    firstImage?.path ||
+    product.image ||
+    product.thumbnail ||
+    "";
+
+  return getImageUrl(imagePath);
+}
+
+function truncateDescription(description: string): string {
+  const normalized = description.trim();
+
+  if (normalized.length <= MAX_DESCRIPTION_LENGTH) {
+    return normalized;
+  }
+
+  return `${normalized.slice(0, MAX_DESCRIPTION_LENGTH).trimEnd()}...`;
+}
+
+function sortOldestFirst(products: ApiProduct[]): ApiProduct[] {
+  return [...products].sort((a, b) => {
+    const dateA = a.created_at ? new Date(a.created_at).getTime() : Number.NaN;
+
+    const dateB = b.created_at ? new Date(b.created_at).getTime() : Number.NaN;
+
+    const validA = Number.isFinite(dateA);
+    const validB = Number.isFinite(dateB);
+
+    if (validA && validB && dateA !== dateB) {
+      return dateA - dateB;
+    }
+
+    const idA = Number(a.id);
+    const idB = Number(b.id);
+
+    if (Number.isFinite(idA) && Number.isFinite(idB) && idA !== idB) {
+      return idA - idB;
+    }
+
+    if (validA !== validB) {
+      return validA ? -1 : 1;
+    }
+
+    return 0;
+  });
+}
+
+function mapProduct(
+  product: ApiProduct,
+  index: number,
+  locale: string,
+): SolutionProduct {
+  const name =
+    (locale === "en"
+      ? product.name_en || product.name || product.name_idn
+      : product.name_idn || product.name || product.name_en) || "";
+
+  const description =
+    (locale === "en"
+      ? product.description_en || product.description || product.description_idn
+      : product.description_idn ||
+        product.description ||
+        product.description_en) || "";
+
+  return {
+    id: String(product.id),
+    number: String(index + 1).padStart(2, "0"),
+    name,
+    description: truncateDescription(description),
+    image: getProductImage(product),
+    href: `/produk/teknologi-budidaya/${product.slug}`,
+  };
+}
 
 export default function Solution() {
   const t = useTranslations("About.solution");
+  const locale = useLocale();
 
-  const solutions = t.raw("items") as {
-    number: string;
-    name: string;
-    category: string;
-    description: string;
-  }[];
+  const [products, setProducts] = useState<SolutionProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
+
+    async function fetchProducts() {
+      setLoading(true);
+      setError(false);
+
+      try {
+        const response = await fetch(`${API_BASE}/api/products`, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+          cache: "no-store",
+          signal: controller.signal,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Gagal mengambil produk (${response.status}).`);
+        }
+
+        const payload: unknown = await response.json();
+        const allProducts = unwrapProducts(payload);
+
+        const technologyProducts = allProducts.filter((product) => {
+          if (product.is_active === false) {
+            return false;
+          }
+
+          if (product.status && product.status.toLowerCase() !== "published") {
+            return false;
+          }
+
+          return (
+            getCategorySlug(product) === "technology" &&
+            Boolean(product.slug) &&
+            Boolean(product.name_idn || product.name_en || product.name)
+          );
+        });
+
+        const oldestProducts = sortOldestFirst(technologyProducts)
+          .slice(0, PRODUCTS_LIMIT)
+          .map((product, index) => mapProduct(product, index, locale));
+
+        if (!active) return;
+
+        setProducts(oldestProducts);
+      } catch (err) {
+        if (!active || (err instanceof Error && err.name === "AbortError")) {
+          return;
+        }
+
+        console.error("Gagal mengambil produk kategori technology:", err);
+
+        setProducts([]);
+        setError(true);
+      } finally {
+        if (active) {
+          setLoading(false);
+        }
+      }
+    }
+
+    void fetchProducts();
+
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [locale, retryKey]);
 
   return (
     <section
@@ -68,9 +322,7 @@ export default function Solution() {
             className="font-display text-3xl font-semibold leading-[1.08] tracking-tight text-foreground sm:text-4xl lg:text-[42px]"
           >
             {t("titleBefore")}{" "}
-            <span className="text-primary">
-              {t("titleHighlight")}
-            </span>
+            <span className="text-primary">{t("titleHighlight")}</span>
           </h2>
 
           <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-[17px]">
@@ -78,92 +330,102 @@ export default function Solution() {
           </p>
         </header>
 
-        {/* SOLUTION CARDS */}
-        <div className="mt-12 grid gap-5 lg:mt-14 lg:grid-cols-3">
-          {solutions.map((solution, index) => {
-            const Icon = solutionIcons[index];
-            const href = solutionLinks[index];
-
-            return (
-              <article
-                key={solution.number}
-                className="group relative overflow-hidden rounded-[24px] border border-border bg-muted transition-all duration-300 hover:-translate-y-1 hover:border-brand-secondary/40 hover:shadow-lg hover:shadow-brand-dark/5"
+        {/* TECHNOLOGY PRODUCT CARDS */}
+        <div className="mt-12 grid items-stretch gap-5 lg:mt-14 lg:grid-cols-3">
+          {loading ? (
+            Array.from({ length: PRODUCTS_LIMIT }, (_, index) => (
+              <div
+                key={index}
+                className="overflow-hidden rounded-[24px] border border-border bg-muted"
               >
-                {/* IMAGE */}
-                <div className="relative aspect-[4/3] overflow-hidden bg-white">
-                  <img
-                    src={solutionImages[index]}
-                    alt={t("imageAlt", {
-                      name: solution.name,
-                      category: solution.category,
-                    })}
-                    width={1200}
-                    height={900}
-                    loading="lazy"
-                    className="h-full w-full object-contain p-6 transition-transform duration-500 group-hover:scale-[1.03]"
-                  />
+                <div className="aspect-[4/3] animate-pulse bg-muted-foreground/10" />
 
-                  {/* NUMBER */}
+                <div className="space-y-3 p-6">
+                  <div className="h-6 w-2/3 animate-pulse rounded bg-muted-foreground/10" />
+                  <div className="h-4 w-full animate-pulse rounded bg-muted-foreground/10" />
+                  <div className="h-4 w-4/5 animate-pulse rounded bg-muted-foreground/10" />
+                  <div className="h-10 animate-pulse rounded-lg bg-muted-foreground/10" />
+                </div>
+              </div>
+            ))
+          ) : error ? (
+            <div className="col-span-full rounded-2xl border border-border bg-card p-8 text-center">
+              <p className="text-sm text-muted-foreground">
+                {t("errorDescription")}
+              </p>
+
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-4"
+                onClick={() => setRetryKey((value) => value + 1)}
+              >
+                {t("retryLabel")}
+              </Button>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="col-span-full rounded-2xl border border-border bg-card p-8 text-center">
+              <p className="text-sm text-muted-foreground">
+                {t("emptyDescription")}
+              </p>
+            </div>
+          ) : (
+            products.map((product) => (
+              <article
+                key={product.id}
+                className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-border bg-muted transition-transform duration-300 hover:-translate-y-1"
+              >
+                {/* PRODUCT IMAGE */}
+                <Link
+                  href={product.href}
+                  aria-label={`${t("linkLabel")}: ${product.name}`}
+                  className="relative block aspect-[4/3] shrink-0 overflow-hidden bg-white"
+                >
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      width={1200}
+                      height={900}
+                      loading="lazy"
+                      className="h-full w-full object-contain p-5 transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                      {t("noImage")}
+                    </div>
+                  )}
+
                   <span
                     className="absolute left-5 top-5 flex size-9 items-center justify-center rounded-full border border-border bg-white/90 text-xs font-bold text-brand-dark shadow-sm backdrop-blur-sm"
                     aria-hidden="true"
                   >
-                    {solution.number}
+                    {product.number}
                   </span>
-                </div>
+                </Link>
 
-                {/* CONTENT */}
-                <div className="p-6 sm:p-7">
-                  {/* CATEGORY */}
-                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.12em] text-brand-secondary">
-                    <Icon
-                      className="size-4 text-primary"
-                      strokeWidth={2}
-                      aria-hidden="true"
-                    />
-                    {solution.category}
-                  </div>
-
-                  {/* PRODUCT NAME — CLICKABLE */}
-                  <h3 className="mt-3 font-display text-2xl font-semibold tracking-tight text-foreground">
-                    <Link
-                      href={href}
-                      className="transition-colors duration-300 hover:text-primary focus-visible:rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    >
-                      {solution.name}
-                    </Link>
+                {/* PRODUCT CONTENT */}
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="font-display text-2xl font-semibold tracking-tight text-foreground">
+                    {product.name}
                   </h3>
 
-                  {/* DESCRIPTION */}
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                    {solution.description}
+                  <p className="mt-3 line-clamp-3 min-h-[4.5rem] text-sm leading-6 text-muted-foreground">
+                    {product.description}
                   </p>
 
-                  {/* PRODUCT LINK */}
-                  <div className="mt-6 border-t border-border pt-5">
-                    <Link
-                      href={href}
-                      className="group/link flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em] text-brand-secondary transition-colors duration-300 hover:text-brand-dark"
-                    >
-                      <span>{t("linkLabel")}</span>
-
-                      <ArrowUpRight
-                        className="size-4 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                        strokeWidth={1.8}
-                        aria-hidden="true"
-                      />
-                    </Link>
+                  <div className="mt-auto pt-6">
+                    <Button asChild className="group/detail flex w-full">
+                      <Link href={product.href}>
+                        {t("linkLabel")}
+                        <ArrowRight className="transition-transform duration-300 group-hover/detail:translate-x-1" />
+                      </Link>
+                    </Button>
                   </div>
                 </div>
-
-                {/* BOTTOM INDICATOR */}
-                <div
-                  className="pointer-events-none absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full"
-                  aria-hidden="true"
-                />
               </article>
-            );
-          })}
+            ))
+          )}
         </div>
 
         {/* KEY ADVANTAGES */}

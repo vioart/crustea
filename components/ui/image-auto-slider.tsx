@@ -17,7 +17,7 @@ export function ImageAutoSlider({ className }: { className?: string }) {
 
   const images: SliderImage[] = [
     {
-      src: "/img/produk3.png",
+      src: "/img/slider/teknologi.webp",
       alt: t("items.technology.alt"),
       title: t("items.technology.title"),
       category: t("items.technology.category"),

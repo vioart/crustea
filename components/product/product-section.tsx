@@ -1,5 +1,7 @@
+
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -18,10 +20,7 @@ const API_BASE = (
 
 const ITEMS_PER_PAGE = 6;
 
-export type ProductCategory =
-  | "hardware"
-  | "software"
-  | "processed_product";
+export type ProductCategory = "technology" | "krasty" | "trading";
 
 type ApiImage = {
   id?: number;
@@ -37,6 +36,7 @@ type ApiProduct = {
   description_idn?: string;
   description_en?: string;
   images?: ApiImage[] | null;
+  created_at?: string;
 };
 
 type ApiResponse = {
@@ -44,10 +44,12 @@ type ApiResponse = {
 };
 
 export type Product = {
+  id: number;
   name: string;
   description: string;
   image?: string;
   slug: string;
+  createdAt?: string;
 };
 
 type ProductSectionProps = {
@@ -77,18 +79,73 @@ function normalizeCategory(category?: string): string {
     .replaceAll(" ", "_");
 }
 
-function mapProduct(product: ApiProduct): Product {
+function matchesCategory(
+  productCategory: string,
+  selectedCategory: ProductCategory,
+): boolean {
+  const normalizedProductCategory = normalizeCategory(productCategory);
+
+  if (selectedCategory === "krasty" || selectedCategory === "trading") {
+    return (
+      normalizedProductCategory === "krasty" ||
+      normalizedProductCategory === "trading"
+    );
+  }
+
+  return normalizedProductCategory === selectedCategory;
+}
+
+/**
+ * Urutkan produk dari yang paling lama ke yang paling baru.
+ * created_at menjadi acuan utama jika tersedia.
+ * Jika tanggal tidak tersedia atau sama, gunakan ID terkecil dahulu.
+ */
+function sortProductsOldestFirst(products: ApiProduct[]): ApiProduct[] {
+  return [...products].sort((a, b) => {
+    const timeA = a.created_at
+      ? new Date(a.created_at).getTime()
+      : Number.NaN;
+
+    const timeB = b.created_at
+      ? new Date(b.created_at).getTime()
+      : Number.NaN;
+
+    const hasValidDateA = Number.isFinite(timeA);
+    const hasValidDateB = Number.isFinite(timeB);
+
+    if (hasValidDateA && hasValidDateB && timeA !== timeB) {
+      return timeA - timeB;
+    }
+
+    if (hasValidDateA !== hasValidDateB) {
+      return hasValidDateA ? -1 : 1;
+    }
+
+    return a.id - b.id;
+  });
+}
+
+function mapProduct(product: ApiProduct, locale: string): Product {
   const images = Array.isArray(product.images) ? product.images : [];
   const firstImage = images.find((image) => image.file_url);
 
+  const isEnglish = locale.startsWith("en");
+
+  const name = isEnglish
+    ? product.name_en || product.name_idn
+    : product.name_idn || product.name_en;
+
+  const description = isEnglish
+    ? product.description_en || product.description_idn
+    : product.description_idn || product.description_en;
+
   return {
-    name: product.name_idn || product.name_en || "Produk tanpa nama",
-    description:
-      product.description_idn ||
-      product.description_en ||
-      "Belum ada deskripsi produk.",
+    id: product.id,
+    name: name || "—",
+    description: description || "",
     image: getImageUrl(firstImage?.file_url) || undefined,
     slug: product.slug,
+    createdAt: product.created_at,
   };
 }
 
@@ -99,20 +156,21 @@ function ProductCard({
   product: Product;
   basePath: string;
 }) {
+  const t = useTranslations("Product.overview");
   const detailHref = `${basePath.replace(/\/+$/, "")}/${product.slug}`;
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
       <Link
         href={detailHref}
-        aria-label={`Lihat detail ${product.name}`}
+        aria-label={`${t("viewDetail")}: ${product.name}`}
         className="relative block overflow-hidden bg-muted"
       >
         <div className="aspect-[4/3] w-full">
           {product.image ? (
             <img
               src={product.image}
-              alt={product.name}
+              alt={t("productImageAlt", { product: product.name })}
               width={800}
               height={600}
               loading="lazy"
@@ -144,7 +202,7 @@ function ProductCard({
         <div className="mt-auto pt-6">
           <Button asChild className="group/detail w-full">
             <Link href={detailHref}>
-              Lihat Detail
+              {t("viewDetail")}
               <ArrowRight className="transition-transform duration-300 group-hover/detail:translate-x-1" />
             </Link>
           </Button>
@@ -163,18 +221,20 @@ function Pagination({
   totalPages: number;
   onPageChange: (page: number) => void;
 }) {
+  const t = useTranslations("Product.overview");
+
   if (totalPages <= 1) return null;
 
   return (
     <nav
-      aria-label="Pagination produk"
+      aria-label={t("pagination")}
       className="mt-10 flex items-center justify-center gap-2"
     >
       <button
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        aria-label="Halaman sebelumnya"
+        aria-label={t("previousPage")}
         className="flex size-10 items-center justify-center rounded-xl border border-border bg-card text-foreground transition-all hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
       >
         <ChevronLeft className="size-4" aria-hidden="true" />
@@ -189,7 +249,7 @@ function Pagination({
             key={page}
             type="button"
             onClick={() => onPageChange(page)}
-            aria-label={`Halaman ${page}`}
+            aria-label={t("pageNumber", { number: page })}
             aria-current={active ? "page" : undefined}
             className={`flex size-10 items-center justify-center rounded-xl text-sm font-semibold transition-all ${
               active
@@ -206,7 +266,7 @@ function Pagination({
         type="button"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        aria-label="Halaman berikutnya"
+        aria-label={t("nextPage")}
         className="flex size-10 items-center justify-center rounded-xl border border-border bg-card text-foreground transition-all hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
       >
         <ChevronRight className="size-4" aria-hidden="true" />
@@ -221,6 +281,9 @@ export default function ProductSection({
   category,
   basePath,
 }: ProductSectionProps) {
+  const t = useTranslations("Product.overview");
+  const locale = useLocale();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -233,6 +296,8 @@ export default function ProductSection({
     let active = true;
 
     async function loadProducts() {
+      setFetchState("loading");
+
       try {
         const response = await fetch(`${API_BASE}/api/products`, {
           method: "GET",
@@ -244,22 +309,22 @@ export default function ProductSection({
         });
 
         if (!response.ok) {
-          throw new Error(`Gagal mengambil produk (${response.status}).`);
+          throw new Error(
+            `${t("loadError")} (${response.status})`,
+          );
         }
 
         const result: ApiResponse = await response.json();
 
         if (!Array.isArray(result.data)) {
-          throw new Error("Format respons API produk tidak sesuai.");
+          throw new Error(t("loadError"));
         }
 
-        const filteredProducts = result.data
-          .filter(
-            (item) =>
-              normalizeCategory(item.category) ===
-              normalizeCategory(category),
-          )
-          .map(mapProduct);
+        const filteredProducts = sortProductsOldestFirst(
+          result.data.filter((item) =>
+            matchesCategory(item.category, category),
+          ),
+        ).map((item) => mapProduct(item, locale));
 
         if (!active) return;
 
@@ -273,9 +338,7 @@ export default function ProductSection({
         console.error("Gagal mengambil produk:", err);
 
         setError(
-          err instanceof Error
-            ? err.message
-            : "Produk belum dapat dimuat. Silakan coba kembali.",
+          err instanceof Error ? err.message : t("loadError"),
         );
 
         setFetchState("error");
@@ -288,19 +351,19 @@ export default function ProductSection({
       active = false;
       controller.abort();
     };
-  }, [category, retryKey]);
+  }, [category, locale, retryKey, t]);
 
   const filteredProducts = useMemo(() => {
-    const keyword = search.trim().toLowerCase();
+    const keyword = search.trim().toLocaleLowerCase(locale);
 
     if (!keyword) return products;
 
     return products.filter(
       (product) =>
-        product.name.toLowerCase().includes(keyword) ||
-        product.description.toLowerCase().includes(keyword),
+        product.name.toLocaleLowerCase(locale).includes(keyword) ||
+        product.description.toLocaleLowerCase(locale).includes(keyword),
     );
-  }, [products, search]);
+  }, [products, search, locale]);
 
   const totalPages = Math.ceil(
     filteredProducts.length / ITEMS_PER_PAGE,
@@ -329,6 +392,7 @@ export default function ProductSection({
   }
 
   function handleRetry() {
+    setError(null);
     setFetchState("loading");
     setRetryKey((value) => value + 1);
   }
@@ -346,10 +410,11 @@ export default function ProductSection({
       />
 
       <div className="relative mx-auto max-w-7xl px-5 py-12 sm:py-16 lg:px-8 lg:py-20">
+        {/* Section heading and search */}
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-secondary">
-              Produk Crustea
+              {t("eyebrow")}
             </span>
 
             <h2 className="mt-3 font-display text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl">
@@ -363,7 +428,7 @@ export default function ProductSection({
 
           <div className="w-full lg:max-w-sm">
             <label htmlFor="product-search" className="sr-only">
-              Cari produk
+              {t("searchLabel")}
             </label>
 
             <div className="relative">
@@ -377,17 +442,19 @@ export default function ProductSection({
                 type="search"
                 value={search}
                 onChange={(event) => handleSearch(event.target.value)}
-                placeholder="Cari produk..."
+                placeholder={t("searchPlaceholder")}
                 className="h-12 w-full rounded-xl border border-border bg-card pl-11 pr-4 text-[14px] text-foreground shadow-sm outline-none transition-all placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </div>
           </div>
         </div>
 
+        {/* Loading state */}
         {fetchState === "loading" ? (
           <div
             className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
             aria-live="polite"
+            aria-label={t("loading")}
           >
             {Array.from({ length: 6 }, (_, index) => (
               <div
@@ -406,12 +473,13 @@ export default function ProductSection({
             ))}
           </div>
         ) : fetchState === "error" ? (
+          /* Error state */
           <div
             className="mt-8 rounded-[24px] border border-border bg-card px-6 py-16 text-center shadow-sm"
             role="alert"
           >
             <h3 className="font-display text-xl font-semibold text-foreground">
-              Produk belum dapat dimuat
+              {t("loadError")}
             </h3>
 
             <p className="mx-auto mt-2 max-w-md text-sm leading-7 text-muted-foreground">
@@ -423,31 +491,33 @@ export default function ProductSection({
               className="mt-5"
               onClick={handleRetry}
             >
-              Coba Lagi
+              {t("retry")}
             </Button>
           </div>
         ) : (
           <>
-            <div className="mt-8 flex items-center justify-between border-b border-border pb-4">
+            {/* Product count */}
+            <div className="mt-8 flex items-center justify-between gap-4 border-b border-border pb-4">
               <p className="text-[14px] text-muted-foreground">
-                Menampilkan{" "}
+                {t("showingProducts")}{" "}
                 <span className="font-semibold text-foreground">
                   {filteredProducts.length}
                 </span>{" "}
-                produk
+                {t("productCount")}
               </p>
 
               {search && (
                 <button
                   type="button"
                   onClick={() => handleSearch("")}
-                  className="text-[13px] font-semibold text-brand-secondary transition-colors hover:text-brand-dark"
+                  className="shrink-0 text-[13px] font-semibold text-brand-secondary transition-colors hover:text-brand-dark"
                 >
-                  Hapus pencarian
+                  {t("clearSearch")}
                 </button>
               )}
             </div>
 
+            {/* Product cards */}
             {visibleProducts.length > 0 ? (
               <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {visibleProducts.map((product) => (
@@ -459,6 +529,7 @@ export default function ProductSection({
                 ))}
               </div>
             ) : (
+              /* Empty state */
               <div className="mt-8 rounded-[24px] border border-border bg-card px-6 py-16 text-center shadow-sm">
                 <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-secondary text-brand-secondary">
                   <Search className="size-6" aria-hidden="true" />
@@ -466,14 +537,14 @@ export default function ProductSection({
 
                 <h3 className="mt-5 font-display text-xl font-semibold text-foreground">
                   {search
-                    ? "Produk tidak ditemukan"
-                    : "Belum ada produk"}
+                    ? t("productNotFound")
+                    : t("noProducts")}
                 </h3>
 
                 <p className="mx-auto mt-2 max-w-md text-[14px] leading-7 text-muted-foreground">
                   {search
-                    ? `Tidak ada produk yang sesuai dengan pencarian "${search}".`
-                    : "Belum ada produk yang tersedia dalam kategori ini."}
+                    ? t("searchEmpty", { search })
+                    : t("categoryEmpty")}
                 </p>
 
                 {search && (
@@ -482,12 +553,13 @@ export default function ProductSection({
                     onClick={() => handleSearch("")}
                     className="mt-5 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-95"
                   >
-                    Lihat Semua Produk
+                    {t("showAllProducts")}
                   </button>
                 )}
               </div>
             )}
 
+            {/* Pagination */}
             <Pagination
               currentPage={safeCurrentPage}
               totalPages={totalPages}

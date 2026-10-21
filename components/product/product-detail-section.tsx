@@ -1,9 +1,15 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ArrowRight, Check, ChevronRight, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  ChevronRight,
+  MessageCircle,
+} from "lucide-react";
 
 const API_BASE = (
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
@@ -12,17 +18,17 @@ const API_BASE = (
 const WHATSAPP_NUMBER = "6282140773592";
 
 const CATEGORY_CONFIG = {
-  hardware: {
-    href: "/produk/hardware-teknologi",
-    translationKey: "hardware",
+  technology: {
+    href: "/produk/teknologi-budidaya",
+    translationKey: "technology",
   },
-  software: {
-    href: "/produk/software",
-    translationKey: "software",
+  krasty: {
+    href: "/produk/krasty",
+    translationKey: "krasty",
   },
-  processed_product: {
-    href: "/produk/produk-olahan",
-    translationKey: "processedProduct",
+  trading: {
+    href: "/produk/trading",
+    translationKey: "trading",
   },
 } as const;
 
@@ -88,26 +94,46 @@ type ProductDetailProps = {
   slug: string;
 };
 
-function getCategoryKey(category: string): ProductCategoryKey | null {
+/**
+ * Normalisasi kategori API.
+ *
+ * Kategori utama:
+ * - technology
+ * - krasty
+ * - trading
+ *
+ * Alias kategori lama tetap didukung agar data lama
+ * tidak langsung gagal ditampilkan.
+ */
+function getCategoryKey(
+  category: string,
+): ProductCategoryKey | null {
   const normalized = category
     .toLowerCase()
     .trim()
     .replaceAll("-", "_")
     .replaceAll(" ", "_");
 
-  if (normalized === "hardware") {
-    return "hardware";
-  }
+  const categoryAliases: Record<
+    string,
+    ProductCategoryKey
+  > = {
+    technology: "technology",
+    teknologi: "technology",
+    teknologi_budidaya: "technology",
+    technology_cultivation: "technology",
+    cultivation_technology: "technology",
+    hardware: "technology",
 
-  if (normalized === "software") {
-    return "software";
-  }
+    krasty: "krasty",
 
-  if (normalized === "processed_product" || normalized === "processed") {
-    return "processed_product";
-  }
+    trading: "trading",
+    software: "trading",
+    processed_product: "trading",
+    processed: "trading",
+  };
 
-  return null;
+  return categoryAliases[normalized] ?? null;
 }
 
 function getImageUrl(path?: string): string {
@@ -126,22 +152,40 @@ function mapProduct(
 ): ProductDetailData | null {
   const data = response.data;
 
-  if (!data) return null;
+  if (!data || typeof data !== "object") {
+    return null;
+  }
 
   const isWrappedProduct = "product" in data;
-  const product = isWrappedProduct ? data.product : (data as ApiProduct);
 
-  if (!product) return null;
+  const product = isWrappedProduct
+    ? data.product
+    : (data as ApiProduct);
 
-  const categoryKey = getCategoryKey(product.category);
+  if (!product) {
+    return null;
+  }
 
-  if (!categoryKey) return null;
+  const categoryKey = getCategoryKey(
+    product.category ?? "",
+  );
+
+  if (!categoryKey) {
+    console.error(
+      "Kategori produk tidak dikenali:",
+      product.category,
+    );
+
+    return null;
+  }
 
   const categoryConfig = CATEGORY_CONFIG[categoryKey];
   const isEnglish = locale === "en";
 
   const images =
-    (isWrappedProduct ? data.images : undefined) ?? product.images ?? [];
+    (isWrappedProduct ? data.images : undefined) ??
+    product.images ??
+    [];
 
   const excellences =
     (isWrappedProduct ? data.excellences : undefined) ??
@@ -149,7 +193,9 @@ function mapProduct(
     [];
 
   const specifications =
-    (isWrappedProduct ? data.specifications : undefined) ??
+    (isWrappedProduct
+      ? data.specifications
+      : undefined) ??
     product.specifications ??
     [];
 
@@ -162,10 +208,16 @@ function mapProduct(
     categoryHref: categoryConfig.href,
 
     description: isEnglish
-      ? product.description_en || product.description_idn || ""
-      : product.description_idn || product.description_en || "",
+      ? product.description_en ||
+        product.description_idn ||
+        ""
+      : product.description_idn ||
+        product.description_en ||
+        "",
 
-    images: images.map((image) => getImageUrl(image.file_url)).filter(Boolean),
+    images: images
+      .map((image) => getImageUrl(image.file_url))
+      .filter(Boolean),
 
     highlights: excellences
       .map((item) =>
@@ -189,11 +241,15 @@ function mapProduct(
   };
 }
 
-export default function ProductDetail({ slug }: ProductDetailProps) {
+export default function ProductDetail({
+  slug,
+}: ProductDetailProps) {
   const locale = useLocale();
   const t = useTranslations("Product.detail");
 
-  const [product, setProduct] = useState<ProductDetailData | null>(null);
+  const [product, setProduct] =
+    useState<ProductDetailData | null>(null);
+
   const [activeImage, setActiveImage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -209,7 +265,9 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
       try {
         const response = await fetch(
-          `${API_BASE}/api/products/slug/${encodeURIComponent(slug)}`,
+          `${API_BASE}/api/products/slug/${encodeURIComponent(
+            slug,
+          )}`,
           {
             method: "GET",
             headers: {
@@ -221,25 +279,40 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
         );
 
         if (!response.ok) {
-          throw new Error(`Gagal mengambil produk: ${response.status}`);
+          throw new Error(
+            `Gagal mengambil produk: ${response.status}`,
+          );
         }
 
-        const result: ApiResponse = await response.json();
-        const mappedProduct = mapProduct(result, locale);
+        const result: ApiResponse =
+          await response.json();
+
+        const mappedProduct = mapProduct(
+          result,
+          locale,
+        );
 
         if (!mappedProduct || !mappedProduct.name) {
-          throw new Error("Data produk tidak ditemukan.");
+          throw new Error(
+            "Data produk tidak ditemukan atau format respons API tidak sesuai.",
+          );
         }
 
         if (!controller.signal.aborted) {
           setProduct(mappedProduct);
         }
       } catch (err) {
-        if (err instanceof Error && err.name === "AbortError") {
+        if (
+          err instanceof Error &&
+          err.name === "AbortError"
+        ) {
           return;
         }
 
-        console.error("Gagal mengambil detail produk:", err);
+        console.error(
+          "Gagal mengambil detail produk:",
+          err,
+        );
 
         if (!controller.signal.aborted) {
           setError(true);
@@ -257,17 +330,25 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
   }, [slug, locale]);
 
   const whatsappMessage = encodeURIComponent(
-    product ? t("whatsappMessage", { product: product.name }) : "",
+    product
+      ? t("whatsappMessage", {
+          product: product.name,
+        })
+      : "",
   );
 
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
+  const whatsappUrl =
+    `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`;
 
   if (loading) {
     return (
       <main className="min-h-[60vh] bg-background">
         <div className="mx-auto max-w-7xl px-5 py-24 text-center lg:px-8">
           <div className="mx-auto size-10 animate-spin rounded-full border-4 border-border border-t-primary" />
-          <p className="mt-5 text-sm text-muted-foreground">{t("loading")}</p>
+
+          <p className="mt-5 text-sm text-muted-foreground">
+            {t("loading")}
+          </p>
         </div>
       </main>
     );
@@ -297,14 +378,16 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
     );
   }
 
-  const categoryConfig = CATEGORY_CONFIG[product.categoryKey];
+  const categoryConfig =
+    CATEGORY_CONFIG[product.categoryKey];
 
+  // Menggunakan translation key dari JSON terbaru.
   const categoryLabel =
-    product.categoryKey === "hardware"
-      ? t("categories.hardware")
-      : product.categoryKey === "software"
-        ? t("categories.software")
-        : t("categories.processedProduct");
+    product.categoryKey === "technology"
+      ? t("categories.technology")
+      : product.categoryKey === "krasty"
+        ? t("categories.krasty")
+        : t("categories.trading");
 
   const images = product.images;
 
@@ -341,7 +424,10 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
                 <ChevronRight className="size-4 text-muted-foreground/60" />
               </li>
 
-              <li className="font-medium text-foreground" aria-current="page">
+              <li
+                className="font-medium text-foreground"
+                aria-current="page"
+              >
                 {product.name}
               </li>
             </ol>
@@ -381,11 +467,15 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
                     <button
                       key={`${image}-${index}`}
                       type="button"
-                      onClick={() => setActiveImage(index)}
+                      onClick={() =>
+                        setActiveImage(index)
+                      }
                       aria-label={t("viewImage", {
                         number: index + 1,
                       })}
-                      aria-pressed={activeImage === index}
+                      aria-pressed={
+                        activeImage === index
+                      }
                       className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl border bg-muted transition-all duration-300 ${
                         activeImage === index
                           ? "border-primary ring-2 ring-primary/20"
@@ -456,20 +546,22 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
             </div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {product.highlights.map((highlight, index) => (
-                <div
-                  key={`${highlight}-${index}`}
-                  className="flex items-start gap-4 rounded-[20px] border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
-                >
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-dark">
-                    <Check className="size-5" />
-                  </span>
+              {product.highlights.map(
+                (highlight, index) => (
+                  <div
+                    key={`${highlight}-${index}`}
+                    className="flex items-start gap-4 rounded-[20px] border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md"
+                  >
+                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-dark">
+                      <Check className="size-5" />
+                    </span>
 
-                  <p className="pt-2 text-sm font-medium leading-5 text-foreground">
-                    {highlight}
-                  </p>
-                </div>
-              ))}
+                    <p className="pt-2 text-sm font-medium leading-5 text-foreground">
+                      {highlight}
+                    </p>
+                  </div>
+                ),
+              )}
             </div>
           </div>
         </section>
@@ -491,20 +583,22 @@ export default function ProductDetail({ slug }: ProductDetailProps) {
 
             <div className="mt-10 overflow-hidden rounded-[24px] border border-border bg-card shadow-sm">
               <div className="divide-y divide-border">
-                {product.specifications.map((spec, index) => (
-                  <div
-                    key={`${spec.label}-${index}`}
-                    className="grid gap-2 px-6 py-5 sm:grid-cols-2"
-                  >
-                    <p className="text-sm font-medium text-muted-foreground">
-                      {spec.label}
-                    </p>
+                {product.specifications.map(
+                  (spec, index) => (
+                    <div
+                      key={`${spec.label}-${index}`}
+                      className="grid gap-2 px-6 py-5 sm:grid-cols-2"
+                    >
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {spec.label}
+                      </p>
 
-                    <p className="text-sm font-semibold text-brand-dark sm:text-right">
-                      {spec.value}
-                    </p>
-                  </div>
-                ))}
+                      <p className="text-sm font-semibold text-brand-dark sm:text-right">
+                        {spec.value}
+                      </p>
+                    </div>
+                  ),
+                )}
               </div>
             </div>
           </div>

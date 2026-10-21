@@ -16,33 +16,25 @@
     "productSolutionDescription": "Integrated technologies and solutions to support aquaculture operations and business needs.",
     "learnMore": "Want to learn more?",
     "productsList": {
-      "hardware": {
-        "title": "Aquaculture Hardware",
-        "description": "Hardware technology to support aquaculture operations."
+      "technology": {
+        "title": "Aquaculture Technology",
+        "description": "Integrated technology for aquaculture operations."
       },
-      "software": {
-        "title": "Software",
-        "description": "Software solutions to help manage business operations."
+      "akuatur": {
+        "title": "Akuatur",
+        "description": "Community-based educational tourism and coastal culture."
       },
       "processedProduct": {
-        "title": "Processed Products - Krasty",
-        "description": "Processed fishery products with distinctive flavors."
-      },
-      "trading": {
-        "title": "Trading",
-        "description": "Aquaculture product trading and distribution solutions."
+        "title": "Krasty & Trading",
+        "description": "Processed seafood products and aquaculture trading."
       },
       "aquagrowth": {
         "title": "Aquagrowth",
-        "description": "Solutions to support business growth and development."
-      },
-      "partnership": {
-        "title": "Partnership",
-        "description": "Collaboration and partnership opportunities with Crustea."
+        "description": "Solutions for business growth and development."
       },
       "calculator": {
         "title": "Aquaculture Calculator",
-        "description": "A calculation tool for aquaculture needs."
+        "description": "Practical calculations for aquaculture needs."
       }
     },
     "companyLinks": {
@@ -403,31 +395,14 @@
       "eyebrow": "Crustea Solutions",
       "titleBefore": "From challenges to",
       "titleHighlight": "technological solutions.",
-      "description": "Crustea provides technology to help farmers monitor water quality, improve aeration efficiency, and optimize energy consumption in aquaculture ponds.",
-      "items": [
-        {
-          "number": "01",
-          "name": "EBII System",
-          "category": "Water Quality Monitoring",
-          "description": "A water quality monitoring system that measures four key parameters to help farmers understand pond conditions."
-        },
-        {
-          "number": "02",
-          "name": "Eco-Aerator",
-          "category": "Renewable Energy",
-          "description": "An aeration technology combining solar panels and an impeller, designed to produce smaller bubbles and increase oxygen levels."
-        },
-        {
-          "number": "03",
-          "name": "Smart Energy",
-          "category": "Energy Management",
-          "description": "A solution that enables farmers to conveniently monitor and control aerator energy consumption using a smartphone."
-        }
-      ],
-      "imageAlt": "{name} - {category}",
-      "linkLabel": "Explore Technology",
+      "description": "Crustea delivers technology to help farmers monitor water quality, improve aeration efficiency, and optimize energy consumption in aquaculture ponds.",
+      "linkLabel": "View Details",
+      "noImage": "Image unavailable",
+      "emptyDescription": "No technology products are currently available.",
+      "errorDescription": "Products could not be loaded. Please try again.",
+      "retryLabel": "Try Again",
       "advantages": {
-        "productionLabel": "Aquaculture Yield Potential",
+        "productionLabel": "Cultivation Yield Potential",
         "productionValue": "200%",
         "productionDescription": "larger, higher-quality shrimp",
         "centerLabel": "Advantages",
@@ -669,7 +644,7 @@
       "eyebrow": "Crustea Products",
       "heading": "Discover solutions for",
       "headingHighlight": "aquaculture.",
-      "description": "From hardware technology to digital solutions and processed products, explore Crustea products developed to support the aquaculture ecosystem.",
+      "description": "From aquaculture technology to Krasty products and trading solutions, explore Crustea's offerings developed to support the aquaculture ecosystem.",
       "categoryCount": "Product Categories",
       "categoryNavigation": "Product categories",
       "allProducts": "All Products",
@@ -683,32 +658,47 @@
       "noFeaturedProduct": "No featured product is currently available.",
       "noImage": "Image unavailable",
       "emptyCategory": "There are no products in this category yet.",
+      "searchPlaceholder": "Search products...",
+      "searchLabel": "Search products",
+      "showingProducts": "Showing",
+      "productCount": "products",
+      "clearSearch": "Clear search",
+      "productNotFound": "Product not found",
+      "noProducts": "No products available",
+      "searchEmpty": "No products match the search \"{search}\".",
+      "categoryEmpty": "There are no products available in this category yet.",
+      "showAllProducts": "View All Products",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "pageNumber": "Page {number}",
+      "pagination": "Product pagination",
+      "productImageAlt": "Product image for {product}",
       "categories": {
-        "hardware": {
-          "title": "Hardware Technology",
-          "shortTitle": "Hardware",
-          "description": "Hardware technology designed to support aquaculture operations and farming needs."
+        "technology": {
+          "title": "Aquaculture Technology",
+          "shortTitle": "Technology",
+          "description": "Integrated technology solutions designed to support aquaculture monitoring, operations, and farming needs."
         },
-        "software": {
-          "title": "Software",
-          "shortTitle": "Software",
-          "description": "Software solutions for the digitalization, monitoring, and management of aquaculture activities."
+        "krasty": {
+          "title": "Krasty",
+          "shortTitle": "Krasty",
+          "description": "Krasty products that deliver added value and support the aquaculture ecosystem."
         },
-        "processedProduct": {
-          "title": "Processed Products",
-          "shortTitle": "Processed Products",
-          "description": "Processed fishery products developed to deliver additional value."
+        "trading": {
+          "title": "Trading",
+          "shortTitle": "Trading",
+          "description": "Fishery product trading solutions designed to support aquaculture business needs."
         }
       }
     },
     "detail": {
-      "categories": {
-        "hardware": "Hardware Technology",
-        "software": "Software",
-        "processedProduct": "Processed Products"
-      },
       "breadcrumb": "Breadcrumb",
       "home": "Home",
+      "categories": {
+        "technology": "Aquaculture Technology",
+        "krasty": "Krasty",
+        "trading": "Trading"
+      },
       "loading": "Loading product details...",
       "notFoundTitle": "Product not found",
       "notFoundDescription": "The product is unavailable or could not be loaded. Please try again.",
@@ -725,42 +715,54 @@
     }
   },
 
-  "HardwareProducts": {
+  "TechnologyProducts": {
     "breadcrumb": {
       "home": "Home"
     },
     "hero": {
-      "title": "Aquaculture Hardware"
+      "title": "Aquaculture Technology"
     },
     "section": {
-      "title": "Aquaculture Hardware",
-      "description": "Equipment technology designed to support aquaculture operations and farming needs."
+      "title": "Aquaculture Technology",
+      "description": "Integrated technology solutions to support aquaculture monitoring and operations."
     }
   },
 
-  "SoftwareProducts": {
+  "KrastyTradingProducts": {
     "breadcrumb": {
       "home": "Home"
     },
     "hero": {
-      "title": "Software"
+      "title": "Krasty & Trading"
     },
-    "section": {
-      "title": "Software",
-      "description": "Software solutions to support digitalization, monitoring, and management of aquaculture operations."
+    "krasty": {
+      "title": "Krasty",
+      "description": "Krasty products designed to support aquaculture cultivation needs."
+    },
+    "trading": {
+      "title": "Trading",
+      "description": "Fishery product trading solutions that deliver added value and support aquaculture business needs."
     }
   },
 
-  "ProcessedProducts": {
-    "breadcrumb": {
-      "home": "Home"
-    },
-    "hero": {
-      "title": "Processed Products"
-    },
-    "section": {
-      "title": "Processed Products",
-      "description": "Processed fishery products developed to create added value from aquaculture products."
+  "Akuatur": {
+    "page": {
+      "title": "Akuatur",
+      "breadcrumb": {
+        "home": "Home",
+        "akuatur": "Akuatur"
+      },
+      "status": "Coming Soon",
+      "heading": "Akuatur is being",
+      "headingHighlight": "prepared for you.",
+      "description": "Akuatur is a Crustea product program currently under development. We are preparing an experience powered by aquaculture technology innovations to support more effective and sustainable farming practices. Stay tuned for the upcoming launch of Akuatur!",
+      "features": {
+        "sustainable": "Sustainable Aquaculture",
+        "innovation": "Technology Innovation",
+        "comingSoon": "In Development"
+      },
+      "contactButton": "Contact Us",
+      "footerNote": "Stay tuned for the latest updates on Akuatur by Crustea."
     }
   },
 
@@ -1393,10 +1395,9 @@
     },
     "links": {
       "products": {
-        "hardware": "Technology Hardware",
-        "software": "Software",
-        "krasty": "Processed Products - Krasty",
-        "trading": "Trading",
+        "aquaculture-technology": "Aquaculture Technology",
+        "akuatur": "Akuatur",
+        "krasty-trading": "Krasty & Trading",
         "aquagrowth": "Aquagrowth",
         "calculator": "Aquaculture Calculator"
       },

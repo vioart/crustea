@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -51,16 +50,16 @@ const menuItems = [
     icon: Package,
     children: [
       {
-        key: "hardware",
-        href: "/portal/produk/hardware",
+        key: "technology",
+        href: "/portal/produk/teknologi-budidaya",
       },
       {
-        key: "software",
-        href: "/portal/produk/software",
+        key: "krasty",
+        href: "/portal/produk/krasty",
       },
       {
-        key: "processedProducts",
-        href: "/portal/produk/produk-olahan",
+        key: "trading",
+        href: "/portal/produk/trading",
       },
     ],
   },
@@ -83,9 +82,9 @@ const translations = {
     category: "Kategori",
     post: "Post",
     products: "Produk",
-    hardware: "Hardware",
-    software: "Software",
-    processedProducts: "Produk Olahan",
+    technology: "Teknologi Budidaya",
+    krasty: "Krasty",
+    trading: "Trading",
     faq: "FAQ",
     users: "Pengguna",
     menu: "Menu",
@@ -95,8 +94,7 @@ const translations = {
     closeSidebar: "Tutup sidebar",
     closeMenu: "Tutup menu",
     logoutTitle: "Keluar Dari Akun?",
-    logoutDescription:
-      "Apakah Anda yakin ingin keluar dari akun saat ini?",
+    logoutDescription: "Apakah Anda yakin ingin keluar dari akun saat ini?",
     cancel: "Batal",
     confirmLogout: "Ya, Keluar",
   },
@@ -106,9 +104,9 @@ const translations = {
     category: "Categories",
     post: "Posts",
     products: "Products",
-    hardware: "Hardware",
-    software: "Software",
-    processedProducts: "Processed Products",
+    technology: "Aquaculture Technology",
+    krasty: "Krasty",
+    trading: "Trading",
     faq: "FAQ",
     users: "Users",
     menu: "Menu",
@@ -136,9 +134,7 @@ export default function DashboardSidebar({
   const { language } = useLanguage();
   const t = translations[language];
 
-  const [expandedMenus, setExpandedMenus] = useState<
-    Record<string, boolean>
-  >({
+  const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
     news: pathname.startsWith("/portal/berita"),
     products: pathname.startsWith("/portal/produk"),
   });
@@ -247,7 +243,9 @@ export default function DashboardSidebar({
               const title = getTitle(item.key);
               const hasChildren = "children" in item && item.children;
 
-              {/* Menu dengan submenu */}
+              {
+                /* Menu dengan submenu */
+              }
               if (hasChildren) {
                 const isParentActive = item.children.some((child) =>
                   pathname.startsWith(child.href),
@@ -346,7 +344,9 @@ export default function DashboardSidebar({
                 );
               }
 
-              {/* Menu tanpa submenu */}
+              {
+                /* Menu tanpa submenu */
+              }
               const isActive =
                 item.href === "/portal"
                   ? pathname === "/portal"

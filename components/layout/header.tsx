@@ -8,19 +8,17 @@ import type { LucideIcon } from "lucide-react";
 import {
   Calculator,
   ChevronDown,
-  Code2,
+  Compass,
   Cpu,
   FileText,
   Globe2,
-  Handshake,
   HelpCircle,
   Layers3,
   Package,
+  Route,
   Shield,
-  ShoppingCart,
   Sprout,
   Users,
-  Route,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -52,10 +50,8 @@ export default function Header() {
 
   const [open, setOpen] = React.useState(false);
   const [languageOpen, setLanguageOpen] = React.useState(false);
-  const [mobileProductsOpen, setMobileProductsOpen] =
-    React.useState(false);
-  const [mobileAboutOpen, setMobileAboutOpen] =
-    React.useState(false);
+  const [mobileProductsOpen, setMobileProductsOpen] = React.useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = React.useState(false);
 
   const chooseLanguage = (value: "id" | "en") => {
     setLanguageOpen(false);
@@ -78,22 +74,40 @@ export default function Header() {
     };
   }, [open]);
 
+  const whiteLogoClass = isSolid
+    ? "opacity-0"
+    : open
+      ? "opacity-0 md:opacity-100"
+      : "opacity-100";
+
+  const normalLogoClass = isSolid
+    ? "opacity-100"
+    : open
+      ? "opacity-100 md:opacity-0"
+      : "opacity-0";
+
+  // Hamburger putih di posisi awal, biru saat scroll atau menu aktif.
+  const mobileMenuButtonClass =
+    open || isSolid
+      ? "text-[#05546a] hover:bg-accent"
+      : "text-white hover:bg-white/10 hover:text-white";
+
   const productLinks: LinkItem[] = [
     {
-      title: t("productsList.hardware.title"),
-      href: "/produk/hardware-teknologi",
-      description: t("productsList.hardware.description"),
+      title: t("productsList.technology.title"),
+      href: "/produk/teknologi-budidaya",
+      description: t("productsList.technology.description"),
       icon: Cpu,
     },
     {
-      title: t("productsList.software.title"),
-      href: "/produk/software",
-      description: t("productsList.software.description"),
-      icon: Code2,
+      title: t("productsList.akuatur.title"),
+      href: "/produk/akuatur",
+      description: t("productsList.akuatur.description"),
+      icon: Compass,
     },
     {
       title: t("productsList.processedProduct.title"),
-      href: "/produk/produk-olahan",
+      href: "/produk/krasty-trading",
       description: t("productsList.processedProduct.description"),
       icon: Package,
     },
@@ -155,34 +169,30 @@ export default function Header() {
         )}
       >
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 lg:px-8">
-          {/* Logo: transisi dari putih ke logo normal */}
-          <Link
-            href="/"
-            className="grid items-center"
-            aria-label="Crustea"
-          >
+          {/* Logo: perubahan saat menu aktif hanya berlaku di mobile */}
+          <Link href="/" className="grid items-center" aria-label="Crustea">
             <img
               src="/logo-white.png"
               alt="Crustea logo"
-              aria-hidden={isSolid}
+              aria-hidden={isSolid && !open}
               className={cn(
                 "col-start-1 row-start-1 h-9 w-auto object-contain transition-opacity duration-300",
-                isSolid ? "opacity-0" : "opacity-100",
+                whiteLogoClass,
               )}
             />
 
             <img
               src="/logo.svg"
               alt="Crustea logo"
-              aria-hidden={!isSolid}
+              aria-hidden={!isSolid || open}
               className={cn(
                 "col-start-1 row-start-1 h-9 w-auto object-contain transition-opacity duration-300",
-                isSolid ? "opacity-100" : "opacity-0",
+                normalLogoClass,
               )}
             />
           </Link>
 
-          {/* Navigasi desktop: tidak diubah */}
+          {/* Navigasi desktop: dipertahankan */}
           <NavigationMenu className="hidden md:flex">
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -323,7 +333,7 @@ export default function Header() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          {/* Pemilih bahasa desktop */}
+          {/* Pemilih bahasa desktop: dipertahankan */}
           <div className="hidden items-center gap-2 md:flex">
             <div className="relative">
               <Button
@@ -360,9 +370,7 @@ export default function Header() {
                     )}
                   >
                     Indonesia
-                    <span className="text-xs text-muted-foreground">
-                      ID
-                    </span>
+                    <span className="text-xs text-muted-foreground">ID</span>
                   </Button>
 
                   <Button
@@ -375,9 +383,7 @@ export default function Header() {
                     )}
                   >
                     English
-                    <span className="text-xs text-muted-foreground">
-                      EN
-                    </span>
+                    <span className="text-xs text-muted-foreground">EN</span>
                   </Button>
                 </div>
               )}
@@ -394,12 +400,12 @@ export default function Header() {
             </Button>
           </div>
 
-          {/* Tombol menu mobile */}
+          {/* Hamburger mobile */}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setOpen((current) => !current)}
-            className="md:hidden"
+            className={cn("md:hidden", mobileMenuButtonClass)}
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? t("closeMenu") : t("openMenu")}
@@ -415,7 +421,6 @@ export default function Header() {
           className="flex flex-1 flex-col overflow-y-auto px-5 pb-5 pt-28"
           aria-label={t("mainNavigation")}
         >
-          {/* Beranda */}
           <Link
             href="/"
             onClick={() => setOpen(false)}
@@ -424,19 +429,16 @@ export default function Header() {
             {t("home")}
           </Link>
 
-          {/* Dropdown Produk: tanpa margin tambahan */}
+          {/* Dropdown Produk */}
           <div className="border-b border-border">
             <button
               type="button"
-              onClick={() =>
-                setMobileProductsOpen((current) => !current)
-              }
+              onClick={() => setMobileProductsOpen((current) => !current)}
               className="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-foreground"
               aria-expanded={mobileProductsOpen}
               aria-controls="mobile-products-submenu"
             >
               <span>{t("products")}</span>
-
               <ChevronDown
                 className={cn(
                   "size-4 shrink-0 transition-transform duration-200",
@@ -462,15 +464,12 @@ export default function Header() {
           <div className="border-b border-border">
             <button
               type="button"
-              onClick={() =>
-                setMobileAboutOpen((current) => !current)
-              }
+              onClick={() => setMobileAboutOpen((current) => !current)}
               className="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-foreground"
               aria-expanded={mobileAboutOpen}
               aria-controls="mobile-about-submenu"
             >
               <span>{t("about")}</span>
-
               <ChevronDown
                 className={cn(
                   "size-4 shrink-0 transition-transform duration-200",
@@ -501,7 +500,6 @@ export default function Header() {
             )}
           </div>
 
-          {/* Berita: tinggi dan padding konsisten */}
           <Link
             href="/berita"
             onClick={() => setOpen(false)}
@@ -510,7 +508,6 @@ export default function Header() {
             {t("news")}
           </Link>
 
-          {/* Kontak: tinggi dan padding konsisten */}
           <Link
             href="/kontak"
             onClick={() => setOpen(false)}
@@ -530,9 +527,7 @@ export default function Header() {
                 type="button"
                 variant="outline"
                 onClick={() => chooseLanguage("id")}
-                className={cn(
-                  language === "id" && "border-primary bg-accent",
-                )}
+                className={cn(language === "id" && "border-primary bg-accent")}
               >
                 Indonesia
                 <span className="ml-auto text-xs text-muted-foreground">
@@ -544,9 +539,7 @@ export default function Header() {
                 type="button"
                 variant="outline"
                 onClick={() => chooseLanguage("en")}
-                className={cn(
-                  language === "en" && "border-primary bg-accent",
-                )}
+                className={cn(language === "en" && "border-primary bg-accent")}
               >
                 English
                 <span className="ml-auto text-xs text-muted-foreground">
@@ -571,12 +564,7 @@ type MobileMenuProps = React.ComponentProps<"div"> & {
   open: boolean;
 };
 
-function MobileMenu({
-  open,
-  children,
-  className,
-  ...props
-}: MobileMenuProps) {
+function MobileMenu({ open, children, className, ...props }: MobileMenuProps) {
   if (!open || typeof window === "undefined") {
     return null;
   }
@@ -687,9 +675,5 @@ function useScroll(threshold: number) {
 
   const getServerSnapshot = React.useCallback(() => false, []);
 
-  return React.useSyncExternalStore(
-    subscribe,
-    getSnapshot,
-    getServerSnapshot,
-  );
+  return React.useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }

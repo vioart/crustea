@@ -1,9 +1,10 @@
+
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { ArrowRight, Code2, Cpu, Package, Sparkles } from "lucide-react";
+import { ArrowRight, Cpu, Package, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -71,29 +72,29 @@ type Product = {
 
 const categoryConfig = [
   {
-    key: "hardware",
-    titleKey: "categories.hardware.title",
-    shortTitleKey: "categories.hardware.shortTitle",
-    descriptionKey: "categories.hardware.description",
-    href: "/produk/hardware-teknologi",
+    key: "technology",
+    titleKey: "categories.technology.title",
+    shortTitleKey: "categories.technology.shortTitle",
+    descriptionKey: "categories.technology.description",
+    href: "/produk/teknologi-budidaya",
     number: "01",
     icon: Cpu,
   },
   {
-    key: "software",
-    titleKey: "categories.software.title",
-    shortTitleKey: "categories.software.shortTitle",
-    descriptionKey: "categories.software.description",
-    href: "/produk/software",
+    key: "krasty",
+    titleKey: "categories.krasty.title",
+    shortTitleKey: "categories.krasty.shortTitle",
+    descriptionKey: "categories.krasty.description",
+    href: "/produk/krasty-trading",
     number: "02",
-    icon: Code2,
+    icon: Package,
   },
   {
-    key: "processed_product",
-    titleKey: "categories.processedProduct.title",
-    shortTitleKey: "categories.processedProduct.shortTitle",
-    descriptionKey: "categories.processedProduct.description",
-    href: "/produk/produk-olahan",
+    key: "trading",
+    titleKey: "categories.trading.title",
+    shortTitleKey: "categories.trading.shortTitle",
+    descriptionKey: "categories.trading.description",
+    href: "/produk/krasty-trading",
     number: "03",
     icon: Package,
   },
@@ -164,35 +165,54 @@ function getCategoryKey(product: ApiProduct): string {
       : product.category?.slug ||
         product.category?.name_idn ||
         product.category?.name_en ||
+        product.category_name_idn ||
+        product.category_name_en ||
         "";
 
-  const value = (product.category_slug || category || "")
+  const value = (
+    product.category_slug ||
+    category ||
+    ""
+  )
     .toLowerCase()
     .trim()
     .replaceAll("-", "_")
     .replaceAll(" ", "_");
 
-  if (value.includes("hardware") || value.includes("perangkat_keras")) {
-    return "hardware";
-  }
-
-  if (value.includes("software") || value.includes("perangkat_lunak")) {
-    return "software";
-  }
-
+  // Kategori Teknologi Budidaya
   if (
+    value.includes("technology") ||
+    value.includes("teknologi") ||
+    value.includes("cultivation_technology") ||
+    value.includes("perangkat_keras") ||
+    value === "hardware"
+  ) {
+    return "technology";
+  }
+
+  // Kategori Krasty
+  if (value.includes("krasty")) {
+    return "krasty";
+  }
+
+  // Kategori Trading
+  if (
+    value.includes("trading") ||
+    value.includes("software") ||
     value.includes("processed_product") ||
     value.includes("produk_olahan") ||
-    value.includes("processed")
+    value === "processed"
   ) {
-    return "processed_product";
+    return "trading";
   }
 
   return "";
 }
 
 function getProductImage(product: ApiProduct): string {
-  const primaryImage = product.images?.find((item) => item.is_primary);
+  const primaryImage = product.images?.find(
+    (item) => item.is_primary,
+  );
   const firstImage = primaryImage || product.images?.[0];
 
   return getImageUrl(
@@ -214,13 +234,20 @@ function mapProduct(product: ApiProduct, locale: string): Product {
     categoryId:
       product.category_id != null
         ? String(product.category_id)
-        : typeof product.category === "object" && product.category?.id != null
+        : typeof product.category === "object" &&
+            product.category?.id != null
           ? String(product.category.id)
           : undefined,
     name:
       locale === "en"
-        ? product.name_en || product.name || product.name_idn || ""
-        : product.name_idn || product.name || product.name_en || "",
+        ? product.name_en ||
+          product.name ||
+          product.name_idn ||
+          ""
+        : product.name_idn ||
+          product.name ||
+          product.name_en ||
+          "",
     description:
       locale === "en"
         ? product.description_en ||
@@ -259,7 +286,9 @@ export default function ProductOverview() {
         });
 
         if (!response.ok) {
-          throw new Error(`Gagal mengambil produk: ${response.status}`);
+          throw new Error(
+            `Gagal mengambil produk: ${response.status}`,
+          );
         }
 
         const result: unknown = await response.json();
@@ -331,7 +360,7 @@ export default function ProductOverview() {
         categoryTitle: category.title,
       })),
     )
-    .find((product) => product.categoryKey === "hardware");
+    .find((product) => product.categoryKey === "technology");
 
   return (
     <section className="relative overflow-hidden bg-background">
@@ -357,7 +386,9 @@ export default function ProductOverview() {
 
             <h2 className="mt-4 max-w-2xl font-display text-4xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-5xl">
               {t("heading")}{" "}
-              <span className="text-primary">{t("headingHighlight")}</span>
+              <span className="text-primary">
+                {t("headingHighlight")}
+              </span>
             </h2>
 
             <p className="mt-5 max-w-2xl text-[15px] leading-7 text-muted-foreground">
@@ -400,7 +431,7 @@ export default function ProductOverview() {
             {productCategories.map((category) => (
               <a
                 key={category.key}
-                href={`#${category.key.replaceAll("_", "-")}`}
+                href={`#${category.key}`}
                 className="rounded-full border border-border bg-card px-5 py-2.5 text-sm font-medium text-muted-foreground transition-all hover:border-primary hover:bg-secondary hover:text-brand-dark"
               >
                 {category.shortTitle}
@@ -453,10 +484,13 @@ export default function ProductOverview() {
                   <p
                     className="mt-5 max-w-md text-sm leading-6 text-[#08556B] sm:text-[15px] sm:leading-7"
                     style={{
-                      textShadow: "0 1px 3px rgba(255, 255, 255, 0.85)",
+                      textShadow:
+                        "0 1px 3px rgba(255, 255, 255, 0.85)",
                     }}
                   >
-                    {featuredProduct.description.split(/(?<=[.!?])\s+/)[0]}
+                    {featuredProduct.description.split(
+                      /(?<=[.!?])\s+/,
+                    )[0]}
                   </p>
 
                   <div className="mt-7">
@@ -494,9 +528,14 @@ export default function ProductOverview() {
           </div>
         ) : error ? (
           <div className="rounded-2xl border border-border bg-card p-8 text-center">
-            <p className="text-sm text-muted-foreground">{t("loadError")}</p>
+            <p className="text-sm text-muted-foreground">
+              {t("loadError")}
+            </p>
 
-            <Button className="mt-4" onClick={() => window.location.reload()}>
+            <Button
+              className="mt-4"
+              onClick={() => window.location.reload()}
+            >
               {t("retry")}
             </Button>
           </div>
@@ -508,10 +547,10 @@ export default function ProductOverview() {
               return (
                 <section
                   key={category.key}
-                  id={category.key.replaceAll("_", "-")}
+                  id={category.key}
                   className="scroll-mt-24"
                 >
-                  {/* Category Heading */}
+                  {/* CATEGORY HEADING */}
                   <div className="mb-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
                     <div className="max-w-3xl">
                       <div className="flex items-center gap-3">
@@ -528,7 +567,10 @@ export default function ProductOverview() {
 
                       <div className="mt-4 flex items-center gap-3">
                         <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-brand-dark">
-                          <Icon className="size-5" strokeWidth={1.8} />
+                          <Icon
+                            className="size-5"
+                            strokeWidth={1.8}
+                          />
                         </div>
 
                         <h3 className="font-display text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
@@ -550,15 +592,9 @@ export default function ProductOverview() {
                     </Link>
                   </div>
 
-                  {/* Product Grid */}
+                  {/* PRODUCT GRID: 3 COLUMNS LIKE HARDWARE */}
                   {category.products.length > 0 ? (
-                    <div
-                      className={
-                        category.key === "software"
-                          ? "grid gap-5 sm:grid-cols-2"
-                          : "grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-                      }
-                    >
+                    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                       {category.products.map((product) => {
                         const detailHref = `${category.href}/${product.slug}`;
 
@@ -567,7 +603,7 @@ export default function ProductOverview() {
                             key={product.id}
                             className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                           >
-                            {/* Image */}
+                            {/* PRODUCT IMAGE */}
                             <Link
                               href={detailHref}
                               className="relative block overflow-hidden bg-muted"
@@ -590,7 +626,7 @@ export default function ProductOverview() {
                               </div>
                             </Link>
 
-                            {/* Content */}
+                            {/* PRODUCT CONTENT */}
                             <div className="flex flex-1 flex-col p-5 sm:p-6">
                               <h4 className="font-display text-xl font-semibold leading-tight tracking-tight text-foreground">
                                 {product.name}
@@ -600,9 +636,12 @@ export default function ProductOverview() {
                                 {product.description}
                               </p>
 
-                              {/* Detail Button */}
+                              {/* DETAIL BUTTON */}
                               <div className="mt-auto pt-6">
-                                <Button asChild className="group/detail w-full">
+                                <Button
+                                  asChild
+                                  className="group/detail w-full"
+                                >
                                   <Link href={detailHref}>
                                     {t("viewDetail")}
                                     <ArrowRight className="transition-transform duration-300 group-hover/detail:translate-x-1" />
