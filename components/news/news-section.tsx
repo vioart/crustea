@@ -97,10 +97,7 @@ function getCategoryId(news: ApiNews): number | null {
     return news.category.id;
   }
 
-  if (
-    news.news_category &&
-    typeof news.news_category.id === "number"
-  ) {
+  if (news.news_category && typeof news.news_category.id === "number") {
     return news.news_category.id;
   }
 
@@ -125,9 +122,7 @@ function getCategoryName(
   locale: string,
 ): string {
   const categoryId = getCategoryId(news);
-  const matchedCategory = categoryId
-    ? categoryMap.get(categoryId)
-    : undefined;
+  const matchedCategory = categoryId ? categoryMap.get(categoryId) : undefined;
 
   if (matchedCategory) return matchedCategory.label;
 
@@ -202,8 +197,16 @@ function normalizeNews(
 
   const content =
     locale === "en"
-      ? item.excerpt_en || item.content_en || item.excerpt || item.content_idn || ""
-      : item.excerpt_idn || item.content_idn || item.excerpt || item.content_en || "";
+      ? item.excerpt_en ||
+        item.content_en ||
+        item.excerpt ||
+        item.content_idn ||
+        ""
+      : item.excerpt_idn ||
+        item.content_idn ||
+        item.excerpt ||
+        item.content_en ||
+        "";
 
   const date = item.published_at || item.created_at || item.date || "";
 
@@ -211,7 +214,10 @@ function normalizeNews(
     id: item.id,
     slug: item.slug,
     title,
-    excerpt: content.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim(),
+    excerpt: content
+      .replace(/<[^>]*>/g, " ")
+      .replace(/\s+/g, " ")
+      .trim(),
     date,
     image: getImageUrl(item.thumbnail || item.image),
     categoryId: getCategoryId(item),
@@ -279,8 +285,7 @@ export default function NewsSection() {
         setRawNews(
           newsData.filter(
             (item) =>
-              typeof item.id === "number" &&
-              typeof item.slug === "string",
+              typeof item.id === "number" && typeof item.slug === "string",
           ),
         );
 
@@ -348,9 +353,9 @@ export default function NewsSection() {
   );
 
   const filteredNews = useMemo(() => {
-    const keyword = search.trim().toLocaleLowerCase(
-      locale === "en" ? "en-US" : "id-ID",
-    );
+    const keyword = search
+      .trim()
+      .toLocaleLowerCase(locale === "en" ? "en-US" : "id-ID");
 
     return sortedNews.filter((item) => {
       const matchesSearch =
@@ -367,6 +372,42 @@ export default function NewsSection() {
   }, [sortedNews, search, activeCategory, locale]);
 
   const totalPages = Math.ceil(filteredNews.length / POSTS_PER_PAGE);
+
+  const paginationItems = useMemo<(number | "...")[]>(() => {
+    if (totalPages === 0) return [];
+
+    const pages = new Set<number>();
+
+    pages.add(1);
+    pages.add(totalPages);
+
+    for (
+      let page = Math.max(1, currentPage - 1);
+      page <= Math.min(totalPages, currentPage + 1);
+      page++
+    ) {
+      pages.add(page);
+    }
+
+    const sortedPages = [...pages].sort((a, b) => a - b);
+    const items: (number | "...")[] = [];
+
+    sortedPages.forEach((page, index) => {
+      if (index > 0) {
+        const previousPage = sortedPages[index - 1];
+
+        if (page - previousPage === 2) {
+          items.push(previousPage + 1);
+        } else if (page - previousPage > 2) {
+          items.push("...");
+        }
+      }
+
+      items.push(page);
+    });
+
+    return items;
+  }, [currentPage, totalPages]);
 
   const paginatedNews = filteredNews.slice(
     (currentPage - 1) * POSTS_PER_PAGE,
@@ -427,9 +468,7 @@ export default function NewsSection() {
                 role="status"
                 className="rounded-[24px] border border-border bg-muted/50 px-6 py-16 text-center"
               >
-                <p className="text-sm text-muted-foreground">
-                  {t("loading")}
-                </p>
+                <p className="text-sm text-muted-foreground">{t("loading")}</p>
               </div>
             ) : error ? (
               <div
@@ -539,8 +578,9 @@ export default function NewsSection() {
             {!loading && !error && totalPages > 1 && (
               <nav
                 aria-label={t("paginationLabel")}
-                className="mt-10 flex items-center justify-center gap-2"
+                className="mt-10 flex w-full flex-wrap items-center justify-center gap-1.5 sm:gap-2"
               >
+                {/* Previous */}
                 <button
                   type="button"
                   onClick={() =>
@@ -548,30 +588,41 @@ export default function NewsSection() {
                   }
                   disabled={currentPage === 1}
                   aria-label={t("previousPage")}
-                  className="flex size-10 items-center justify-center rounded-lg border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40 sm:size-10"
                 >
                   <ChevronLeft className="size-4" />
                 </button>
 
-                {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-                  (page) => (
+                {/* Page Numbers */}
+                {paginationItems.map((item, index) =>
+                  item === "..." ? (
+                    <span
+                      key={`ellipsis-${index}`}
+                      aria-hidden="true"
+                      className="flex size-7 shrink-0 items-center justify-center text-sm text-muted-foreground sm:size-10"
+                    >
+                      ...
+                    </span>
+                  ) : (
                     <button
-                      key={page}
+                      key={item}
                       type="button"
-                      onClick={() => setCurrentPage(page)}
-                      aria-current={currentPage === page ? "page" : undefined}
+                      onClick={() => setCurrentPage(item)}
+                      aria-current={currentPage === item ? "page" : undefined}
+                      aria-label={`${t("paginationLabel")} ${item}`}
                       className={[
-                        "flex size-10 items-center justify-center rounded-lg border text-sm font-semibold transition-colors",
-                        currentPage === page
+                        "flex size-9 shrink-0 items-center justify-center rounded-lg border text-sm font-semibold transition-colors sm:size-10",
+                        currentPage === item
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-border bg-background text-brand-dark hover:border-primary hover:bg-secondary",
                       ].join(" ")}
                     >
-                      {page}
+                      {item}
                     </button>
                   ),
                 )}
 
+                {/* Next */}
                 <button
                   type="button"
                   onClick={() =>
@@ -579,7 +630,7 @@ export default function NewsSection() {
                   }
                   disabled={currentPage === totalPages}
                   aria-label={t("nextPage")}
-                  className="flex size-10 items-center justify-center rounded-lg border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-border bg-background text-brand-dark transition-colors hover:border-primary hover:bg-secondary disabled:pointer-events-none disabled:opacity-40 sm:size-10"
                 >
                   <ChevronRight className="size-4" />
                 </button>

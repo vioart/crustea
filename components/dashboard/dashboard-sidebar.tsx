@@ -13,6 +13,8 @@ import {
   LogOut,
   Package,
   Users,
+  Handshake,
+  UserRound,
   X,
 } from "lucide-react";
 
@@ -64,9 +66,28 @@ const menuItems = [
     ],
   },
   {
+    key: "partnerships",
+    icon: Handshake,
+    children: [
+      {
+        key: "partnerList",
+        href: "/portal/partners",
+      },
+      {
+        key: "partnershipProjects",
+        href: "/portal/partnership-projects",
+      },
+    ],
+  },
+  {
     key: "faq",
     href: "/portal/faq",
     icon: HelpCircle,
+  },
+  {
+    key: "team",
+    href: "/portal/team",
+    icon: UserRound,
   },
   {
     key: "users",
@@ -85,8 +106,12 @@ const translations = {
     technology: "Teknologi Budidaya",
     krasty: "Krasty",
     trading: "Trading",
+    partnerships: "Kemitraan",
+    partnerList: "Daftar Partner",
+    partnershipProjects: "Proyek Kemitraan",
     faq: "FAQ",
     users: "Pengguna",
+    team: "Tim",
     menu: "Menu",
     system: "Sistem",
     website: "Website",
@@ -107,8 +132,12 @@ const translations = {
     technology: "Aquaculture Technology",
     krasty: "Krasty",
     trading: "Trading",
+    partnerships: "Partnerships",
+    partnerList: "Partner List",
+    partnershipProjects: "Partnership Projects",
     faq: "FAQ",
     users: "Users",
+    team: "Team",
     menu: "Menu",
     system: "System",
     website: "Website",

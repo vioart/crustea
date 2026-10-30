@@ -18,7 +18,9 @@ import {
   Route,
   Shield,
   Sprout,
-  Users,
+  Handshake,
+  UsersRound,
+  Building2,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -118,6 +120,12 @@ export default function Header() {
       icon: Sprout,
     },
     {
+      title: "Kemitraan",
+      href: "/produk/kemitraan",
+      description: "Jelajahi peluang kemitraan bersama Crustea.",
+      icon: Handshake,
+    },
+    {
       title: t("productsList.calculator.title"),
       href: "/produk/kalkulator-budidaya",
       description: t("productsList.calculator.description"),
@@ -130,7 +138,13 @@ export default function Header() {
       title: t("companyLinks.about.title"),
       href: "/tentang-kami",
       description: t("companyLinks.about.description"),
-      icon: Users,
+      icon: Building2,
+    },
+    {
+      title: t("companyLinks.team.title"),
+      href: "/team",
+      description: t("companyLinks.team.description"),
+      icon: UsersRound,
     },
     {
       title: t("companyLinks.roadmap.title"),

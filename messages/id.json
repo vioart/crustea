@@ -32,6 +32,10 @@
         "title": "Aquagrowth",
         "description": "Solusi untuk pertumbuhan dan pengembangan usaha."
       },
+      "partnership": {
+        "title": "Kemitraan",
+        "description": "Jelajahi peluang kemitraan bersama Crustea."
+      },
       "calculator": {
         "title": "Kalkulator Budidaya",
         "description": "Perhitungan praktis untuk kebutuhan budidaya."
@@ -41,6 +45,10 @@
       "about": {
         "title": "Tentang Kami",
         "description": "Mengenal lebih dekat Crustea, perjalanan, dan tim kami."
+      },
+      "team": {
+        "title": "Tim Kami",
+        "description": "Kenali tim di balik inovasi Crustea."
       },
       "roadmap": {
         "title": "Roadmap Sertifikasi",
@@ -893,6 +901,70 @@
     }
   },
 
+  "Partnership": {
+    "hero": {
+      "title": "Tumbuh Bersama melalui",
+      "highlight": "Kolaborasi",
+      "description": "Kami percaya bahwa inovasi akuakultur yang berkelanjutan tumbuh melalui kolaborasi. Bersama mitra, Crustea mendorong pengembangan teknologi, pertukaran pengetahuan, dan solusi untuk masa depan akuakultur.",
+      "exploreButton": "Jelajahi Kemitraan",
+      "contactButton": "Hubungi Kami",
+      "imageAlt": "Lingkungan perairan",
+      "visionLabel": "Visi Bersama",
+      "visionTitle": "Inovasi hari ini untuk akuakultur masa depan.",
+      "floatingTitle": "Tumbuh Bersama",
+      "floatingDescription": "Kolaborasi untuk Keberlanjutan"
+    },
+    "whyPartnership": {
+      "eyebrow": "Mengapa Bermitra?",
+      "title": "Menciptakan dampak melalui sinergi.",
+      "description": "Tantangan akuakultur membutuhkan pendekatan yang terintegrasi. Melalui kemitraan, kami ingin membuka peluang untuk menggabungkan keahlian, teknologi, dan pengalaman dari berbagai pihak.",
+      "benefits": {
+        "expertise": {
+          "title": "Berbagi Keahlian",
+          "description": "Menghubungkan keahlian dan pengalaman untuk menghasilkan solusi yang relevan."
+        },
+        "innovation": {
+          "title": "Inovasi Berkelanjutan",
+          "description": "Mendorong pengembangan teknologi dan praktik akuakultur yang berorientasi pada keberlanjutan."
+        }
+      }
+    },
+    "projects": {
+      "eyebrow": "Kemitraan Kami",
+      "title": "Proyek Kemitraan",
+      "description": "Mengenal lebih dekat kolaborasi yang mendukung pengembangan teknologi dan ekosistem akuakultur.",
+      "projectCount": "{count} proyek",
+      "loading": "Memuat proyek kemitraan...",
+      "errorTitle": "Gagal Memuat Proyek",
+      "errorDescription": "Terjadi kesalahan saat mengambil data proyek kemitraan. Silakan coba kembali beberapa saat lagi.",
+      "emptyTitle": "Belum Ada Proyek Kemitraan",
+      "emptyDescription": "Informasi proyek kemitraan akan ditampilkan di sini ketika tersedia.",
+      "retryButton": "Coba Lagi",
+      "detailButton": "Lihat detail proyek",
+      "detailAriaLabel": "Lihat detail {name}",
+      "imageAlt": "Gambar proyek kemitraan",
+      "partnerLogoAlt": "Logo mitra",
+      "paginationLabel": "Navigasi halaman proyek kemitraan",
+      "previousPage": "Halaman sebelumnya",
+      "nextPage": "Halaman berikutnya",
+      "pageNumber": "Halaman {page}",
+      "partnerLogoNamedAlt": "Logo {name}"
+    },
+    "modal": {
+      "eyebrow": "Detail Kemitraan",
+      "closeButton": "Tutup",
+      "closeDetailButton": "Tutup Detail",
+      "closeAriaLabel": "Tutup detail proyek",
+      "imageAlt": "Gambar proyek kemitraan"
+    },
+    "cta": {
+      "eyebrow": "Mari Berkolaborasi",
+      "title": "Mari wujudkan peluang kolaborasi bersama Crustea.",
+      "description": "Punya ide, kebutuhan teknologi, atau peluang kerja sama di bidang akuakultur? Mari mulai percakapan bersama tim kami.",
+      "button": "Hubungi Crustea"
+    }
+  },
+
   "CultivationCalculator": {
     "page": {
       "title": "Kalkulator Budidaya",
@@ -1066,6 +1138,31 @@
       },
       "asOf": "Status roadmap per",
       "reportingPeriod": "Oktober 2026"
+    }
+  },
+
+  "Team": {
+    "page": {
+      "title": "Tim Kami",
+      "breadcrumb": {
+        "home": "Beranda",
+        "team": "Tim Kami"
+      }
+    },
+    "section": {
+      "eyebrow": "Tim Kami",
+      "title": "Individu",
+      "titleHighlight": "Profesional",
+      "loading": "Memuat anggota tim",
+      "fetchError": "Gagal mengambil data anggota tim (HTTP {status}).",
+      "generalError": "Terjadi kesalahan saat mengambil data anggota tim.",
+      "retry": "Coba Lagi",
+      "empty": "Belum ada anggota tim yang tersedia.",
+      "viewProfile": "Lihat Profil",
+      "toggleLinkedin": "Tampilkan LinkedIn {name}",
+      "linkedinProfile": "Profil LinkedIn {name}",
+      "memberPhoto": "Foto {name}",
+      "photoUnavailable": "Foto {name} tidak tersedia"
     }
   },
 

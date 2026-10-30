@@ -32,6 +32,10 @@
         "title": "Aquagrowth",
         "description": "Solutions for business growth and development."
       },
+      "partnership": {
+        "title": "Partnership",
+        "description": "Explore partnership opportunities with Crustea."
+      },
       "calculator": {
         "title": "Aquaculture Calculator",
         "description": "Practical calculations for aquaculture needs."
@@ -41,6 +45,10 @@
       "about": {
         "title": "About Us",
         "description": "Get to know Crustea, our journey, and our team."
+      },
+      "team": {
+        "title": "Our Team",
+        "description": "Meet the team behind Crustea's innovation."
       },
       "roadmap": {
         "title": "Certification Roadmap",
@@ -893,6 +901,70 @@
     }
   },
 
+  "Partnership": {
+    "hero": {
+      "title": "Growing Together Through",
+      "highlight": "Collaboration",
+      "description": "We believe sustainable aquaculture innovation grows through collaboration. Together with our partners, Crustea promotes technology development, knowledge exchange, and solutions for the future of aquaculture.",
+      "exploreButton": "Explore Partnerships",
+      "contactButton": "Contact Us",
+      "imageAlt": "Aquatic environment",
+      "visionLabel": "Our Shared Vision",
+      "visionTitle": "Innovating today for the future of aquaculture.",
+      "floatingTitle": "Growing Together",
+      "floatingDescription": "Collaboration for Sustainability"
+    },
+    "whyPartnership": {
+      "eyebrow": "Why Partner With Us?",
+      "title": "Creating impact through synergy.",
+      "description": "Aquaculture challenges require an integrated approach. Through partnerships, we aim to create opportunities to combine expertise, technology, and experience from different stakeholders.",
+      "benefits": {
+        "expertise": {
+          "title": "Sharing Expertise",
+          "description": "Bringing together expertise and experience to develop relevant solutions."
+        },
+        "innovation": {
+          "title": "Sustainable Innovation",
+          "description": "Promoting the development of technologies and aquaculture practices focused on sustainability."
+        }
+      }
+    },
+    "projects": {
+      "eyebrow": "Our Partnerships",
+      "title": "Partnership Projects",
+      "description": "Discover collaborations that support the development of aquaculture technology and ecosystems.",
+      "projectCount": "{count} projects",
+      "loading": "Loading partnership projects...",
+      "errorTitle": "Unable to Load Projects",
+      "errorDescription": "An error occurred while retrieving partnership projects. Please try again in a few moments.",
+      "emptyTitle": "No Partnership Projects Yet",
+      "emptyDescription": "Partnership project information will appear here when available.",
+      "retryButton": "Try Again",
+      "detailButton": "View project details",
+      "detailAriaLabel": "View details for {name}",
+      "imageAlt": "Partnership project image",
+      "partnerLogoAlt": "Partner logo",
+      "paginationLabel": "Partnership project pagination",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "pageNumber": "Page {page}",
+      "partnerLogoNamedAlt": "{name} logo"
+    },
+    "modal": {
+      "eyebrow": "Partnership Details",
+      "closeButton": "Close",
+      "closeDetailButton": "Close Details",
+      "closeAriaLabel": "Close project details",
+      "imageAlt": "Partnership project image"
+    },
+    "cta": {
+      "eyebrow": "Let's Collaborate",
+      "title": "Let's create collaboration opportunities with Crustea.",
+      "description": "Have an idea, a technology requirement, or a potential aquaculture partnership? Let's start a conversation with our team.",
+      "button": "Contact Crustea"
+    }
+  },
+
   "CultivationCalculator": {
     "page": {
       "title": "Cultivation Calculator",
@@ -1066,6 +1138,31 @@
       },
       "asOf": "Roadmap status as of",
       "reportingPeriod": "October 2026"
+    }
+  },
+
+  "Team": {
+    "page": {
+      "title": "Our Team",
+      "breadcrumb": {
+        "home": "Home",
+        "team": "Our Team"
+      }
+    },
+    "section": {
+      "eyebrow": "Our Team",
+      "title": "Professional",
+      "titleHighlight": "Individuals",
+      "loading": "Loading team members",
+      "fetchError": "Failed to fetch team members (HTTP {status}).",
+      "generalError": "An error occurred while fetching team members.",
+      "retry": "Try Again",
+      "empty": "No team members are currently available.",
+      "viewProfile": "View Profile",
+      "toggleLinkedin": "Show LinkedIn for {name}",
+      "linkedinProfile": "{name}'s LinkedIn profile",
+      "memberPhoto": "Photo of {name}",
+      "photoUnavailable": "Photo of {name} is unavailable"
     }
   },
 
