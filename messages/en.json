@@ -977,13 +977,125 @@
       "eyebrow": "Cultivation Calculator",
       "title": "Plan Your Cultivation",
       "titleHighlight": "with Greater Precision",
-      "description": "Select an aerator and enter your cultivation data to estimate biomass, oxygen requirements, and equipment quantities based on the available parameters."
+      "description": "Simulate harvest yields, feed requirements, operational costs, revenue, and estimated aerator requirements based on your cultivation parameters."
+    },
+    "sections": {
+      "data": {
+        "title": "Cultivation Data",
+        "description": "Enter farmer information and initial pond conditions."
+      },
+      "growth": {
+        "title": "Growth and Harvest Results",
+        "description": "Set the survival rate and your target harvest size."
+      },
+      "feed": {
+        "title": "Feed Requirements",
+        "description": "Estimate total feed requirements based on the Feed Conversion Ratio (FCR)."
+      },
+      "cost": {
+        "title": "Costs and Selling Price",
+        "description": "Enter seed, feed, electricity, and other operational costs."
+      },
+      "aerator": {
+        "title": "Aerator Requirements",
+        "description": "Select an aerator type to estimate the number of units based on harvest biomass."
+      }
+    },
+    "fields": {
+      "farmerName": {
+        "label": "Farmer Name",
+        "placeholder": "e.g. John"
+      },
+      "cultivationType": {
+        "label": "Cultivation Type",
+        "options": {
+          "growOut": "Grow-out",
+          "hatchery": "Hatchery",
+          "nursery": "Nursery"
+        }
+      },
+      "area": {
+        "label": "Pond Area",
+        "placeholder": "e.g. 300",
+        "hint": "Total area of the pond being used."
+      },
+      "density": {
+        "label": "Stocking Density",
+        "placeholder": "e.g. 30",
+        "hint": "Number of fish stocked per square meter."
+      },
+      "survivalRate": {
+        "label": "Survival Rate (SR)",
+        "placeholder": "e.g. 80",
+        "hint": "Estimated percentage of fish surviving until harvest."
+      },
+      "harvestSize": {
+        "label": "Harvest Size",
+        "placeholder": "e.g. 4",
+        "hint": "Number of fish per kilogram at harvest."
+      },
+      "fcr": {
+        "label": "Feed Conversion Ratio (FCR)",
+        "placeholder": "e.g. 1.25",
+        "hint": "Ratio of feed consumed to harvested fish biomass."
+      },
+      "seedPrice": {
+        "label": "Seed Price",
+        "placeholder": "e.g. 350"
+      },
+      "feedPrice": {
+        "label": "Feed Price",
+        "placeholder": "e.g. 13500"
+      },
+      "cycleMonths": {
+        "label": "Cultivation Cycle Duration",
+        "placeholder": "e.g. 4"
+      },
+      "monthlyElectricity": {
+        "label": "Monthly Electricity Cost",
+        "placeholder": "e.g. 450000"
+      },
+      "otherCosts": {
+        "label": "Other Costs",
+        "placeholder": "e.g. 3000000",
+        "hint": "Other operational expenses excluding seeds, feed, and electricity."
+      },
+      "sellingPrice": {
+        "label": "Fish Selling Price",
+        "placeholder": "e.g. 24000"
+      }
+    },
+    "units": {
+      "area": "m²",
+      "density": "fish/m²",
+      "fish": "fish",
+      "fishPerKg": "fish/kg",
+      "weight": "kg",
+      "percentage": "%",
+      "seedPrice": "IDR/fish",
+      "feedPrice": "IDR/kg",
+      "currency": "IDR",
+      "month": "months",
+      "unit": "units",
+      "oxygen": "g/hour"
+    },
+    "automatic": {
+      "seedCount": "Automatically Estimated Stocking Count",
+      "seedCountFormula": "Pond area × stocking density",
+      "finalCount": "Estimated Final Fish Count",
+      "finalCountFormula": "Stocking count × survival rate",
+      "harvestBiomass": "Estimated Harvest Biomass",
+      "harvestBiomassFormula": "Final fish count ÷ harvest size",
+      "feedAmount": "Estimated Total Feed",
+      "feedAmountFormula": "FCR × harvest biomass",
+      "seedCost": "Total Seed Cost",
+      "seedCostFormula": "Seed price × stocking count",
+      "feedCost": "Total Feed Cost",
+      "feedCostFormula": "Feed price × total feed",
+      "electricityCost": "Total Electricity Cost",
+      "electricityCostFormula": "Monthly electricity cost × cultivation cycle"
     },
     "aerator": {
-      "step": "01",
-      "title": "Choose an Aerator",
-      "description": "Select the equipment you want to use.",
-      "biomassCapacity": "Reference biomass capacity",
       "mini": {
         "name": "Mini Aerator",
         "subtitle": "For small-scale ponds",
@@ -996,80 +1108,74 @@
         "description": "A brush aerator installed according to the applicable SOP to support higher-biomass farming.",
         "note": "Biomass capacity is based on the range provided in the technical materials."
       },
-      "brushWeighted": {
-        "name": "Brush + Weight",
-        "subtitle": "Weighted configuration",
-        "description": "A brush aerator with an added weight for a configuration with a higher reference biomass capacity.",
-        "note": "Biomass capacity is based on the range provided in the technical materials."
-      },
-      "power": "Power listed in the materials",
-      "oxygenOutput": "O₂ output listed in the materials",
+      "biomassCapacity": "Reference biomass capacity",
+      "power": "Power",
+      "oxygenOutput": "Oxygen output",
       "perDevice": "Reference biomass per unit",
-      "capacityNote": "Capacity figures are based on the supplied materials and must be verified before being used as operational recommendations."
+      "capacityNote": "Capacity figures are based on the supplied technical materials and require verification before being used as operational recommendations."
     },
-    "form": {
-      "step": "02",
-      "title": "Cultivation Data",
-      "description": "Enter data that reflects your pond conditions.",
-      "methodTitle": "Calculation method",
-      "pondMode": "Based on pond data",
-      "pondModeDescription": "Calculate biomass from pond and fish data.",
-      "biomassMode": "Based on biomass",
-      "biomassModeDescription": "Enter the target total fish biomass.",
-      "area": {
-        "label": "Pond area",
-        "placeholder": "e.g. 40",
-        "unit": "m²",
-        "hint": "Total area of the pond being used."
-      },
-      "density": {
-        "label": "Stocking density",
-        "placeholder": "e.g. 35",
-        "unit": "fish/m²",
-        "hint": "Number of fish per square meter."
-      },
-      "averageWeight": {
-        "label": "Average fish weight",
-        "placeholder": "e.g. 200",
-        "unit": "g/fish",
-        "hint": "Average fish weight at the cultivation stage being calculated."
-      },
-      "targetBiomass": {
-        "label": "Target fish biomass",
-        "placeholder": "e.g. 300",
-        "unit": "kg",
-        "hint": "Enter the estimated total weight of fish to be supported."
-      },
-      "validation": "Enter valid numbers greater than zero in all required fields.",
-      "calculate": "Calculate Aerator Requirements",
+    "action": {
+      "calculate": "Calculate Cultivation Simulation",
       "reset": "Reset"
+    },
+    "validation": {
+      "required": "Please enter the farmer's name and complete all required fields.",
+      "invalid": "Please enter valid numerical values.",
+      "positive": "Pond area, stocking density, survival rate, harvest size, FCR, and cultivation cycle must be greater than zero.",
+      "survivalRate": "Survival rate must be greater than 0% and cannot exceed 100%.",
+      "general": "Complete all required fields and ensure all numerical values are valid before calculating."
     },
     "result": {
       "title": "Calculation Summary",
       "heading": "Cultivation Results",
-      "description": "Estimates based on your inputs and the equipment capacity references.",
+      "description": "Estimates based on the cultivation data and technical parameters entered.",
       "emptyTitle": "Your results will appear here",
-      "emptyDescription": "Choose an aerator, complete the cultivation data, and select calculate to view the simulation results.",
-      "estimatedDevices": "Estimated number of aerators",
-      "unit": "units",
-      "basedOnCapacity": "Based on a reference capacity of {capacity} kg of biomass per unit.",
-      "estimatedFish": "Estimated number of fish",
-      "fishUnit": "fish",
-      "targetBiomass": "Target biomass",
-      "oxygenRequirement": "Estimated oxygen requirement",
-      "oxygenFormula": "Based on the reference value of 700 mg O₂/kg/hour from the supplied materials.",
+      "emptyDescription": "Complete the cultivation data and select Calculate to view your estimated harvest, feed requirements, operational costs, and financial analysis.",
+      "netRevenue": "Net Revenue",
+      "netRevenueDescription": "Gross revenue minus total expenses.",
+      "seedCount": "Stocking Count",
+      "harvestBiomass": "Harvest Biomass",
+      "productionSummary": "Production Summary",
+      "costSummary": "Expense Breakdown",
+      "revenueSummary": "Revenue and Business Feasibility",
+      "totalSeedCost": "Total Seed Cost",
+      "totalFeedCost": "Total Feed Cost",
+      "totalElectricity": "Total Electricity Cost",
+      "otherCosts": "Other Costs",
+      "totalExpense": "Total Expenses",
+      "grossRevenue": "Gross Revenue",
+      "netRevenueItem": "Net Revenue",
+      "rcRatio": "Revenue-Cost Ratio (R/C)",
+      "feasible": "Feasible",
+      "notFeasible": "Not Feasible",
+      "cannotEvaluate": "Cannot Be Evaluated",
+      "rcDescription": "R/C ≥ 1 is categorized as Feasible, while R/C < 1 is categorized as Not Feasible.",
+      "aeratorRequirement": "Estimated Aerator Requirements",
+      "estimatedDevices": "Estimated Number of Aerators",
+      "oxygenRequirement": "Estimated Oxygen Requirement",
       "oxygenUnit": "g O₂/hour",
-      "technicalValidationTitle": "Technical validation required",
-      "technicalValidationDescription": "This is an initial mathematical estimate, not a finalized equipment recommendation. Actual capacity, pond configuration, and safety factors must be confirmed by the technical team."
+      "basedOnCapacity": "Based on a minimum reference capacity of {capacity} kg of biomass per unit.",
+      "oxygenFormula": "Based on the reference value of 700 mg O₂/kg/hour.",
+      "technicalValidationTitle": "Estimation Disclaimer",
+      "technicalValidationDescription": "These results are mathematical estimates based on the entered data and supplied parameters. Actual aerator requirements, water quality, and technical feasibility must be validated by the technical team before implementation."
     },
     "technicalNotes": {
       "title": "Calculation Notes",
-      "biomass": "Biomass is calculated by multiplying the number of fish by their average weight.",
-      "devices": "The estimated number of units is rounded up using the lower bound of the biomass capacity range in the supplied materials.",
-      "oxygen": "Oxygen requirements are calculated using the reference value of 700 mg O₂/kg/hour from the supplied materials.",
-      "limitations": "The calculation does not yet account for safety factors, water conditions, pond depth, oxygen distribution, or the actual aerator configuration.",
-      "general": "The calculation uses reference data from the Mini Aerator, Brush Aerator, and Brush + Weight materials. Oxygen output and operating capacity still require verification.",
-      "outputDisclaimer": "Oxygen output figures are shown as provided in the supplied materials and have not been verified against the equipment specifications."
+      "stocking": "Stocking count = pond area × stocking density.",
+      "survival": "Final fish count = stocking count × survival rate.",
+      "biomass": "Harvest biomass = final fish count ÷ harvest size (fish/kg).",
+      "feed": "Total feed = FCR × harvest biomass.",
+      "seedCost": "Total seed cost = seed price × stocking count.",
+      "feedCost": "Total feed cost = feed price × total feed.",
+      "electricity": "Total electricity cost = monthly electricity cost × cultivation cycle.",
+      "expenses": "Total expenses = seed cost + feed cost + electricity cost + other costs.",
+      "grossRevenue": "Gross revenue = fish selling price × harvest biomass.",
+      "netRevenue": "Net revenue = gross revenue − total expenses.",
+      "rcRatio": "R/C ratio = gross revenue ÷ total expenses. R/C ≥ 1 is categorized as Feasible.",
+      "aerator": "The estimated number of aerators is rounded up based on the minimum reference biomass capacity per unit.",
+      "oxygen": "Oxygen requirements use the previous calculator's reference value of 700 mg O₂/kg/hour.",
+      "limitations": "The calculation does not account for all technical factors, including pond depth, water conditions, oxygen distribution, and actual aerator configuration.",
+      "general": "All results are estimates based on the entered parameters and the supplied cultivation materials. Technical validation is recommended before implementation."
     }
   },
 

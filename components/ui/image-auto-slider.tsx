@@ -29,7 +29,7 @@ export function ImageAutoSlider({ className }: { className?: string }) {
       category: t("items.implementation.category"),
     },
     {
-      src: "/img/slider/mendampingi.jpg",
+      src: "/img/slider/mendampingi-pembudidaya.jpg",
       alt: t("items.farmers.alt"),
       title: t("items.farmers.title"),
       category: t("items.farmers.category"),

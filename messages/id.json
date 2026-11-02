@@ -977,13 +977,125 @@
       "eyebrow": "Kalkulator Budidaya",
       "title": "Rencanakan Budidaya",
       "titleHighlight": "dengan Lebih Terukur",
-      "description": "Pilih aerator dan masukkan data budidaya untuk mendapatkan estimasi awal biomassa, kebutuhan oksigen, dan jumlah alat berdasarkan parameter yang tersedia."
+      "description": "Simulasikan hasil panen, kebutuhan pakan, biaya operasional, pendapatan, serta estimasi kebutuhan aerator berdasarkan parameter budidaya yang dimasukkan."
+    },
+    "sections": {
+      "data": {
+        "title": "Data Budidaya",
+        "description": "Masukkan identitas petambak dan kondisi awal kolam."
+      },
+      "growth": {
+        "title": "Pertumbuhan dan Hasil Panen",
+        "description": "Tentukan tingkat kelangsungan hidup dan target ukuran panen."
+      },
+      "feed": {
+        "title": "Kebutuhan Pakan",
+        "description": "Hitung estimasi total kebutuhan pakan berdasarkan Feed Conversion Ratio (FCR)."
+      },
+      "cost": {
+        "title": "Biaya dan Harga Jual",
+        "description": "Masukkan harga benih, pakan, listrik, dan komponen biaya operasional lainnya."
+      },
+      "aerator": {
+        "title": "Kebutuhan Aerator",
+        "description": "Pilih jenis aerator untuk mengestimasi jumlah alat berdasarkan biomassa hasil panen."
+      }
+    },
+    "fields": {
+      "farmerName": {
+        "label": "Nama Petambak",
+        "placeholder": "Contoh: Bagas"
+      },
+      "cultivationType": {
+        "label": "Jenis Budidaya",
+        "options": {
+          "growOut": "Pembesaran",
+          "hatchery": "Pembenihan",
+          "nursery": "Pendederan"
+        }
+      },
+      "area": {
+        "label": "Luas Kolam",
+        "placeholder": "Contoh: 300",
+        "hint": "Total luas kolam yang digunakan."
+      },
+      "density": {
+        "label": "Padat Tebar",
+        "placeholder": "Contoh: 30",
+        "hint": "Jumlah ikan yang ditebar untuk setiap meter persegi."
+      },
+      "survivalRate": {
+        "label": "Survival Rate (SR)",
+        "placeholder": "Contoh: 80",
+        "hint": "Persentase ikan yang diperkirakan bertahan hidup hingga panen."
+      },
+      "harvestSize": {
+        "label": "Size Panen",
+        "placeholder": "Contoh: 4",
+        "hint": "Jumlah ikan dalam setiap satu kilogram hasil panen."
+      },
+      "fcr": {
+        "label": "Feed Conversion Ratio (FCR)",
+        "placeholder": "Contoh: 1,25",
+        "hint": "Perbandingan jumlah pakan yang digunakan terhadap biomassa hasil panen."
+      },
+      "seedPrice": {
+        "label": "Harga Benih",
+        "placeholder": "Contoh: 350"
+      },
+      "feedPrice": {
+        "label": "Harga Pakan",
+        "placeholder": "Contoh: 13500"
+      },
+      "cycleMonths": {
+        "label": "Lama Siklus Budidaya",
+        "placeholder": "Contoh: 4"
+      },
+      "monthlyElectricity": {
+        "label": "Biaya Listrik Bulanan",
+        "placeholder": "Contoh: 450000"
+      },
+      "otherCosts": {
+        "label": "Biaya Lain-lain",
+        "placeholder": "Contoh: 3000000",
+        "hint": "Biaya operasional lainnya di luar benih, pakan, dan listrik."
+      },
+      "sellingPrice": {
+        "label": "Harga Jual Ikan",
+        "placeholder": "Contoh: 24000"
+      }
+    },
+    "units": {
+      "area": "m²",
+      "density": "ekor/m²",
+      "fish": "ekor",
+      "fishPerKg": "ekor/kg",
+      "weight": "kg",
+      "percentage": "%",
+      "seedPrice": "Rp/ekor",
+      "feedPrice": "Rp/kg",
+      "currency": "Rp",
+      "month": "bulan",
+      "unit": "unit",
+      "oxygen": "gram/jam"
+    },
+    "automatic": {
+      "seedCount": "Jumlah Tebar Otomatis",
+      "seedCountFormula": "Luas kolam × padat tebar",
+      "finalCount": "Estimasi Jumlah Akhir",
+      "finalCountFormula": "Jumlah tebar × survival rate",
+      "harvestBiomass": "Estimasi Bobot Panen",
+      "harvestBiomassFormula": "Jumlah akhir ÷ size panen",
+      "feedAmount": "Estimasi Total Pakan",
+      "feedAmountFormula": "FCR × bobot panen",
+      "seedCost": "Total Biaya Benih",
+      "seedCostFormula": "Harga benih × jumlah tebar",
+      "feedCost": "Total Biaya Pakan",
+      "feedCostFormula": "Harga pakan × jumlah pakan",
+      "electricityCost": "Total Biaya Listrik",
+      "electricityCostFormula": "Biaya listrik bulanan × lama siklus"
     },
     "aerator": {
-      "step": "01",
-      "title": "Pilih jenis aerator",
-      "description": "Pilih alat yang ingin kamu gunakan.",
-      "biomassCapacity": "Acuan biomassa",
       "mini": {
         "name": "Aerator Mini",
         "subtitle": "Untuk kolam skala kecil",
@@ -996,80 +1108,74 @@
         "description": "Aerator brush dengan pemasangan sesuai SOP untuk mendukung budidaya dengan biomassa lebih besar.",
         "note": "Kapasitas biomassa mengikuti rentang pada materi teknis."
       },
-      "brushWeighted": {
-        "name": "Brush + Pemberat",
-        "subtitle": "Konfigurasi dengan pemberat",
-        "description": "Aerator brush dengan penambahan pemberat untuk konfigurasi budidaya yang memiliki acuan biomassa lebih besar.",
-        "note": "Kapasitas biomassa mengikuti rentang pada materi teknis."
-      },
-      "power": "Daya pada materi",
-      "oxygenOutput": "Output O₂ pada materi",
+      "biomassCapacity": "Acuan Biomassa",
+      "power": "Daya",
+      "oxygenOutput": "Output Oksigen",
       "perDevice": "Acuan biomassa per alat",
-      "capacityNote": "Data kapasitas mengikuti materi yang diberikan dan perlu diverifikasi sebelum digunakan sebagai rekomendasi operasional."
+      "capacityNote": "Data kapasitas mengikuti materi teknis yang diberikan dan perlu diverifikasi sebelum digunakan sebagai rekomendasi operasional."
     },
-    "form": {
-      "step": "02",
-      "title": "Data budidaya",
-      "description": "Masukkan data sesuai kondisi kolam.",
-      "methodTitle": "Metode perhitungan",
-      "pondMode": "Berdasarkan kolam",
-      "pondModeDescription": "Hitung biomassa dari data kolam dan ikan.",
-      "biomassMode": "Berdasarkan biomassa",
-      "biomassModeDescription": "Masukkan target berat total ikan.",
-      "area": {
-        "label": "Luas kolam",
-        "placeholder": "Contoh: 40",
-        "unit": "m²",
-        "hint": "Total luas kolam yang digunakan."
-      },
-      "density": {
-        "label": "Kepadatan tebar",
-        "placeholder": "Contoh: 35",
-        "unit": "ekor/m²",
-        "hint": "Jumlah ikan per meter persegi."
-      },
-      "averageWeight": {
-        "label": "Berat rata-rata ikan",
-        "placeholder": "Contoh: 200",
-        "unit": "gram/ekor",
-        "hint": "Berat rata-rata ikan pada kondisi atau fase budidaya yang ingin dihitung."
-      },
-      "targetBiomass": {
-        "label": "Target biomassa ikan",
-        "placeholder": "Contoh: 300",
-        "unit": "kg",
-        "hint": "Masukkan estimasi total berat ikan yang ingin ditampung."
-      },
-      "validation": "Isi semua data dengan angka yang valid dan lebih besar dari nol.",
-      "calculate": "Hitung Kebutuhan Aerator",
+    "action": {
+      "calculate": "Hitung Simulasi Budidaya",
       "reset": "Reset"
     },
+    "validation": {
+      "required": "Masukkan nama petambak dan lengkapi seluruh kolom yang wajib diisi.",
+      "invalid": "Masukkan nilai angka yang valid.",
+      "positive": "Luas kolam, padat tebar, survival rate, size panen, FCR, dan lama siklus harus lebih besar dari nol.",
+      "survivalRate": "Survival rate harus lebih besar dari 0% dan tidak boleh melebihi 100%.",
+      "general": "Lengkapi seluruh kolom dan pastikan semua nilai angka valid sebelum melakukan perhitungan."
+    },
     "result": {
-      "title": "Ringkasan kalkulasi",
+      "title": "Ringkasan Kalkulasi",
       "heading": "Hasil Budidaya",
-      "description": "Estimasi berdasarkan input dan acuan kapasitas alat.",
+      "description": "Estimasi berdasarkan data budidaya dan parameter teknis yang dimasukkan.",
       "emptyTitle": "Hasil akan muncul di sini",
-      "emptyDescription": "Pilih aerator, lengkapi data budidaya, lalu tekan tombol hitung untuk melihat hasil simulasi.",
-      "estimatedDevices": "Estimasi jumlah aerator",
-      "unit": "unit",
-      "basedOnCapacity": "Menggunakan kapasitas acuan {capacity} kg biomassa per alat.",
-      "estimatedFish": "Estimasi jumlah ikan",
-      "fishUnit": "ekor",
-      "targetBiomass": "Target biomassa",
-      "oxygenRequirement": "Estimasi kebutuhan oksigen",
-      "oxygenFormula": "Menggunakan acuan 700 mg O₂/kg/jam dari materi.",
+      "emptyDescription": "Lengkapi data budidaya, lalu tekan tombol Hitung untuk melihat estimasi hasil panen, kebutuhan pakan, biaya operasional, dan analisis ekonomi.",
+      "netRevenue": "Pendapatan Bersih",
+      "netRevenueDescription": "Pendapatan kotor dikurangi seluruh pengeluaran.",
+      "seedCount": "Jumlah Tebar",
+      "harvestBiomass": "Bobot Panen",
+      "productionSummary": "Ringkasan Produksi",
+      "costSummary": "Rincian Pengeluaran",
+      "revenueSummary": "Pendapatan dan Kelayakan Usaha",
+      "totalSeedCost": "Total Biaya Benih",
+      "totalFeedCost": "Total Biaya Pakan",
+      "totalElectricity": "Total Biaya Listrik",
+      "otherCosts": "Biaya Lain-lain",
+      "totalExpense": "Total Pengeluaran",
+      "grossRevenue": "Pendapatan Kotor",
+      "netRevenueItem": "Pendapatan Bersih",
+      "rcRatio": "Revenue-Cost Ratio (R/C)",
+      "feasible": "Layak",
+      "notFeasible": "Tidak Layak",
+      "cannotEvaluate": "Belum Dapat Dinilai",
+      "rcDescription": "R/C ≥ 1 dikategorikan Layak, sedangkan R/C < 1 dikategorikan Tidak Layak.",
+      "aeratorRequirement": "Estimasi Kebutuhan Aerator",
+      "estimatedDevices": "Estimasi Jumlah Aerator",
+      "oxygenRequirement": "Estimasi Kebutuhan Oksigen",
       "oxygenUnit": "g O₂/jam",
-      "technicalValidationTitle": "Perlu validasi teknis",
-      "technicalValidationDescription": "Hasil ini adalah estimasi matematis awal, bukan rekomendasi jumlah alat yang siap digunakan. Kapasitas aktual, konfigurasi kolam, dan faktor keamanan perlu dikonfirmasi oleh tim teknis."
+      "basedOnCapacity": "Menggunakan acuan kapasitas minimum {capacity} kg biomassa per alat.",
+      "oxygenFormula": "Menggunakan acuan 700 mg O₂/kg/jam.",
+      "technicalValidationTitle": "Catatan Estimasi",
+      "technicalValidationDescription": "Hasil ini merupakan simulasi matematis berdasarkan input dan parameter yang diberikan. Kebutuhan aerator aktual, kualitas air, dan kelayakan teknis perlu divalidasi oleh tim teknis sebelum diterapkan."
     },
     "technicalNotes": {
-      "title": "Catatan perhitungan",
-      "biomass": "Biomassa dihitung dari jumlah ikan dikalikan berat rata-rata ikan.",
-      "devices": "Estimasi jumlah alat menggunakan pembulatan ke atas berdasarkan batas bawah kapasitas biomassa pada materi.",
-      "oxygen": "Kebutuhan oksigen dihitung dengan acuan 700 mg O₂/kg/jam sesuai materi yang diberikan.",
-      "limitations": "Perhitungan belum memperhitungkan faktor keamanan, kondisi air, kedalaman kolam, distribusi oksigen, atau konfigurasi aktual aerator.",
-      "general": "Perhitungan menggunakan data acuan pada materi Aerator Mini, Aerator Brush, dan Brush + Pemberat. Output oksigen setiap alat dan kapasitas operasional masih perlu diverifikasi.",
-      "outputDisclaimer": "Angka output oksigen ditampilkan sesuai materi yang diberikan dan belum diverifikasi terhadap spesifikasi alat."
+      "title": "Catatan Perhitungan",
+      "stocking": "Jumlah tebar = luas kolam × padat tebar.",
+      "survival": "Jumlah akhir = jumlah tebar × survival rate.",
+      "biomass": "Bobot panen = jumlah akhir ÷ size panen (ekor/kg).",
+      "feed": "Jumlah pakan = FCR × bobot panen.",
+      "seedCost": "Biaya benih = harga benih × jumlah tebar.",
+      "feedCost": "Biaya pakan = harga pakan × jumlah pakan.",
+      "electricity": "Biaya listrik total = biaya listrik bulanan × lama siklus.",
+      "expenses": "Total pengeluaran = biaya benih + biaya pakan + biaya listrik + biaya lain-lain.",
+      "grossRevenue": "Pendapatan kotor = harga jual ikan × bobot panen.",
+      "netRevenue": "Pendapatan bersih = pendapatan kotor − total pengeluaran.",
+      "rcRatio": "R/C = pendapatan kotor ÷ total pengeluaran. R/C ≥ 1 dikategorikan Layak.",
+      "aerator": "Estimasi jumlah aerator menggunakan pembulatan ke atas berdasarkan kapasitas biomassa minimum per alat.",
+      "oxygen": "Kebutuhan oksigen menggunakan acuan 700 mg O₂/kg/jam dari kalkulator sebelumnya.",
+      "limitations": "Perhitungan belum memperhitungkan seluruh faktor teknis, termasuk kedalaman kolam, kondisi air, distribusi oksigen, dan konfigurasi aktual aerator.",
+      "general": "Seluruh hasil merupakan estimasi berdasarkan parameter yang dimasukkan dan materi budidaya yang tersedia. Validasi teknis disarankan sebelum implementasi."
     }
   },
 

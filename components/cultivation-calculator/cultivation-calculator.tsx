@@ -1,7 +1,7 @@
-
 "use client";
 
 import { useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import {
   Calculator,
   Check,
@@ -10,83 +10,60 @@ import {
   Fish,
   Gauge,
   Info,
-  Map,
   RotateCcw,
+  TrendingUp,
   Waves,
   Wind,
-  Zap,
 } from "lucide-react";
 
-type AeratorId = "mini" | "brush" | "brush-weighted";
+type AeratorId = "mini" | "brush";
 
-type Aerator = {
-  id: AeratorId;
-  name: string;
-  subtitle: string;
-  description: string;
-  icon: typeof Wind;
-  power: string;
-  oxygenOutput: string;
-  biomassMin: number;
-  biomassMax: number;
-  areaMin: number;
-  areaMax: number;
-  densityMin: number;
-  densityMax: number;
-  note: string;
+type FormState = {
+  farmerName: string;
+  cultivationType: string;
+  area: string;
+  density: string;
+  survivalRate: string;
+  harvestSize: string;
+  fcr: string;
+  seedPrice: string;
+  feedPrice: string;
+  cycleMonths: string;
+  monthlyElectricity: string;
+  otherCosts: string;
+  sellingPrice: string;
 };
 
-const aerators: Aerator[] = [
+const initialForm: FormState = {
+  farmerName: "",
+  cultivationType: "Pembesaran",
+  area: "300",
+  density: "30",
+  survivalRate: "80",
+  harvestSize: "4",
+  fcr: "1.25",
+  seedPrice: "350",
+  feedPrice: "13500",
+  cycleMonths: "4",
+  monthlyElectricity: "450000",
+  otherCosts: "3000000",
+  sellingPrice: "24000",
+};
+
+const aerators = [
   {
-    id: "mini",
-    name: "Aerator Mini",
-    subtitle: "Untuk kolam skala kecil",
-    description:
-      "Pilihan aerator mini untuk kebutuhan budidaya ikan nila pada kolam berukuran kecil.",
+    id: "mini" as const,
     icon: Wind,
     power: "350 W / ½ HP",
-    oxygenOutput: "250.000 mg O₂/jam",
     biomassMin: 357.14,
     biomassMax: 357.14,
-    areaMin: 30,
-    areaMax: 50,
-    densityMin: 33,
-    densityMax: 36,
-    note: "Data pembesaran ikan nila pada materi teknis.",
   },
   {
-    id: "brush",
-    name: "Aerator Brush",
-    subtitle: "Untuk pembesaran ikan",
-    description:
-      "Aerator brush dengan pemasangan sesuai SOP untuk mendukung budidaya dengan biomassa lebih besar.",
+    id: "brush" as const,
     icon: Waves,
     power: "700 W / 470 W",
-    oxygenOutput: "1.000.000 mg O₂/jam*",
     biomassMin: 1200,
     biomassMax: 1300,
-    areaMin: 200,
-    areaMax: 300,
-    densityMin: 30,
-    densityMax: 50,
-    note: "Kapasitas biomassa mengikuti rentang pada materi teknis.",
-  },
-  {
-    id: "brush-weighted",
-    name: "Brush + Pemberat",
-    subtitle: "Konfigurasi dengan pemberat",
-    description:
-      "Aerator brush dengan penambahan pemberat untuk konfigurasi budidaya yang memiliki acuan biomassa lebih besar.",
-    icon: Gauge,
-    power: "700 W / 600 W",
-    oxygenOutput: "1.300.000 mg O₂/jam*",
-    biomassMin: 1600,
-    biomassMax: 1800,
-    areaMin: 200,
-    areaMax: 300,
-    densityMin: 40,
-    densityMax: 60,
-    note: "Kapasitas biomassa mengikuti rentang pada materi teknis.",
   },
 ];
 
@@ -94,10 +71,12 @@ type InputFieldProps = {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  unit: string;
-  placeholder?: string;
+  unit?: string;
+  placeholder: string;
   hint?: string;
+  inputType?: "text" | "number";
   min?: number;
+  step?: string;
 };
 
 function InputField({
@@ -107,30 +86,31 @@ function InputField({
   unit,
   placeholder,
   hint,
+  inputType = "number",
   min = 0,
+  step = "any",
 }: InputFieldProps) {
   return (
-    <div className="space-y-2">
+    <div className="min-w-0 space-y-2">
       <label className="block text-sm font-medium text-[var(--brand-dark)]">
         {label}
       </label>
-
       <div className="flex items-center rounded-xl border border-[var(--input)] bg-[var(--card)] transition focus-within:border-[var(--brand-secondary)] focus-within:ring-4 focus-within:ring-[var(--brand-secondary)]/15">
         <input
-          type="number"
-          min={min}
-          step="any"
+          type={inputType}
+          min={inputType === "number" ? min : undefined}
+          step={inputType === "number" ? step : undefined}
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          placeholder={placeholder ?? "Masukkan nilai"}
+          placeholder={placeholder}
           className="min-w-0 flex-1 rounded-xl bg-transparent px-4 py-3.5 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)]"
         />
-
-        <span className="shrink-0 px-4 text-sm text-[var(--muted-foreground)]">
-          {unit}
-        </span>
+        {unit && (
+          <span className="shrink-0 px-4 text-sm text-[var(--muted-foreground)]">
+            {unit}
+          </span>
+        )}
       </div>
-
       {hint && (
         <p className="text-xs leading-5 text-[var(--muted-foreground)]">
           {hint}
@@ -140,91 +120,198 @@ function InputField({
   );
 }
 
-export default function CultivationCalculator() {
-  const [selectedAerator, setSelectedAerator] =
-    useState<AeratorId>("mini");
+function SectionHeader({
+  number,
+  title,
+  description,
+}: {
+  number: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <div className="flex items-center gap-3 border-b border-[var(--border)] px-5 py-5 sm:px-7">
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
+        <span className="text-sm font-bold">{number}</span>
+      </div>
+      <div>
+        <h3 className="text-lg font-bold text-[var(--brand-dark)]">{title}</h3>
+        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+          {description}
+        </p>
+      </div>
+    </div>
+  );
+}
 
-  const [area, setArea] = useState("40");
-  const [density, setDensity] = useState("35");
-  const [averageWeight, setAverageWeight] = useState("200");
-  const [targetBiomass, setTargetBiomass] = useState("");
-  const [calculationMode, setCalculationMode] = useState<
-    "pond" | "biomass"
-  >("pond");
+function ResultItem({
+  label,
+  value,
+  unit,
+}: {
+  label: string;
+  value: string;
+  unit?: string;
+}) {
+  return (
+    <div className="flex items-start justify-between gap-3 border-b border-[var(--border)] py-3 last:border-b-0">
+      <p className="text-sm text-[var(--muted-foreground)]">{label}</p>
+      <p className="text-right text-sm font-semibold text-[var(--brand-dark)]">
+        {value} {unit}
+      </p>
+    </div>
+  );
+}
+
+export default function CultivationCalculator() {
+  const t = useTranslations("CultivationCalculator");
+  const locale = useLocale();
+
+  const [form, setForm] = useState<FormState>(initialForm);
+  const [selectedAerator, setSelectedAerator] = useState<AeratorId>("mini");
   const [hasCalculated, setHasCalculated] = useState(false);
 
   const activeAerator = aerators.find(
     (aerator) => aerator.id === selectedAerator,
   )!;
 
-  const parsedArea = Number(area);
-  const parsedDensity = Number(density);
-  const parsedWeight = Number(averageWeight);
-  const parsedBiomass = Number(targetBiomass);
+  const formatNumber = (value: number, maximumFractionDigits = 2) =>
+    new Intl.NumberFormat(locale === "id" ? "id-ID" : "en-US", {
+      maximumFractionDigits,
+    }).format(value);
 
-  const isPondInputValid =
-    area.trim() !== "" &&
-    density.trim() !== "" &&
-    averageWeight.trim() !== "" &&
-    Number.isFinite(parsedArea) &&
-    Number.isFinite(parsedDensity) &&
-    Number.isFinite(parsedWeight) &&
-    parsedArea > 0 &&
-    parsedDensity > 0 &&
-    parsedWeight > 0;
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat(locale === "id" ? "id-ID" : "en-US", {
+      style: "currency",
+      currency: "IDR",
+      maximumFractionDigits: 0,
+    }).format(value);
 
-  const isBiomassInputValid =
-    targetBiomass.trim() !== "" &&
-    Number.isFinite(parsedBiomass) &&
-    parsedBiomass > 0;
+  const number = (value: string) =>
+    value.trim() === "" ? Number.NaN : Number(value);
+
+  const parsed = {
+    area: number(form.area),
+    density: number(form.density),
+    survivalRate: number(form.survivalRate),
+    harvestSize: number(form.harvestSize),
+    fcr: number(form.fcr),
+    seedPrice: number(form.seedPrice),
+    feedPrice: number(form.feedPrice),
+    cycleMonths: number(form.cycleMonths),
+    monthlyElectricity: number(form.monthlyElectricity),
+    otherCosts: number(form.otherCosts),
+    sellingPrice: number(form.sellingPrice),
+  };
+
+  const isValid =
+    Object.values(parsed).every(
+      (value) => Number.isFinite(value) && value >= 0,
+    ) &&
+    parsed.area > 0 &&
+    parsed.density > 0 &&
+    parsed.survivalRate > 0 &&
+    parsed.survivalRate <= 100 &&
+    parsed.harvestSize > 0 &&
+    parsed.fcr > 0 &&
+    parsed.cycleMonths > 0 &&
+    form.farmerName.trim() !== "" &&
+    form.cultivationType.trim() !== "";
 
   const result = useMemo(() => {
-    const fishCount = isPondInputValid
-      ? Math.floor(parsedArea * parsedDensity)
-      : 0;
+    const p = parsed;
 
-    const calculatedBiomass = isPondInputValid
-      ? (fishCount * parsedWeight) / 1000
-      : 0;
-
-    const biomass =
-      calculationMode === "pond"
-        ? calculatedBiomass
-        : isBiomassInputValid
-          ? parsedBiomass
-          : 0;
-
-    // Batas bawah kapasitas hanya digunakan sebagai acuan awal.
-    const estimatedUnits =
-      biomass > 0
-        ? Math.ceil(biomass / activeAerator.biomassMin)
+    const seedCount =
+      Number.isFinite(p.area) && Number.isFinite(p.density)
+        ? p.area * p.density
         : 0;
 
-    const oxygenRequirement = biomass * 700;
+    const finalCount = Number.isFinite(p.survivalRate)
+      ? seedCount * (p.survivalRate / 100)
+      : 0;
+
+    const harvestBiomass =
+      Number.isFinite(p.harvestSize) && p.harvestSize > 0
+        ? finalCount / p.harvestSize
+        : 0;
+
+    const feedAmount = Number.isFinite(p.fcr) ? p.fcr * harvestBiomass : 0;
+
+    const totalSeedCost = Number.isFinite(p.seedPrice)
+      ? p.seedPrice * seedCount
+      : 0;
+
+    const totalFeedCost = Number.isFinite(p.feedPrice)
+      ? p.feedPrice * feedAmount
+      : 0;
+
+    const totalElectricity =
+      Number.isFinite(p.monthlyElectricity) && Number.isFinite(p.cycleMonths)
+        ? p.monthlyElectricity * p.cycleMonths
+        : 0;
+
+    const totalExpense =
+      totalSeedCost +
+      totalFeedCost +
+      totalElectricity +
+      (Number.isFinite(p.otherCosts) ? p.otherCosts : 0);
+
+    const grossRevenue =
+      (Number.isFinite(p.sellingPrice) ? p.sellingPrice : 0) *
+      harvestBiomass;
+
+    const netRevenue = grossRevenue - totalExpense;
+    const rcRatio = totalExpense > 0 ? grossRevenue / totalExpense : null;
+
+    const estimatedAeratorUnits =
+      harvestBiomass > 0
+        ? Math.ceil(harvestBiomass / activeAerator.biomassMin)
+        : 0;
+
+    // Acuan kebutuhan oksigen: 700 mg O2/kg/jam, dikonversi ke gram/jam.
+    const oxygenRequirementGram = (harvestBiomass * 700) / 1000;
 
     return {
-      fishCount,
-      biomass,
-      estimatedUnits,
-      oxygenRequirement,
-      isValid:
-        calculationMode === "pond"
-          ? isPondInputValid
-          : isBiomassInputValid,
+      seedCount,
+      finalCount,
+      harvestBiomass,
+      feedAmount,
+      totalSeedCost,
+      totalFeedCost,
+      totalElectricity,
+      totalExpense,
+      grossRevenue,
+      netRevenue,
+      rcRatio,
+      estimatedAeratorUnits,
+      oxygenRequirementGram,
+      isFeasible: rcRatio !== null && rcRatio >= 1,
     };
   }, [
+    parsed.area,
+    parsed.density,
+    parsed.survivalRate,
+    parsed.harvestSize,
+    parsed.fcr,
+    parsed.seedPrice,
+    parsed.feedPrice,
+    parsed.cycleMonths,
+    parsed.monthlyElectricity,
+    parsed.otherCosts,
+    parsed.sellingPrice,
     activeAerator,
-    calculationMode,
-    isBiomassInputValid,
-    isPondInputValid,
-    parsedArea,
-    parsedDensity,
-    parsedWeight,
-    parsedBiomass,
   ]);
 
+  function updateField<K extends keyof FormState>(
+    key: K,
+    value: FormState[K],
+  ) {
+    setForm((current) => ({ ...current, [key]: value }));
+    setHasCalculated(false);
+  }
+
   function handleCalculate() {
-    if (!result.isValid) {
+    if (!isValid) {
       setHasCalculated(false);
       return;
     }
@@ -239,20 +326,21 @@ export default function CultivationCalculator() {
   }
 
   function handleReset() {
+    setForm(initialForm);
     setSelectedAerator("mini");
-    setArea("40");
-    setDensity("35");
-    setAverageWeight("200");
-    setTargetBiomass("");
-    setCalculationMode("pond");
     setHasCalculated(false);
   }
 
-  function formatNumber(value: number, maximumFractionDigits = 2) {
-    return new Intl.NumberFormat("id-ID", {
-      maximumFractionDigits,
-    }).format(value);
-  }
+  const cultivationTypeLabel =
+    form.cultivationType === "Pembesaran"
+      ? t("fields.cultivationType.options.growOut")
+      : form.cultivationType === "Pembenihan"
+        ? t("fields.cultivationType.options.hatchery")
+        : t("fields.cultivationType.options.nursery");
+
+  const aeratorName = t(`aerator.${selectedAerator}.name`);
+  const aeratorDescription = t(`aerator.${selectedAerator}.description`);
+  const aeratorNote = t(`aerator.${selectedAerator}.note`);
 
   return (
     <section
@@ -263,54 +351,290 @@ export default function CultivationCalculator() {
         {/* Intro */}
         <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-12">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--accent)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--brand-dark)]">
-            <Calculator
-              size={15}
-              className="text-[var(--brand-secondary)]"
-            />
-            Kalkulator Budidaya
+            <Calculator size={15} className="text-[var(--brand-secondary)]" />
+            {t("intro.eyebrow")}
           </div>
 
           <h2 className="text-3xl font-bold tracking-tight text-[var(--brand-dark)] sm:text-4xl lg:text-5xl">
-            Rencanakan Budidaya
+            {t("intro.title")}
             <span className="mt-1 block text-[var(--brand-secondary)]">
-              dengan Lebih Terukur
+              {t("intro.titleHighlight")}
             </span>
           </h2>
 
           <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[var(--muted-foreground)] sm:text-base">
-            Pilih aerator dan masukkan data budidaya untuk mendapatkan
-            estimasi awal biomassa, kebutuhan oksigen, dan jumlah alat
-            berdasarkan parameter yang tersedia.
+            {t("intro.description")}
           </p>
         </div>
 
-        {/* Main layout */}
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(340px,0.85fr)] lg:gap-8">
           {/* Form */}
           <div className="space-y-6">
-            {/* Step 1 */}
+            {/* Section 1: Cultivation data */}
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
-              <div className="border-b border-[var(--border)] px-5 py-5 sm:px-7">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
-                    <span className="text-sm font-bold">01</span>
-                  </div>
+              <SectionHeader
+                number="01"
+                title={t("sections.data.title")}
+                description={t("sections.data.description")}
+              />
 
-                  <div>
-                    <h3 className="text-lg font-bold text-[var(--brand-dark)]">
-                      Pilih jenis aerator
-                    </h3>
-                    <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-                      Pilih alat yang ingin kamu gunakan.
-                    </p>
-                  </div>
+              <div className="grid gap-5 p-5 sm:grid-cols-2 sm:p-7">
+                <InputField
+                  label={t("fields.farmerName.label")}
+                  value={form.farmerName}
+                  onChange={(value) => updateField("farmerName", value)}
+                  inputType="text"
+                  placeholder={t("fields.farmerName.placeholder")}
+                />
+
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-[var(--brand-dark)]">
+                    {t("fields.cultivationType.label")}
+                  </label>
+                  <select
+                    value={form.cultivationType}
+                    onChange={(event) =>
+                      updateField("cultivationType", event.target.value)
+                    }
+                    className="w-full rounded-xl border border-[var(--input)] bg-[var(--card)] px-4 py-3.5 text-sm text-[var(--foreground)] outline-none focus:border-[var(--brand-secondary)] focus:ring-4 focus:ring-[var(--brand-secondary)]/15"
+                  >
+                    <option value="Pembesaran">
+                      {t("fields.cultivationType.options.growOut")}
+                    </option>
+                    <option value="Pembenihan">
+                      {t("fields.cultivationType.options.hatchery")}
+                    </option>
+                    <option value="Pendederan">
+                      {t("fields.cultivationType.options.nursery")}
+                    </option>
+                  </select>
+                </div>
+
+                <InputField
+                  label={t("fields.area.label")}
+                  value={form.area}
+                  onChange={(value) => updateField("area", value)}
+                  unit={t("units.area")}
+                  placeholder={t("fields.area.placeholder")}
+                />
+
+                <InputField
+                  label={t("fields.density.label")}
+                  value={form.density}
+                  onChange={(value) => updateField("density", value)}
+                  unit={t("units.density")}
+                  placeholder={t("fields.density.placeholder")}
+                  hint={t("fields.density.hint")}
+                />
+
+                <div className="rounded-xl bg-[var(--secondary)] p-4 sm:col-span-2">
+                  <p className="text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.seedCount")}
+                  </p>
+                  <p className="mt-1 text-2xl font-bold text-[var(--brand-dark)]">
+                    {formatNumber(result.seedCount, 0)} {t("units.fish")}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.seedCountFormula")}
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <div className="grid gap-3 p-4 sm:grid-cols-3 sm:p-5">
+            {/* Section 2: Growth and harvest */}
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+              <SectionHeader
+                number="02"
+                title={t("sections.growth.title")}
+                description={t("sections.growth.description")}
+              />
+
+              <div className="grid gap-5 p-5 sm:grid-cols-2 sm:p-7">
+                <InputField
+                  label={t("fields.survivalRate.label")}
+                  value={form.survivalRate}
+                  onChange={(value) => updateField("survivalRate", value)}
+                  unit={t("units.percentage")}
+                  placeholder={t("fields.survivalRate.placeholder")}
+                  hint={t("fields.survivalRate.hint")}
+                />
+
+                <InputField
+                  label={t("fields.harvestSize.label")}
+                  value={form.harvestSize}
+                  onChange={(value) => updateField("harvestSize", value)}
+                  unit={t("units.fishPerKg")}
+                  placeholder={t("fields.harvestSize.placeholder")}
+                  hint={t("fields.harvestSize.hint")}
+                />
+
+                <div className="rounded-xl bg-[var(--secondary)] p-4">
+                  <p className="text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.finalCount")}
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-[var(--brand-dark)]">
+                    {formatNumber(result.finalCount, 0)} {t("units.fish")}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.finalCountFormula")}
+                  </p>
+                </div>
+
+                <div className="rounded-xl bg-[var(--secondary)] p-4">
+                  <p className="text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.harvestBiomass")}
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-[var(--brand-dark)]">
+                    {formatNumber(result.harvestBiomass)} {t("units.weight")}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.harvestBiomassFormula")}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3: Feed */}
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+              <SectionHeader
+                number="03"
+                title={t("sections.feed.title")}
+                description={t("sections.feed.description")}
+              />
+
+              <div className="grid gap-5 p-5 sm:grid-cols-2 sm:p-7">
+                <InputField
+                  label={t("fields.fcr.label")}
+                  value={form.fcr}
+                  onChange={(value) => updateField("fcr", value)}
+                  placeholder={t("fields.fcr.placeholder")}
+                  hint={t("fields.fcr.hint")}
+                />
+
+                <div className="rounded-xl bg-[var(--secondary)] p-4">
+                  <p className="text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.feedAmount")}
+                  </p>
+                  <p className="mt-1 text-xl font-bold text-[var(--brand-dark)]">
+                    {formatNumber(result.feedAmount)} {t("units.weight")}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.feedAmountFormula")}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Section 4: Costs and selling price */}
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+              <SectionHeader
+                number="04"
+                title={t("sections.cost.title")}
+                description={t("sections.cost.description")}
+              />
+
+              <div className="grid gap-5 p-5 sm:grid-cols-2 sm:p-7">
+                <InputField
+                  label={t("fields.seedPrice.label")}
+                  value={form.seedPrice}
+                  onChange={(value) => updateField("seedPrice", value)}
+                  unit={t("units.seedPrice")}
+                  placeholder={t("fields.seedPrice.placeholder")}
+                />
+
+                <div className="rounded-xl bg-[var(--secondary)] p-4">
+                  <p className="text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.seedCost")}
+                  </p>
+                  <p className="mt-1 text-lg font-bold text-[var(--brand-dark)]">
+                    {formatCurrency(result.totalSeedCost)}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.seedCostFormula")}
+                  </p>
+                </div>
+
+                <InputField
+                  label={t("fields.feedPrice.label")}
+                  value={form.feedPrice}
+                  onChange={(value) => updateField("feedPrice", value)}
+                  unit={t("units.feedPrice")}
+                  placeholder={t("fields.feedPrice.placeholder")}
+                />
+
+                <div className="rounded-xl bg-[var(--secondary)] p-4">
+                  <p className="text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.feedCost")}
+                  </p>
+                  <p className="mt-1 text-lg font-bold text-[var(--brand-dark)]">
+                    {formatCurrency(result.totalFeedCost)}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.feedCostFormula")}
+                  </p>
+                </div>
+
+                <InputField
+                  label={t("fields.cycleMonths.label")}
+                  value={form.cycleMonths}
+                  onChange={(value) => updateField("cycleMonths", value)}
+                  unit={t("units.month")}
+                  placeholder={t("fields.cycleMonths.placeholder")}
+                />
+
+                <InputField
+                  label={t("fields.monthlyElectricity.label")}
+                  value={form.monthlyElectricity}
+                  onChange={(value) =>
+                    updateField("monthlyElectricity", value)
+                  }
+                  unit={t("units.currency")}
+                  placeholder={t("fields.monthlyElectricity.placeholder")}
+                />
+
+                <div className="rounded-xl bg-[var(--secondary)] p-4">
+                  <p className="text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.electricityCost")}
+                  </p>
+                  <p className="mt-1 text-lg font-bold text-[var(--brand-dark)]">
+                    {formatCurrency(result.totalElectricity)}
+                  </p>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                    {t("automatic.electricityCostFormula")}
+                  </p>
+                </div>
+
+                <InputField
+                  label={t("fields.otherCosts.label")}
+                  value={form.otherCosts}
+                  onChange={(value) => updateField("otherCosts", value)}
+                  unit={t("units.currency")}
+                  placeholder={t("fields.otherCosts.placeholder")}
+                  hint={t("fields.otherCosts.hint")}
+                />
+
+                <InputField
+                  label={t("fields.sellingPrice.label")}
+                  value={form.sellingPrice}
+                  onChange={(value) => updateField("sellingPrice", value)}
+                  unit={`${t("units.currency")}/${t("units.weight")}`}
+                  placeholder={t("fields.sellingPrice.placeholder")}
+                />
+              </div>
+            </div>
+
+            {/* Section 5: Aerator */}
+            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
+              <SectionHeader
+                number="05"
+                title={t("sections.aerator.title")}
+                description={t("sections.aerator.description")}
+              />
+
+              <div className="grid gap-3 p-4 sm:grid-cols-2 sm:p-5">
                 {aerators.map((aerator) => {
                   const Icon = aerator.icon;
-                  const isSelected = selectedAerator === aerator.id;
+                  const selected = selectedAerator === aerator.id;
 
                   return (
                     <button
@@ -320,48 +644,40 @@ export default function CultivationCalculator() {
                         setSelectedAerator(aerator.id);
                         setHasCalculated(false);
                       }}
-                      aria-pressed={isSelected}
-                      className={`group relative flex h-full flex-col rounded-xl border p-4 text-left transition duration-200 hover:-translate-y-0.5 hover:shadow-md ${
-                        isSelected
+                      aria-pressed={selected}
+                      className={`relative flex flex-col rounded-xl border p-4 text-left transition hover:shadow-md ${
+                        selected
                           ? "border-[var(--brand-primary)] bg-[var(--accent)] ring-2 ring-[var(--brand-primary)]/20"
                           : "border-[var(--border)] bg-[var(--card)] hover:border-[var(--brand-secondary)]"
                       }`}
                     >
-                      {isSelected && (
+                      {selected && (
                         <span className="absolute right-3 top-3 flex size-5 items-center justify-center rounded-full bg-[var(--brand-primary)] text-[var(--brand-dark)]">
                           <Check size={12} strokeWidth={3} />
                         </span>
                       )}
 
-                      <div
-                        className={`mb-4 flex size-11 items-center justify-center rounded-xl transition ${
-                          isSelected
-                            ? "bg-[var(--brand-dark)] text-white"
-                            : "bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)] group-hover:bg-[var(--accent)]"
-                        }`}
-                      >
-                        <Icon size={23} strokeWidth={1.8} />
-                      </div>
+                      <span className="mb-3 flex size-10 items-center justify-center rounded-xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
+                        <Icon size={22} />
+                      </span>
 
-                      <h4 className="pr-2 text-sm font-bold leading-5 text-[var(--brand-dark)]">
-                        {aerator.name}
-                      </h4>
+                      <span className="text-sm font-bold text-[var(--brand-dark)]">
+                        {t(`aerator.${aerator.id}.name`)}
+                      </span>
 
-                      <p className="mt-2 text-xs leading-5 text-[var(--muted-foreground)]">
-                        {aerator.subtitle}
-                      </p>
+                      <span className="mt-1 text-xs text-[var(--muted-foreground)]">
+                        {t(`aerator.${aerator.id}.subtitle`)}
+                      </span>
 
-                      <div className="mt-4 border-t border-[var(--border)] pt-3">
-                        <p className="text-[11px] text-[var(--muted-foreground)]">
-                          Acuan biomassa
-                        </p>
-                        <p className="mt-1 text-sm font-bold text-[var(--brand-secondary)]">
+                      <span className="mt-3 border-t border-[var(--border)] pt-3 text-xs text-[var(--muted-foreground)]">
+                        {t("aerator.biomassCapacity")}:{" "}
+                        <strong className="text-[var(--brand-secondary)]">
                           {formatNumber(aerator.biomassMin)}
                           {aerator.biomassMin !== aerator.biomassMax &&
                             `–${formatNumber(aerator.biomassMax)}`}{" "}
-                          kg
-                        </p>
-                      </div>
+                          {t("units.weight")}
+                        </strong>
+                      </span>
                     </button>
                   );
                 })}
@@ -373,181 +689,44 @@ export default function CultivationCalculator() {
                   className="mt-0.5 shrink-0 text-[var(--brand-secondary)]"
                 />
                 <p className="text-xs leading-5 text-[var(--muted-foreground)]">
-                  {activeAerator.description} {activeAerator.note}
+                  {aeratorDescription} {aeratorNote}
                 </p>
               </div>
             </div>
 
-            {/* Step 2 */}
-            <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-sm">
-              <div className="border-b border-[var(--border)] px-5 py-5 sm:px-7">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
-                    <span className="text-sm font-bold">02</span>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[var(--brand-dark)]">
-                      Data budidaya
-                    </h3>
-                    <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-                      Masukkan data sesuai kondisi kolam.
-                    </p>
-                  </div>
-                </div>
+            {!isValid && (
+              <div
+                role="alert"
+                className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"
+              >
+                {t("validation.general")}
               </div>
+            )}
 
-              <div className="space-y-6 p-5 sm:p-7">
-                <div>
-                  <p className="mb-3 text-sm font-semibold text-[var(--brand-dark)]">
-                    Metode perhitungan
-                  </p>
+            <div className="flex flex-col gap-3 border-t border-[var(--border)] pt-5 sm:flex-row">
+              <button
+                type="button"
+                onClick={handleCalculate}
+                disabled={!isValid}
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--brand-primary)] px-5 py-3.5 text-sm font-semibold text-[var(--brand-dark)] shadow-sm transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <Calculator size={18} />
+                {t("action.calculate")}
+                <ChevronRight size={17} />
+              </button>
 
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCalculationMode("pond");
-                        setHasCalculated(false);
-                      }}
-                      className={`flex items-start gap-3 rounded-xl border p-4 text-left transition ${
-                        calculationMode === "pond"
-                          ? "border-[var(--brand-secondary)] bg-[var(--brand-secondary)]/10 ring-1 ring-[var(--brand-secondary)]/20"
-                          : "border-[var(--border)] hover:border-[var(--brand-secondary)]"
-                      }`}
-                    >
-                      <Map
-                        size={20}
-                        className="shrink-0 text-[var(--brand-secondary)]"
-                      />
-                      <span>
-                        <span className="block text-sm font-semibold text-[var(--brand-dark)]">
-                          Berdasarkan kolam
-                        </span>
-                        <span className="mt-1 block text-xs leading-5 text-[var(--muted-foreground)]">
-                          Hitung biomassa dari data kolam dan ikan.
-                        </span>
-                      </span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCalculationMode("biomass");
-                        setHasCalculated(false);
-                      }}
-                      className={`flex items-start gap-3 rounded-xl border p-4 text-left transition ${
-                        calculationMode === "biomass"
-                          ? "border-[var(--brand-secondary)] bg-[var(--brand-secondary)]/10 ring-1 ring-[var(--brand-secondary)]/20"
-                          : "border-[var(--border)] hover:border-[var(--brand-secondary)]"
-                      }`}
-                    >
-                      <Fish
-                        size={20}
-                        className="shrink-0 text-[var(--brand-secondary)]"
-                      />
-                      <span>
-                        <span className="block text-sm font-semibold text-[var(--brand-dark)]">
-                          Berdasarkan biomassa
-                        </span>
-                        <span className="mt-1 block text-xs leading-5 text-[var(--muted-foreground)]">
-                          Masukkan target berat total ikan.
-                        </span>
-                      </span>
-                    </button>
-                  </div>
-                </div>
-
-                {calculationMode === "pond" ? (
-                  <div className="grid gap-5 sm:grid-cols-2">
-                    <InputField
-                      label="Luas kolam"
-                      value={area}
-                      onChange={(value) => {
-                        setArea(value);
-                        setHasCalculated(false);
-                      }}
-                      unit="m²"
-                      placeholder="Contoh: 40"
-                      hint="Total luas kolam yang digunakan."
-                    />
-
-                    <InputField
-                      label="Kepadatan tebar"
-                      value={density}
-                      onChange={(value) => {
-                        setDensity(value);
-                        setHasCalculated(false);
-                      }}
-                      unit="ekor/m²"
-                      placeholder="Contoh: 35"
-                      hint="Jumlah ikan per meter persegi."
-                    />
-
-                    <div className="sm:col-span-2">
-                      <InputField
-                        label="Berat rata-rata ikan"
-                        value={averageWeight}
-                        onChange={(value) => {
-                          setAverageWeight(value);
-                          setHasCalculated(false);
-                        }}
-                        unit="gram/ekor"
-                        placeholder="Contoh: 200"
-                        hint="Berat rata-rata ikan pada kondisi atau fase budidaya yang ingin dihitung."
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <InputField
-                    label="Target biomassa ikan"
-                    value={targetBiomass}
-                    onChange={(value) => {
-                      setTargetBiomass(value);
-                      setHasCalculated(false);
-                    }}
-                    unit="kg"
-                    placeholder="Contoh: 300"
-                    hint="Masukkan estimasi total berat ikan yang ingin ditampung."
-                  />
-                )}
-
-                {hasCalculated && !result.isValid && (
-                  <div
-                    role="alert"
-                    className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700"
-                  >
-                    Isi semua data dengan angka yang valid dan lebih besar
-                    dari nol.
-                  </div>
-                )}
-
-                <div className="flex flex-col gap-3 border-t border-[var(--border)] pt-5 sm:flex-row">
-                  <button
-                    type="button"
-                    onClick={handleCalculate}
-                    disabled={!result.isValid}
-                    className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-[var(--brand-primary)] px-5 py-3.5 text-sm font-semibold text-[var(--brand-dark)] shadow-sm transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-50"
-                  >
-                    <Calculator size={18} />
-                    Hitung Kebutuhan Aerator
-                    <ChevronRight size={17} />
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={handleReset}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3.5 text-sm font-medium text-[var(--brand-dark)] transition hover:border-[var(--brand-secondary)] hover:bg-[var(--secondary)]"
-                  >
-                    <RotateCcw size={16} />
-                    Reset
-                  </button>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={handleReset}
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-[var(--border)] px-5 py-3.5 text-sm font-medium text-[var(--brand-dark)] transition hover:border-[var(--brand-secondary)] hover:bg-[var(--secondary)]"
+              >
+                <RotateCcw size={16} />
+                {t("action.reset")}
+              </button>
             </div>
           </div>
 
-          {/* Results panel */}
+          {/* Results */}
           <aside
             id="cultivation-results"
             className="scroll-mt-24 space-y-5 lg:sticky lg:top-24"
@@ -563,15 +742,15 @@ export default function CultivationCalculator() {
                   </div>
 
                   <p className="text-sm font-medium text-white/80">
-                    Ringkasan kalkulasi
+                    {t("result.title")}
                   </p>
 
                   <h3 className="mt-2 text-2xl font-bold tracking-tight">
-                    Hasil Budidaya
+                    {t("result.heading")}
                   </h3>
 
                   <p className="mt-2 text-sm leading-6 text-white/80">
-                    Estimasi berdasarkan input dan acuan kapasitas alat.
+                    {t("result.description")}
                   </p>
                 </div>
               </div>
@@ -584,93 +763,225 @@ export default function CultivationCalculator() {
                     </div>
 
                     <h4 className="font-semibold text-[var(--brand-dark)]">
-                      Hasil akan muncul di sini
+                      {t("result.emptyTitle")}
                     </h4>
 
                     <p className="mx-auto mt-2 max-w-xs text-sm leading-6 text-[var(--muted-foreground)]">
-                      Pilih aerator, lengkapi data budidaya, lalu tekan
-                      tombol hitung untuk melihat hasil simulasi.
+                      {t("result.emptyDescription")}
                     </p>
                   </div>
                 ) : (
                   <>
                     <div className="rounded-xl border border-[var(--brand-secondary)]/30 bg-[var(--brand-secondary)]/10 p-4">
                       <p className="text-sm font-medium text-[var(--brand-secondary)]">
-                        Estimasi jumlah aerator
+                        {t("result.netRevenue")}
                       </p>
 
-                      <div className="mt-2 flex items-end gap-2">
-                        <span className="text-4xl font-bold tracking-tight text-[var(--brand-dark)]">
-                          {result.estimatedUnits}
-                        </span>
-                        <span className="pb-1 text-sm text-[var(--brand-secondary)]">
-                          unit
-                        </span>
-                      </div>
+                      <p
+                        className={`mt-2 text-3xl font-bold tracking-tight ${
+                          result.netRevenue >= 0
+                            ? "text-[var(--brand-dark)]"
+                            : "text-red-700"
+                        }`}
+                      >
+                        {formatCurrency(result.netRevenue)}
+                      </p>
 
-                      <p className="mt-2 text-xs leading-5 text-[var(--brand-secondary)]">
-                        Menggunakan kapasitas acuan{" "}
-                        {formatNumber(activeAerator.biomassMin)} kg biomassa
-                        per alat.
+                      <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+                        {t("result.netRevenueDescription")}
                       </p>
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div className="rounded-xl border border-[var(--border)] p-4">
-                        <div className="mb-3 flex size-9 items-center justify-center rounded-lg bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
-                          <Fish size={19} />
-                        </div>
-                        <p className="text-xs leading-5 text-[var(--muted-foreground)]">
-                          Estimasi jumlah ikan
+                        <Fish
+                          size={19}
+                          className="mb-3 text-[var(--brand-secondary)]"
+                        />
+                        <p className="text-xs text-[var(--muted-foreground)]">
+                          {t("result.seedCount")}
                         </p>
                         <p className="mt-1 text-lg font-bold text-[var(--brand-dark)]">
-                          {calculationMode === "pond"
-                            ? formatNumber(result.fishCount, 0)
-                            : "—"}
+                          {formatNumber(result.seedCount, 0)}
                         </p>
                         <p className="text-xs text-[var(--muted-foreground)]">
-                          ekor
+                          {t("units.fish")}
                         </p>
                       </div>
 
                       <div className="rounded-xl border border-[var(--border)] p-4">
-                        <div className="mb-3 flex size-9 items-center justify-center rounded-lg bg-[var(--brand-primary)]/15 text-[var(--brand-dark)]">
-                          <Gauge size={19} />
-                        </div>
-                        <p className="text-xs leading-5 text-[var(--muted-foreground)]">
-                          Target biomassa
+                        <TrendingUp
+                          size={19}
+                          className="mb-3 text-[var(--brand-secondary)]"
+                        />
+                        <p className="text-xs text-[var(--muted-foreground)]">
+                          {t("result.harvestBiomass")}
                         </p>
                         <p className="mt-1 text-lg font-bold text-[var(--brand-dark)]">
-                          {formatNumber(result.biomass)}
+                          {formatNumber(result.harvestBiomass)}
                         </p>
                         <p className="text-xs text-[var(--muted-foreground)]">
-                          kg
+                          {t("units.weight")}
                         </p>
                       </div>
                     </div>
 
-                    <div className="rounded-xl border border-[var(--border)] p-4">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-sm font-semibold text-[var(--brand-dark)]">
-                            Estimasi kebutuhan oksigen
-                          </p>
-                          <p className="mt-1 text-xs leading-5 text-[var(--muted-foreground)]">
-                            Menggunakan acuan 700 mg O₂/kg/jam dari materi.
-                          </p>
-                        </div>
-                        <Zap
-                          size={20}
-                          className="shrink-0 text-[var(--brand-secondary)]"
+                    <div>
+                      <h4 className="mb-2 text-sm font-bold text-[var(--brand-dark)]">
+                        {t("result.productionSummary")}
+                      </h4>
+
+                      <ResultItem
+                        label={t("fields.density.label")}
+                        value={formatNumber(parsed.density)}
+                        unit={t("units.density")}
+                      />
+
+                      <ResultItem
+                        label={t("automatic.finalCount")}
+                        value={formatNumber(result.finalCount, 0)}
+                        unit={t("units.fish")}
+                      />
+
+                      <ResultItem
+                        label={t("automatic.feedAmount")}
+                        value={formatNumber(result.feedAmount)}
+                        unit={t("units.weight")}
+                      />
+                    </div>
+
+                    <div>
+                      <h4 className="mb-2 text-sm font-bold text-[var(--brand-dark)]">
+                        {t("result.costSummary")}
+                      </h4>
+
+                      <ResultItem
+                        label={t("result.totalSeedCost")}
+                        value={formatCurrency(result.totalSeedCost)}
+                      />
+
+                      <ResultItem
+                        label={t("result.totalFeedCost")}
+                        value={formatCurrency(result.totalFeedCost)}
+                      />
+
+                      <ResultItem
+                        label={t("result.totalElectricity")}
+                        value={formatCurrency(result.totalElectricity)}
+                      />
+
+                      <ResultItem
+                        label={t("result.otherCosts")}
+                        value={formatCurrency(parsed.otherCosts)}
+                      />
+
+                      <div className="mt-2 rounded-lg bg-[var(--secondary)] px-3">
+                        <ResultItem
+                          label={t("result.totalExpense")}
+                          value={formatCurrency(result.totalExpense)}
                         />
                       </div>
+                    </div>
 
-                      <p className="mt-3 text-xl font-bold text-[var(--brand-dark)]">
-                        {formatNumber(result.oxygenRequirement / 1000)}{" "}
-                        <span className="text-sm font-medium text-[var(--muted-foreground)]">
-                          g O₂/jam
+                    <div>
+                      <h4 className="mb-2 text-sm font-bold text-[var(--brand-dark)]">
+                        {t("result.revenueSummary")}
+                      </h4>
+
+                      <ResultItem
+                        label={t("result.grossRevenue")}
+                        value={formatCurrency(result.grossRevenue)}
+                      />
+
+                      <ResultItem
+                        label={t("result.netRevenueItem")}
+                        value={formatCurrency(result.netRevenue)}
+                      />
+
+                      <div className="mt-3 rounded-xl border border-[var(--border)] p-4">
+                        <p className="text-xs text-[var(--muted-foreground)]">
+                          {t("result.rcRatio")}
+                        </p>
+
+                        <p className="mt-1 text-2xl font-bold text-[var(--brand-dark)]">
+                          {result.rcRatio === null
+                            ? t("result.cannotEvaluate")
+                            : formatNumber(result.rcRatio, 3)}
+                        </p>
+
+                        <span
+                          className={`mt-2 inline-flex rounded-full px-3 py-1 text-xs font-semibold ${
+                            result.isFeasible
+                              ? "bg-emerald-100 text-emerald-800"
+                              : "bg-red-100 text-red-800"
+                          }`}
+                        >
+                          {result.rcRatio === null
+                            ? t("result.cannotEvaluate")
+                            : result.isFeasible
+                              ? t("result.feasible")
+                              : t("result.notFeasible")}
                         </span>
-                      </p>
+
+                        <p className="mt-2 text-xs leading-5 text-[var(--muted-foreground)]">
+                          {t("result.rcDescription")}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-2 text-sm font-bold text-[var(--brand-dark)]">
+                        {t("result.aeratorRequirement")}
+                      </h4>
+
+                      <div className="rounded-xl border border-[var(--border)] p-4">
+                        <div className="flex items-center gap-3">
+                          <span className="flex size-10 items-center justify-center rounded-xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
+                            {selectedAerator === "mini" ? (
+                              <Wind size={21} />
+                            ) : (
+                              <Waves size={21} />
+                            )}
+                          </span>
+
+                          <div>
+                            <p className="text-sm font-bold text-[var(--brand-dark)]">
+                              {aeratorName}
+                            </p>
+                            <p className="text-xs text-[var(--muted-foreground)]">
+                              {activeAerator.power}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="mt-4 grid grid-cols-2 gap-3">
+                          <div>
+                            <p className="text-xs text-[var(--muted-foreground)]">
+                              {t("result.estimatedDevices")}
+                            </p>
+                            <p className="mt-1 text-2xl font-bold text-[var(--brand-dark)]">
+                              {result.estimatedAeratorUnits} {t("units.unit")}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className="text-xs text-[var(--muted-foreground)]">
+                              {t("result.oxygenRequirement")}
+                            </p>
+                            <p className="mt-1 text-lg font-bold text-[var(--brand-dark)]">
+                              {formatNumber(result.oxygenRequirementGram)}{" "}
+                              {t("result.oxygenUnit")}
+                            </p>
+                          </div>
+                        </div>
+
+                        <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
+                          {t("result.basedOnCapacity", {
+                            capacity: formatNumber(activeAerator.biomassMin),
+                          })}{" "}
+                          {t("result.oxygenFormula")}
+                        </p>
+                      </div>
                     </div>
 
                     <div className="rounded-xl border border-amber-200 bg-amber-50 p-4">
@@ -681,13 +992,10 @@ export default function CultivationCalculator() {
                         />
                         <div>
                           <p className="text-sm font-semibold text-amber-900">
-                            Perlu validasi teknis
+                            {t("result.technicalValidationTitle")}
                           </p>
                           <p className="mt-1 text-xs leading-5 text-amber-800">
-                            Hasil ini adalah estimasi matematis awal, bukan
-                            rekomendasi jumlah alat yang siap digunakan.
-                            Kapasitas aktual, konfigurasi kolam, dan faktor
-                            keamanan perlu dikonfirmasi oleh tim teknis.
+                            {t("result.technicalValidationDescription")}
                           </p>
                         </div>
                       </div>
@@ -697,62 +1005,21 @@ export default function CultivationCalculator() {
               </div>
             </div>
 
-            {/* Selected equipment */}
-            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)]">
-                Alat yang dipilih
-              </p>
-
-              <div className="mt-4 flex items-center gap-4">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
-                  {(() => {
-                    const Icon = activeAerator.icon;
-                    return <Icon size={24} />;
-                  })()}
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <h4 className="font-bold text-[var(--brand-dark)]">
-                    {activeAerator.name}
-                  </h4>
-                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                    Daya pada materi: {activeAerator.power}
-                  </p>
-                </div>
+            {hasCalculated && (
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-sm sm:p-6">
+                <h4 className="mt-2 text-lg font-bold text-[var(--brand-dark)]">
+                  {form.farmerName}
+                </h4>
+                <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+                  {cultivationTypeLabel} · {formatNumber(parsed.area)}{" "}
+                  {t("units.area")}
+                </p>
               </div>
-
-              <div className="mt-4 grid grid-cols-2 gap-3 border-t border-[var(--border)] pt-4">
-                <div>
-                  <p className="text-xs text-[var(--muted-foreground)]">
-                    Output O₂ pada materi
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-[var(--brand-dark)]">
-                    {activeAerator.oxygenOutput}
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-xs text-[var(--muted-foreground)]">
-                    Acuan biomassa per alat
-                  </p>
-                  <p className="mt-1 text-sm font-semibold text-[var(--brand-secondary)]">
-                    {formatNumber(activeAerator.biomassMin)}
-                    {activeAerator.biomassMin !== activeAerator.biomassMax &&
-                      `–${formatNumber(activeAerator.biomassMax)}`}{" "}
-                    kg
-                  </p>
-                </div>
-              </div>
-
-              <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
-                *Angka output oksigen ditampilkan sesuai materi yang
-                diberikan dan belum diverifikasi terhadap spesifikasi alat.
-              </p>
-            </div>
+            )}
           </aside>
         </div>
 
-        {/* Technical notes */}
+        {/* Calculation notes */}
         <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 sm:p-6">
           <div className="flex items-start gap-3">
             <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
@@ -761,27 +1028,25 @@ export default function CultivationCalculator() {
 
             <div>
               <h3 className="font-bold text-[var(--brand-dark)]">
-                Catatan perhitungan
+                {t("technicalNotes.title")}
               </h3>
 
               <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--muted-foreground)]">
-                <li>
-                  • Biomassa dihitung dari jumlah ikan dikalikan berat
-                  rata-rata ikan.
-                </li>
-                <li>
-                  • Estimasi jumlah alat menggunakan pembulatan ke atas
-                  berdasarkan batas bawah kapasitas biomassa pada materi.
-                </li>
-                <li>
-                  • Kebutuhan oksigen dihitung dengan acuan 700 mg
-                  O₂/kg/jam sesuai materi yang diberikan.
-                </li>
-                <li>
-                  • Perhitungan belum memperhitungkan faktor keamanan,
-                  kondisi air, kedalaman kolam, distribusi oksigen, atau
-                  konfigurasi aktual aerator.
-                </li>
+                <li>• {t("technicalNotes.stocking")}</li>
+                <li>• {t("technicalNotes.survival")}</li>
+                <li>• {t("technicalNotes.biomass")}</li>
+                <li>• {t("technicalNotes.feed")}</li>
+                <li>• {t("technicalNotes.seedCost")}</li>
+                <li>• {t("technicalNotes.feedCost")}</li>
+                <li>• {t("technicalNotes.electricity")}</li>
+                <li>• {t("technicalNotes.expenses")}</li>
+                <li>• {t("technicalNotes.grossRevenue")}</li>
+                <li>• {t("technicalNotes.netRevenue")}</li>
+                <li>• {t("technicalNotes.rcRatio")}</li>
+                <li>• {t("technicalNotes.aerator")}</li>
+                <li>• {t("technicalNotes.oxygen")}</li>
+                <li>• {t("technicalNotes.limitations")}</li>
+                <li>• {t("technicalNotes.general")}</li>
               </ul>
             </div>
           </div>
