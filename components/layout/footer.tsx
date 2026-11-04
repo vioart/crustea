@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -8,22 +9,26 @@ import {
   FaLinkedinIn,
   FaWhatsapp,
 } from "react-icons/fa";
-import { ArrowUpRight, Mail, MapPin, Waves } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 const productLinks = [
   { key: "aquaculture-technology", href: "/produk/teknologi-budidaya" },
   { key: "akuatur", href: "/produk/akuatur" },
   { key: "krasty-trading", href: "/produk/krasty-trading" },
   { key: "aquagrowth", href: "/produk/aquagrowth" },
-  { key: "calculator", href: "/produk/kalkulator-budidaya" },
+  { key: "partnership", href: "/produk/kemitraan" },
 ] as const;
 
 const serviceLinks = [
   { key: "consultation", href: "/kontak" },
+  { key: "calculator", href: "/produk/kalkulator-budidaya" },
+  { key: "solar-calculator", href: "/produk/kalkulator-plts" },
 ] as const;
 
 const companyLinks = [
   { key: "about", href: "/tentang-kami" },
+  { key: "team", href: "/team" },
+  { key: "roadmap", href: "/roadmap-sertifikasi" },
 ] as const;
 
 const resourceLinks = [

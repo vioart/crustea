@@ -20,6 +20,7 @@ import {
   Sprout,
   Handshake,
   UsersRound,
+  Sun,
   Building2,
 } from "lucide-react";
 
@@ -53,6 +54,7 @@ export default function Header() {
   const [open, setOpen] = React.useState(false);
   const [languageOpen, setLanguageOpen] = React.useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = React.useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = React.useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = React.useState(false);
 
   const chooseLanguage = (value: "id" | "en") => {
@@ -120,16 +122,25 @@ export default function Header() {
       icon: Sprout,
     },
     {
-      title: "Kemitraan",
+      title: t("productsList.partnership.title"),
       href: "/produk/kemitraan",
-      description: "Jelajahi peluang kemitraan bersama Crustea.",
+      description: t("productsList.partnership.description"),
       icon: Handshake,
     },
+  ];
+
+  const serviceLinks: LinkItem[] = [
     {
-      title: t("productsList.calculator.title"),
+      title: t("servicesList.cultivationCalculator.title"),
       href: "/produk/kalkulator-budidaya",
-      description: t("productsList.calculator.description"),
+      description: t("servicesList.cultivationCalculator.description"),
       icon: Calculator,
+    },
+    {
+      title: t("servicesList.solarCalculator.title"),
+      href: "/produk/kalkulator-plts",
+      description: t("servicesList.solarCalculator.description"),
+      icon: Sun,
     },
   ];
 
@@ -271,6 +282,28 @@ export default function Header() {
                       </p>
                     </div>
                   </div>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              {/* Dropdown Layanan */}
+              <NavigationMenuItem>
+                <NavigationMenuTrigger
+                  className={cn(
+                    "!bg-transparent",
+                    isSolid
+                      ? "text-foreground hover:bg-accent"
+                      : "!text-white hover:!bg-white/10 hover:!text-white",
+                  )}
+                >
+                  {t("services")}
+                </NavigationMenuTrigger>
+
+                <NavigationMenuContent>
+                  <ul className="grid w-[380px] gap-1 p-3">
+                    {serviceLinks.map((item) => (
+                      <ListItem key={item.href} {...item} />
+                    ))}
+                  </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
 
@@ -464,6 +497,37 @@ export default function Header() {
             {mobileProductsOpen && (
               <div id="mobile-products-submenu" className="pb-2 pl-2">
                 {productLinks.map((link) => (
+                  <MobileLink
+                    key={link.href}
+                    item={link}
+                    onClick={() => setOpen(false)}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Dropdown Layanan */}
+          <div className="border-b border-border">
+            <button
+              type="button"
+              onClick={() => setMobileServicesOpen((current) => !current)}
+              className="flex w-full items-center justify-between py-4 text-left text-sm font-semibold text-foreground"
+              aria-expanded={mobileServicesOpen}
+              aria-controls="mobile-services-submenu"
+            >
+              <span>{t("services")}</span>
+              <ChevronDown
+                className={cn(
+                  "size-4 shrink-0 transition-transform duration-200",
+                  mobileServicesOpen && "rotate-180",
+                )}
+              />
+            </button>
+
+            {mobileServicesOpen && (
+              <div id="mobile-services-submenu" className="pb-2 pl-2">
+                {serviceLinks.map((link) => (
                   <MobileLink
                     key={link.href}
                     item={link}

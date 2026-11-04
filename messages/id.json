@@ -2,6 +2,7 @@
   "Header": {
     "home": "Beranda",
     "products": "Produk",
+    "services": "Layanan",
     "about": "Tentang Kami",
     "news": "Berita",
     "contact": "Kontak",
@@ -35,10 +36,16 @@
       "partnership": {
         "title": "Kemitraan",
         "description": "Jelajahi peluang kemitraan bersama Crustea."
-      },
-      "calculator": {
+      }
+    },
+    "servicesList": {
+      "cultivationCalculator": {
         "title": "Kalkulator Budidaya",
-        "description": "Perhitungan praktis untuk kebutuhan budidaya."
+        "description": "Hitung kebutuhan dan estimasi biaya operasional budidaya perikanan."
+      },
+      "solarCalculator": {
+        "title": "Kalkulator PLTS",
+        "description": "Hitung kebutuhan dan estimasi sistem pembangkit listrik tenaga surya."
       }
     },
     "companyLinks": {
@@ -1179,6 +1186,302 @@
     }
   },
 
+  "PLTSCalculator": {
+    "page": {
+      "title": "Kalkulator PLTS",
+      "breadcrumb": {
+        "home": "Beranda",
+        "calculator": "Kalkulator PLTS"
+      }
+    },
+    "intro": {
+      "eyebrow": "Kalkulator PLTS",
+      "title": "Hitung Kebutuhan PLTS Anda",
+      "description": "Simulasikan kapasitas panel surya, baterai, biaya investasi, penghematan, dan estimasi payback berdasarkan kebutuhan listrik Anda."
+    },
+    "system": {
+      "ongrid": "On-grid",
+      "hybrid": "Hybrid",
+      "offgrid": "Off-grid"
+    },
+    "form": {
+      "title": "Data Simulasi",
+      "gridProfile": "Profil Listrik & Atap",
+      "loadProfile": "Daftar Kebutuhan Listrik",
+      "fields": {
+        "location": {
+          "label": "Kota / Lokasi (M1)"
+        },
+        "module": {
+          "label": "Tipe Modul Surya (Wp)"
+        },
+        "tariff": {
+          "label": "Golongan Tarif PLN (M2)"
+        },
+        "plnPower": {
+          "label": "Daya Terpasang PLN"
+        },
+        "monthlyBill": {
+          "label": "Tagihan Listrik per Bulan (Rp)"
+        },
+        "targetSaving": {
+          "label": "Target Penghematan"
+        },
+        "phase": {
+          "label": "Fase Listrik",
+          "options": {
+            "auto": "Otomatis",
+            "single": "1 Fase",
+            "three": "3 Fase"
+          }
+        },
+        "roofType": {
+          "label": "Jenis Atap",
+          "options": {
+            "tile": "Genteng",
+            "metal": "Metal",
+            "concrete": "Beton",
+            "spandek": "Spandek"
+          }
+        },
+        "roofArea": {
+          "label": "Luas Atap (m²) · Opsional",
+          "placeholder": "Kosongkan jika belum tahu",
+          "hint": "Jika diisi, jumlah modul dibatasi luas atap (5,58 m²/kWp)."
+        },
+        "backupHours": {
+          "label": "Durasi Backup saat PLN Padam"
+        },
+        "batteryMode": {
+          "label": "Kapasitas Baterai",
+          "options": {
+            "auto": "Otomatis Dihitung Sistem",
+            "manual": "Pilih Kapasitas Manual"
+          }
+        },
+        "manualBattery": {
+          "label": "Kapasitas Baterai Manual"
+        },
+        "loads": {
+          "title": "Daftar Beban Listrik",
+          "description": "Isi daya, jumlah perangkat, dan jam pemakaian per hari.",
+          "name": "Nama Beban",
+          "watt": "Watt",
+          "quantity": "Jumlah",
+          "hours": "Jam/Hari",
+          "energy": "Energi",
+          "add": "Tambah Beban",
+          "remove": "Hapus Beban",
+          "newLoad": "Beban Baru"
+        },
+        "autonomyDays": {
+          "label": "Hari Otonomi Baterai"
+        },
+        "reservePercent": {
+          "label": "Cadangan Beban"
+        },
+        "lossPercent": {
+          "label": "Rugi Sistem"
+        }
+      }
+    },
+    "actions": {
+      "calculate": "Lihat Hasil Perhitungan",
+      "reset": "Reset",
+      "downloadPdf": "Download PDF Hasil Perhitungan"
+    },
+    "notes": {
+      "estimation": "Estimasi awal berdasarkan asumsi data master. Hasil akhir dapat berubah mengikuti kondisi lokasi, spesifikasi perangkat, instalasi, dan harga aktual.",
+      "roofAreaOptional": "Jika diisi, jumlah modul dibatasi luas atap (5,58 m²/kWp).",
+      "informationTitle": "Informasi Perhitungan",
+      "locationPsh": "PSH Lokasi",
+      "pr": "PR On-grid/Hybrid: 85%.",
+      "masterData": "Harga dan asumsi dapat diperbarui melalui data master admin.",
+      "priceDisclaimer": "Nilai hasil merupakan estimasi, bukan penawaran harga final.",
+      "resultDisclaimer": "Hasil perhitungan ini memberikan estimasi kebutuhan kapasitas, spesifikasi sistem, potensi penghematan, dan investasi PLTS berdasarkan profil energi serta kondisi lokasi yang dipilih. Untuk rekomendasi teknis dan estimasi penawaran yang lebih akurat, silakan konsultasikan kebutuhan instalasi Anda dengan tim Crustea."
+    },
+    "live": {
+      "title": "Estimasi Realtime",
+      "pvSystem": "Sistem PV",
+      "moduleCount": "Jumlah Modul",
+      "criticalLoad": "Beban Kritis",
+      "battery": "Baterai LFP",
+      "hybridInverter": "Inverter Hybrid",
+      "monthlySaving": "Hemat / Bulan",
+      "savingPercent": "Hemat (%)",
+      "estimatedSystemCost": "Biaya Sistem (Est.)",
+      "payback": "Payback",
+      "notCalculated": "Belum Dapat Dihitung",
+      "co2Avoided": "CO₂ Dihindari / Tahun",
+      "electricalPhase": "Fase Listrik",
+      "estimatedSaving": "Estimasi Penghematan",
+      "totalConsumption": "Total Konsumsi",
+      "peakLoad": "Peak Load",
+      "batteryInverter": "Inverter Baterai",
+      "dieselSaving": "Hemat vs Genset"
+    },
+    "result": {
+      "title": "Rincian Hasil Perhitungan",
+      "eyebrow": "Rincian Perhitungan",
+      "calculationBreakdown": "Calculation Breakdown",
+      "systemCost": "Biaya Sistem",
+      "savingPercent": "Persentase Hemat",
+      "co2Avoided": "CO₂ Dihindari / Tahun",
+      "equivalentTrees": "Setara Pohon",
+      "dailyConsumption": "Konsumsi Harian",
+      "peakLoad": "Beban Puncak",
+      "pvCapacity": "Kapasitas PV",
+      "battery": "Baterai",
+      "table": {
+        "code": "Kode",
+        "component": "Komponen",
+        "formula": "Rumus / Dasar Hitung",
+        "result": "Hasil"
+      },
+      "components": {
+        "pvSystem": "Sistem PV",
+        "moduleCount": "Jumlah Modul",
+        "inverter": "Inverter",
+        "saving": "Penghematan",
+        "savingPercent": "Persentase Hemat",
+        "systemCost": "Biaya Sistem",
+        "criticalLoad": "Beban Kritis",
+        "lfpBattery": "Baterai LFP",
+        "maximumBackup": "Backup Maksimum",
+        "hybridInverter": "Inverter Hybrid",
+        "payback": "Payback",
+        "co2Avoided": "CO₂ Dihindari per Tahun",
+        "pvProduction": "Produksi PV",
+        "selfConsumption": "Energi Digunakan Sendiri",
+        "gridImport": "Impor Listrik PLN",
+        "newBill": "Estimasi Tagihan Baru",
+        "roofArea": "Kebutuhan Luas Atap",
+        "savingPackage": "Harga Paket Hemat",
+        "standardPackage": "Harga Paket Standar",
+        "premiumPackage": "Harga Paket Premium",
+        "equivalentTrees": "Setara Pohon",
+        "equivalentVehicleDistance": "Setara Jarak Kendaraan",
+        "co2Avoided25Years": "CO₂ Dihindari Selama 25 Tahun",
+        "simplePayback": "Payback Sederhana",
+        "dailyConsumption": "Konsumsi Harian",
+        "peakLoad": "Beban Puncak",
+        "dieselSaving": "Hemat vs Genset"
+      },
+      "formulas": {
+        "pvSystem": "Jumlah modul × Wp ÷ 1.000",
+        "moduleCount": "MIN(kebutuhan; batas daya PLN; batas atap)",
+        "inverter": "Katalog terkecil ≥ A ÷ 1,2",
+        "saving": "Energi digunakan × tarif PLN",
+        "savingPercent": "D ÷ Tagihan × 100",
+        "systemCost": "Estimasi investasi sistem",
+        "criticalLoad": "0,6 × VA × 0,8 ÷ 1.000",
+        "batteryAuto": "Auto: ⌈(J × Durasi ÷ DoD ÷ 5)⌉ × 5",
+        "batteryManual": "Manual: kapasitas baterai sesuai pilihan pengguna",
+        "maximumBackup": "I × DoD ÷ J",
+        "hybridInverter": "Katalog terkecil ≥ MAX(A ÷ 1,2; J)",
+        "compoundPayback": "Compound: tarif naik 5%/th, produksi turun 1,5%/th",
+        "co2Avoided": "R × 12 × Faktor emisi",
+        "pvProduction": "A × PSH × 30 × PR",
+        "selfConsumption": "Produksi × faktor pemakaian",
+        "gridImport": "Konsumsi PLN − R",
+        "newBill": "S × Tarif PLN",
+        "roofArea": "A × 5,58",
+        "savingPackage": "F × 0,75",
+        "standardPackage": "F × 1,00",
+        "premiumPackage": "F × 1,37",
+        "equivalentTrees": "H ÷ 21,8",
+        "vehicleDistance": "H ÷ 0,16",
+        "co2Avoided25Years": "H × 25",
+        "simplePayback": "F ÷ (D × 12)",
+        "dailyConsumption": "Σ energi setiap beban ÷ 1.000",
+        "peakLoad": "Σ (Watt × jumlah) ÷ 1.000",
+        "offgridPvProduction": "A × PSH × 30 × (1 − rugi)",
+        "offgridBattery": "↑(M × (1 + cadangan) × otonomi ÷ (DoD × η) ÷ 5) × 5",
+        "offgridInverter": "Katalog terkecil ≥ 1,25 × 0,8 × N",
+        "offgridSystemCost": "A × 12 jt + C × 3 jt + I × 3 jt",
+        "offgridDieselSaving": "M × 365 × 0,28 × harga solar ÷ 12",
+        "offgridPayback": "F ÷ (O × 12)",
+        "offgridCo2": "M × 365 × 0,28 × 2,57",
+        "offgridTrees": "↓ H ÷ 21,8"
+      },
+      "technicalDisclaimer": "Hasil perhitungan ini memberikan estimasi kebutuhan kapasitas, spesifikasi sistem, potensi penghematan, dan investasi PLTS berdasarkan profil energi serta kondisi lokasi yang dipilih. Untuk rekomendasi teknis dan estimasi penawaran yang lebih akurat, silakan konsultasikan kebutuhan instalasi Anda dengan tim Crustea."
+    },
+    "pdf": {
+      "title": "LAPORAN PERHITUNGAN PLTS",
+      "system": "Sistem {system}",
+      "reportInformation": "Informasi Laporan",
+      "simulationParameters": "Parameter Simulasi",
+      "calculationSummary": "Ringkasan Hasil Perhitungan",
+      "calculationDetails": "Rincian Perhitungan",
+      "reportDate": "Tanggal Laporan",
+      "systemType": "Jenis Sistem",
+      "location": "Lokasi",
+      "psh": "Peak Sun Hours (PSH)",
+      "moduleCapacity": "Kapasitas Modul",
+      "parameter": "Parameter",
+      "value": "Nilai",
+      "plnTariff": "Tarif PLN",
+      "plnInstalledPower": "Daya Terpasang PLN",
+      "electricityBill": "Tagihan Listrik",
+      "targetSaving": "Target Penghematan",
+      "electricalPhase": "Fase Listrik",
+      "roofType": "Jenis Atap",
+      "roofArea": "Luas Atap",
+      "notSpecified": "Tidak Ditentukan",
+      "backupDuration": "Durasi Backup",
+      "batteryCapacityMode": "Mode Kapasitas Baterai",
+      "automatic": "Otomatis",
+      "manual": "Manual",
+      "manualBatteryCapacity": "Kapasitas Baterai Manual",
+      "autonomyDays": "Hari Otonomi",
+      "loadReserve": "Cadangan Beban",
+      "systemLoss": "Rugi Sistem",
+      "dailyConsumption": "Konsumsi Harian",
+      "peakLoad": "Beban Puncak",
+      "pvCapacity": "Kapasitas PV",
+      "moduleCount": "Jumlah Modul",
+      "battery": "Baterai",
+      "inverter": "Inverter",
+      "systemCost": "Biaya Sistem",
+      "dieselSaving": "Hemat vs Genset",
+      "payback": "Payback",
+      "co2Avoided": "CO₂ Dihindari",
+      "equivalentTrees": "Setara Pohon",
+      "monthlyProduction": "Produksi PV",
+      "monthlySaving": "Penghematan Bulanan",
+      "savingPercent": "Persentase Penghematan",
+      "compoundPayback": "Payback Compound",
+      "cannotCalculate": "Belum Dapat Dihitung",
+      "criticalLoad": "Beban Kritis",
+      "backupDurationResult": "Durasi Backup",
+      "hybridInverter": "Inverter Hybrid",
+      "vehicleDistance": "Setara Jarak Kendaraan",
+      "co2Avoided25Years": "CO₂ Dihindari 25 Tahun",
+      "component": "Komponen",
+      "formula": "Rumus / Dasar Hitung",
+      "result": "Hasil",
+      "footer": "Crustea | Estimasi Perhitungan PLTS",
+      "page": "Halaman {current} dari {total}",
+      "fileName": "Hasil-Perhitungan-PLTS",
+      "logoError": "Logo Crustea tidak berhasil dimuat.",
+      "pdfError": "PDF gagal dibuat. Silakan periksa file logo atau coba kembali."
+    },
+    "units": {
+      "hour": "jam",
+      "hoursPerDay": "jam/hari",
+      "day": "hari",
+      "month": "bulan",
+      "perMonth": "/bulan",
+      "perDay": "/hari",
+      "perYear": "/tahun",
+      "year": "tahun",
+      "module": "modul",
+      "tree": "pohon",
+      "unit": "unit",
+      "notAvailable": "—"
+    }
+  },
+
   "Roadmap": {
     "page": {
       "title": "Roadmap Sertifikasi",
@@ -1600,16 +1903,19 @@
       "products": {
         "aquaculture-technology": "Teknologi Budidaya",
         "akuatur": "Akuatur",
-        "krasty-trading": "Krasty & Trading",
+        "krasty-trading": "Produk Olahan",
         "aquagrowth": "Aquagrowth",
-        "calculator": "Kalkulator Budidaya"
+        "partnership": "Kemitraan"
       },
       "services": {
-        "consultation": "Konsultasi & Konstruksi"
+        "consultation": "Konsultasi",
+        "calculator": "Kalkulator Budidaya",
+        "solar-calculator": "Kalkulator PLTS"
       },
       "company": {
         "about": "Tentang Kami",
-        "partnership": "Kemitraan"
+        "team": "Team",
+        "roadmap": "Roadmap & Sertifikasi"
       },
       "resources": {
         "news": "Berita",

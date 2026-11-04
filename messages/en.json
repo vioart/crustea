@@ -2,6 +2,7 @@
   "Header": {
     "home": "Home",
     "products": "Products",
+    "services": "Services",
     "about": "About Us",
     "news": "News",
     "contact": "Contact",
@@ -35,10 +36,16 @@
       "partnership": {
         "title": "Partnership",
         "description": "Explore partnership opportunities with Crustea."
-      },
-      "calculator": {
+      }
+    },
+    "servicesList": {
+      "cultivationCalculator": {
         "title": "Aquaculture Calculator",
-        "description": "Practical calculations for aquaculture needs."
+        "description": "Calculate aquaculture requirements and estimated operational costs."
+      },
+      "solarCalculator": {
+        "title": "Solar PV Calculator",
+        "description": "Calculate the requirements and estimated specifications of a solar power system."
       }
     },
     "companyLinks": {
@@ -1179,6 +1186,302 @@
     }
   },
 
+  "PLTSCalculator": {
+    "page": {
+      "title": "Solar PV Calculator",
+      "breadcrumb": {
+        "home": "Home",
+        "calculator": "Solar PV Calculator"
+      }
+    },
+    "intro": {
+      "eyebrow": "Solar PV Calculator",
+      "title": "Calculate Your Solar PV Requirements",
+      "description": "Simulate solar panel capacity, battery requirements, investment costs, savings, and estimated payback based on your electricity needs."
+    },
+    "system": {
+      "ongrid": "On-grid",
+      "hybrid": "Hybrid",
+      "offgrid": "Off-grid"
+    },
+    "form": {
+      "title": "Simulation Data",
+      "gridProfile": "Electricity & Roof Profile",
+      "loadProfile": "Electricity Load List",
+      "fields": {
+        "location": {
+          "label": "City / Location (M1)"
+        },
+        "module": {
+          "label": "Solar Module Type (Wp)"
+        },
+        "tariff": {
+          "label": "PLN Tariff Category (M2)"
+        },
+        "plnPower": {
+          "label": "Installed PLN Power"
+        },
+        "monthlyBill": {
+          "label": "Monthly Electricity Bill (IDR)"
+        },
+        "targetSaving": {
+          "label": "Savings Target"
+        },
+        "phase": {
+          "label": "Electrical Phase",
+          "options": {
+            "auto": "Automatic",
+            "single": "Single Phase",
+            "three": "Three Phase"
+          }
+        },
+        "roofType": {
+          "label": "Roof Type",
+          "options": {
+            "tile": "Roof Tiles",
+            "metal": "Metal",
+            "concrete": "Concrete",
+            "spandek": "Spandek"
+          }
+        },
+        "roofArea": {
+          "label": "Roof Area (m²) · Optional",
+          "placeholder": "Leave blank if unknown",
+          "hint": "If provided, the number of modules will be limited by the available roof area (5.58 m²/kWp)."
+        },
+        "backupHours": {
+          "label": "Backup Duration During PLN Outages"
+        },
+        "batteryMode": {
+          "label": "Battery Capacity",
+          "options": {
+            "auto": "Automatically Calculated",
+            "manual": "Select Manual Capacity"
+          }
+        },
+        "manualBattery": {
+          "label": "Manual Battery Capacity"
+        },
+        "loads": {
+          "title": "Electricity Load List",
+          "description": "Enter the power, quantity, and daily operating hours for each device.",
+          "name": "Load Name",
+          "watt": "Watts",
+          "quantity": "Quantity",
+          "hours": "Hours/Day",
+          "energy": "Energy",
+          "add": "Add Load",
+          "remove": "Remove Load",
+          "newLoad": "New Load"
+        },
+        "autonomyDays": {
+          "label": "Battery Autonomy Days"
+        },
+        "reservePercent": {
+          "label": "Load Reserve"
+        },
+        "lossPercent": {
+          "label": "System Loss"
+        }
+      }
+    },
+    "actions": {
+      "calculate": "View Calculation Results",
+      "reset": "Reset",
+      "downloadPdf": "Download Calculation Results PDF"
+    },
+    "notes": {
+      "estimation": "Initial estimates are based on master data assumptions. Final results may vary depending on site conditions, equipment specifications, installation, and actual prices.",
+      "roofAreaOptional": "If provided, the number of modules will be limited by the available roof area (5.58 m²/kWp).",
+      "informationTitle": "Calculation Information",
+      "locationPsh": "Location PSH",
+      "pr": "On-grid/Hybrid PR: 85%.",
+      "masterData": "Prices and assumptions can be updated through the admin master data.",
+      "priceDisclaimer": "The results are estimates and do not constitute a final price quotation.",
+      "resultDisclaimer": "These calculations provide estimated capacity requirements, system specifications, potential savings, and solar PV investment costs based on the selected energy profile and site conditions. For more accurate technical recommendations and quotations, please consult the Crustea team regarding your installation requirements."
+    },
+    "live": {
+      "title": "Real-time Estimate",
+      "pvSystem": "PV System",
+      "moduleCount": "Number of Modules",
+      "criticalLoad": "Critical Load",
+      "battery": "LFP Battery",
+      "hybridInverter": "Hybrid Inverter",
+      "monthlySaving": "Monthly Savings",
+      "savingPercent": "Savings (%)",
+      "estimatedSystemCost": "Estimated System Cost",
+      "payback": "Payback",
+      "notCalculated": "Cannot Be Calculated Yet",
+      "co2Avoided": "CO₂ Avoided / Year",
+      "electricalPhase": "Electrical Phase",
+      "estimatedSaving": "Estimated Savings",
+      "totalConsumption": "Total Consumption",
+      "peakLoad": "Peak Load",
+      "batteryInverter": "Battery Inverter",
+      "dieselSaving": "Savings vs. Generator"
+    },
+    "result": {
+      "title": "Calculation Results Breakdown",
+      "eyebrow": "Calculation Breakdown",
+      "calculationBreakdown": "Calculation Breakdown",
+      "systemCost": "System Cost",
+      "savingPercent": "Savings Percentage",
+      "co2Avoided": "CO₂ Avoided / Year",
+      "equivalentTrees": "Equivalent Trees",
+      "dailyConsumption": "Daily Consumption",
+      "peakLoad": "Peak Load",
+      "pvCapacity": "PV Capacity",
+      "battery": "Battery",
+      "table": {
+        "code": "Code",
+        "component": "Component",
+        "formula": "Formula / Calculation Basis",
+        "result": "Result"
+      },
+      "components": {
+        "pvSystem": "PV System",
+        "moduleCount": "Number of Modules",
+        "inverter": "Inverter",
+        "saving": "Savings",
+        "savingPercent": "Savings Percentage",
+        "systemCost": "System Cost",
+        "criticalLoad": "Critical Load",
+        "lfpBattery": "LFP Battery",
+        "maximumBackup": "Maximum Backup Duration",
+        "hybridInverter": "Hybrid Inverter",
+        "payback": "Payback",
+        "co2Avoided": "CO₂ Avoided per Year",
+        "pvProduction": "PV Production",
+        "selfConsumption": "Self-consumed Energy",
+        "gridImport": "PLN Grid Import",
+        "newBill": "Estimated New Electricity Bill",
+        "roofArea": "Required Roof Area",
+        "savingPackage": "Economy Package Price",
+        "standardPackage": "Standard Package Price",
+        "premiumPackage": "Premium Package Price",
+        "equivalentTrees": "Equivalent Trees",
+        "equivalentVehicleDistance": "Equivalent Vehicle Distance",
+        "co2Avoided25Years": "CO₂ Avoided Over 25 Years",
+        "simplePayback": "Simple Payback",
+        "dailyConsumption": "Daily Consumption",
+        "peakLoad": "Peak Load",
+        "dieselSaving": "Savings vs. Generator"
+      },
+      "formulas": {
+        "pvSystem": "Number of modules × Wp ÷ 1,000",
+        "moduleCount": "MIN(requirement; PLN power limit; roof limit)",
+        "inverter": "Smallest catalog size ≥ A ÷ 1.2",
+        "saving": "Self-consumed energy × PLN tariff",
+        "savingPercent": "D ÷ Electricity Bill × 100",
+        "systemCost": "Estimated system investment",
+        "criticalLoad": "0.6 × VA × 0.8 ÷ 1,000",
+        "batteryAuto": "Auto: ⌈(J × Duration ÷ DoD ÷ 5)⌉ × 5",
+        "batteryManual": "Manual: battery capacity based on user selection",
+        "maximumBackup": "I × DoD ÷ J",
+        "hybridInverter": "Smallest catalog size ≥ MAX(A ÷ 1.2; J)",
+        "compoundPayback": "Compound: tariff increases by 5%/year, production decreases by 1.5%/year",
+        "co2Avoided": "R × 12 × Emission Factor",
+        "pvProduction": "A × PSH × 30 × PR",
+        "selfConsumption": "Production × self-consumption factor",
+        "gridImport": "PLN Consumption − R",
+        "newBill": "S × PLN Tariff",
+        "roofArea": "A × 5.58",
+        "savingPackage": "F × 0.75",
+        "standardPackage": "F × 1.00",
+        "premiumPackage": "F × 1.37",
+        "equivalentTrees": "H ÷ 21.8",
+        "vehicleDistance": "H ÷ 0.16",
+        "co2Avoided25Years": "H × 25",
+        "simplePayback": "F ÷ (D × 12)",
+        "dailyConsumption": "Σ energy of each load ÷ 1,000",
+        "peakLoad": "Σ (Watts × quantity) ÷ 1,000",
+        "offgridPvProduction": "A × PSH × 30 × (1 − loss)",
+        "offgridBattery": "↑(M × (1 + reserve) × autonomy ÷ (DoD × η) ÷ 5) × 5",
+        "offgridInverter": "Smallest catalog size ≥ 1.25 × 0.8 × N",
+        "offgridSystemCost": "A × 12 million + C × 3 million + I × 3 million",
+        "offgridDieselSaving": "M × 365 × 0.28 × diesel price ÷ 12",
+        "offgridPayback": "F ÷ (O × 12)",
+        "offgridCo2": "M × 365 × 0.28 × 2.57",
+        "offgridTrees": "↓ H ÷ 21.8"
+      },
+      "technicalDisclaimer": "These calculations provide estimated capacity requirements, system specifications, potential savings, and solar PV investment costs based on the selected energy profile and site conditions. For more accurate technical recommendations and quotations, please consult the Crustea team regarding your installation requirements."
+    },
+    "pdf": {
+      "title": "SOLAR PV CALCULATION REPORT",
+      "system": "{system} System",
+      "reportInformation": "Report Information",
+      "simulationParameters": "Simulation Parameters",
+      "calculationSummary": "Calculation Summary",
+      "calculationDetails": "Calculation Details",
+      "reportDate": "Report Date",
+      "systemType": "System Type",
+      "location": "Location",
+      "psh": "Peak Sun Hours (PSH)",
+      "moduleCapacity": "Module Capacity",
+      "parameter": "Parameter",
+      "value": "Value",
+      "plnTariff": "PLN Tariff",
+      "plnInstalledPower": "Installed PLN Power",
+      "electricityBill": "Electricity Bill",
+      "targetSaving": "Savings Target",
+      "electricalPhase": "Electrical Phase",
+      "roofType": "Roof Type",
+      "roofArea": "Roof Area",
+      "notSpecified": "Not Specified",
+      "backupDuration": "Backup Duration",
+      "batteryCapacityMode": "Battery Capacity Mode",
+      "automatic": "Automatic",
+      "manual": "Manual",
+      "manualBatteryCapacity": "Manual Battery Capacity",
+      "autonomyDays": "Autonomy Days",
+      "loadReserve": "Load Reserve",
+      "systemLoss": "System Loss",
+      "dailyConsumption": "Daily Consumption",
+      "peakLoad": "Peak Load",
+      "pvCapacity": "PV Capacity",
+      "moduleCount": "Number of Modules",
+      "battery": "Battery",
+      "inverter": "Inverter",
+      "systemCost": "System Cost",
+      "dieselSaving": "Savings vs. Generator",
+      "payback": "Payback",
+      "co2Avoided": "CO₂ Avoided",
+      "equivalentTrees": "Equivalent Trees",
+      "monthlyProduction": "PV Production",
+      "monthlySaving": "Monthly Savings",
+      "savingPercent": "Savings Percentage",
+      "compoundPayback": "Compound Payback",
+      "cannotCalculate": "Cannot Be Calculated Yet",
+      "criticalLoad": "Critical Load",
+      "backupDurationResult": "Backup Duration",
+      "hybridInverter": "Hybrid Inverter",
+      "vehicleDistance": "Equivalent Vehicle Distance",
+      "co2Avoided25Years": "CO₂ Avoided Over 25 Years",
+      "component": "Component",
+      "formula": "Formula / Calculation Basis",
+      "result": "Result",
+      "footer": "Crustea | Solar PV Calculation Estimate",
+      "page": "Page {current} of {total}",
+      "fileName": "Solar-PV-Calculation-Results",
+      "logoError": "The Crustea logo could not be loaded.",
+      "pdfError": "Failed to generate the PDF. Please check the logo file or try again."
+    },
+    "units": {
+      "hour": "hour",
+      "hoursPerDay": "hours/day",
+      "day": "day",
+      "month": "month",
+      "perMonth": "/month",
+      "perDay": "/day",
+      "perYear": "/year",
+      "year": "year",
+      "module": "module",
+      "tree": "trees",
+      "unit": "unit",
+      "notAvailable": "—"
+    }
+  },
+
   "Roadmap": {
     "page": {
       "title": "Certification Roadmap",
@@ -1600,16 +1903,19 @@
       "products": {
         "aquaculture-technology": "Aquaculture Technology",
         "akuatur": "Akuatur",
-        "krasty-trading": "Krasty & Trading",
+        "krasty-trading": "Processed Products",
         "aquagrowth": "Aquagrowth",
-        "calculator": "Aquaculture Calculator"
+        "partnership": "Partnership"
       },
       "services": {
-        "consultation": "Consulting & Construction"
+        "consultation": "Consultation",
+        "calculator": "Aquaculture Calculator",
+        "solar-calculator": "Solar PV Calculator"
       },
       "company": {
         "about": "About Us",
-        "partnership": "Partnerships"
+        "team": "Our Team",
+        "roadmap": "Roadmap & Certifications"
       },
       "resources": {
         "news": "News",
