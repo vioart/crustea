@@ -646,7 +646,7 @@ export default function PLTSCalculator() {
       const logo = await loadCrusteaLogo();
 
       // HEADER PDF
-      doc.addImage(logo, "PNG", margin, 10, 32, 16);
+      doc.addImage(logo, "PNG", margin, 10, 45, 15);
 
       doc.setFont("helvetica", "bold");
       doc.setFontSize(16);
@@ -895,313 +895,7 @@ export default function PLTSCalculator() {
         },
       });
 
-      currentY = (doc as JsPDFWithAutoTable).lastAutoTable.finalY + 9;
-
-      // RINCIAN PERHITUNGAN
-      const addSectionTitle = (title: string) => {
-        if (currentY > pageHeight - 35) {
-          doc.addPage();
-          currentY = 20;
-        }
-
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(11);
-        doc.setTextColor(5, 84, 106);
-        doc.text(title, margin, currentY);
-        currentY += 4;
-      };
-
-      addSectionTitle(t("pdf.calculationDetails"));
-
-      const detailRows: string[][] = [];
-
-      if (system === "offgrid") {
-        offResult.loadRows.forEach((row) => {
-          detailRows.push([
-            "L",
-            row.name,
-            `${row.watt} W × ${row.quantity} × ${row.hours} ${t("units.hour")}`,
-            `${number(row.energyWh, 0)} Wh/${t("units.day")}`,
-          ]);
-        });
-
-        detailRows.push(
-          [
-            "M",
-            t("pdf.dailyConsumption"),
-            t("result.formulas.dailyConsumption"),
-            `${number(offResult.dailyKwh)} kWh/${t("units.day")}`,
-          ],
-          [
-            "N",
-            t("pdf.peakLoad"),
-            t("result.formulas.peakLoad"),
-            `${number(offResult.peakKw)} kW`,
-          ],
-          [
-            "A",
-            t("pdf.systemType"),
-            t("result.formulas.pvSystem"),
-            `${number(offResult.kwp)} kWp`,
-          ],
-          [
-            "B",
-            t("pdf.moduleCount"),
-            t("result.formulas.offgridPvProduction"),
-            `${offResult.moduleCount} × ${moduleWp} Wp`,
-          ],
-          [
-            "Q",
-            t("pdf.monthlyProduction"),
-            t("result.formulas.offgridPvProduction"),
-            `${number(offResult.production)} kWh/${t("units.month")}`,
-          ],
-          [
-            "I",
-            t("pdf.battery"),
-            t("result.formulas.offgridBattery"),
-            `${number(offResult.batteryKwh, 0)} kWh`,
-          ],
-          [
-            "C",
-            t("pdf.inverter"),
-            t("result.formulas.offgridInverter"),
-            `${number(offResult.inverterKw)} kW`,
-          ],
-          [
-            "F",
-            t("pdf.systemCost"),
-            t("result.formulas.offgridSystemCost"),
-            money(offResult.cost),
-          ],
-          [
-            "O",
-            t("pdf.dieselSaving"),
-            t("result.formulas.offgridDieselSaving"),
-            `${money(offResult.dieselSaving)}${t("units.perMonth")}`,
-          ],
-          [
-            "G",
-            t("pdf.payback"),
-            t("result.formulas.offgridPayback"),
-            offResult.payback !== null
-              ? `${number(offResult.payback, 1)} ${t("units.year")}`
-              : "—",
-          ],
-          [
-            "H",
-            t("pdf.co2Avoided"),
-            t("result.formulas.offgridCo2"),
-            `${number(offResult.co2, 0)} kg${t("units.perYear")}`,
-          ],
-          [
-            "X",
-            t("pdf.equivalentTrees"),
-            t("result.formulas.offgridTrees"),
-            `${offResult.trees} ${t("units.tree")}`,
-          ],
-        );
-      } else {
-        detailRows.push(
-          [
-            "A",
-            t("pdf.systemType"),
-            t("result.formulas.pvSystem"),
-            `${number(gridResult.kwp)} kWp`,
-          ],
-          [
-            "B",
-            t("pdf.moduleCount"),
-            t("result.formulas.moduleCount"),
-            `${gridResult.modules} ${t("units.module")}`,
-          ],
-        );
-
-        if (system === "ongrid") {
-          detailRows.push([
-            "C",
-            t("pdf.inverter"),
-            t("result.formulas.inverter"),
-            `${number(gridResult.inverterKw)} kW`,
-          ]);
-        }
-
-        detailRows.push(
-          [
-            "D",
-            t("result.components.saving"),
-            t("result.formulas.saving"),
-            money(gridResult.saving),
-          ],
-          [
-            "E",
-            t("result.components.savingPercent"),
-            t("result.formulas.savingPercent"),
-            `${number(gridResult.savingPercent)}%`,
-          ],
-          [
-            "F",
-            t("pdf.systemCost"),
-            t("result.formulas.systemCost"),
-            money(gridResult.totalCost),
-          ],
-        );
-
-        if (system === "hybrid") {
-          detailRows.push(
-            [
-              "J",
-              t("pdf.criticalLoad"),
-              t("result.formulas.criticalLoad"),
-              `${number(gridResult.criticalLoadKw)} kW`,
-            ],
-            [
-              "I",
-              t("result.components.lfpBattery"),
-              batteryMode === "auto"
-                ? t("result.formulas.batteryAuto")
-                : t("result.formulas.batteryManual"),
-              `${number(gridResult.batteryKwh, 0)} kWh`,
-            ],
-            [
-              "—",
-              t("result.components.maximumBackup"),
-              t("result.formulas.maximumBackup"),
-              `${number(gridResult.backupHours)} ${t("units.hour")}`,
-            ],
-            [
-              "K",
-              t("pdf.hybridInverter"),
-              t("result.formulas.hybridInverter"),
-              `${number(gridResult.hybridInverterKw)} kW`,
-            ],
-          );
-        }
-
-        detailRows.push(
-          [
-            "G",
-            t("pdf.payback"),
-            t("result.formulas.compoundPayback"),
-            gridResult.compoundPayback !== null
-              ? `${number(gridResult.compoundPayback, 1)} ${t("units.year")}`
-              : "—",
-          ],
-          [
-            "H",
-            t("pdf.co2Avoided"),
-            t("result.formulas.co2Avoided"),
-            `${number(gridResult.co2, 0)} kg${t("units.perYear")}`,
-          ],
-          [
-            "Q",
-            t("pdf.monthlyProduction"),
-            t("result.formulas.pvProduction"),
-            `${number(gridResult.production)} kWh/${t("units.month")}`,
-          ],
-          [
-            "R",
-            t("result.components.selfConsumption"),
-            t("result.formulas.selfConsumption"),
-            `${number(gridResult.used)} kWh/${t("units.month")}`,
-          ],
-          [
-            "S",
-            t("result.components.gridImport"),
-            t("result.formulas.gridImport"),
-            `${number(gridResult.newGridImport)} kWh/${t("units.month")}`,
-          ],
-          [
-            "T",
-            t("result.components.newBill"),
-            t("result.formulas.newBill"),
-            money(gridResult.newBill),
-          ],
-          [
-            "U",
-            t("result.components.roofArea"),
-            t("result.formulas.roofArea"),
-            `${number(gridResult.roofAreaRequired)} m²`,
-          ],
-          [
-            "W",
-            t("result.components.savingPackage"),
-            t("result.formulas.savingPackage"),
-            money(gridResult.packagePrices[0]),
-          ],
-          [
-            "W",
-            t("result.components.standardPackage"),
-            t("result.formulas.standardPackage"),
-            money(gridResult.packagePrices[1]),
-          ],
-          [
-            "W",
-            t("result.components.premiumPackage"),
-            t("result.formulas.premiumPackage"),
-            money(gridResult.packagePrices[2]),
-          ],
-          [
-            "X",
-            t("pdf.equivalentTrees"),
-            t("result.formulas.equivalentTrees"),
-            `${number(gridResult.trees, 0)} ${t("units.tree")}`,
-          ],
-          [
-            "X",
-            t("pdf.vehicleDistance"),
-            t("result.formulas.vehicleDistance"),
-            `${number(gridResult.carKm, 0)} km`,
-          ],
-          [
-            "Y",
-            t("pdf.co2Avoided25Years"),
-            t("result.formulas.co2Avoided25Years"),
-            `${number(gridResult.co2_25y, 0)} kg`,
-          ],
-          [
-            "Z",
-            t("result.components.simplePayback"),
-            t("result.formulas.simplePayback"),
-            gridResult.simplePayback !== null
-              ? `${number(gridResult.simplePayback, 1)} ${t("units.year")}`
-              : "—",
-          ],
-        );
-      }
-
-      autoTable(doc, {
-        startY: currentY,
-        theme: "grid",
-        margin: { left: margin, right: margin },
-        head: [
-          [
-            t("result.table.code"),
-            t("pdf.component"),
-            t("pdf.formula"),
-            t("pdf.result"),
-          ],
-        ],
-        body: detailRows,
-        styles: {
-          fontSize: 7.5,
-          cellPadding: 2.3,
-          overflow: "linebreak",
-          lineColor: [228, 233, 223],
-          textColor: [51, 65, 85],
-        },
-        headStyles: {
-          fillColor: [5, 84, 106],
-          textColor: 255,
-          fontStyle: "bold",
-        },
-        columnStyles: {
-          0: { cellWidth: 12, halign: "center" },
-          1: { cellWidth: 43 },
-          2: { cellWidth: 75 },
-          3: { cellWidth: 50, halign: "right" },
-        },
-      });
+      currentY = (doc as JsPDFWithAutoTable).lastAutoTable.finalY + 9
 
       // FOOTER SEMUA HALAMAN
       const totalPages = doc.getNumberOfPages();
@@ -1951,7 +1645,6 @@ export default function PLTSCalculator() {
                       <tr className="border-b bg-slate-50 text-slate-600">
                         <th className="p-3">{t("result.table.code")}</th>
                         <th className="p-3">{t("result.table.component")}</th>
-                        <th className="p-3">{t("result.table.formula")}</th>
                         <th className="p-3 text-right">
                           {t("result.table.result")}
                         </th>
@@ -2340,12 +2033,11 @@ function Summary({ label, value }: { label: string; value: string }) {
 function ResultRow({
   code,
   label,
-  formula,
   value,
 }: {
   code: string;
   label: string;
-  formula: string;
+  formula?: string;
   value: string;
 }) {
   return (
@@ -2355,9 +2047,14 @@ function ResultRow({
           {code}
         </span>
       </td>
-      <td className="p-3 font-semibold text-slate-800">{label}</td>
-      <td className="p-3 text-slate-500">{formula}</td>
-      <td className="p-3 text-right font-bold text-slate-900">{value}</td>
+
+      <td className="p-3 font-semibold text-slate-800">
+        {label}
+      </td>
+
+      <td className="p-3 text-right font-bold text-slate-900">
+        {value}
+      </td>
     </tr>
   );
 }

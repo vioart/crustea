@@ -132,13 +132,13 @@ export default function Header() {
   const serviceLinks: LinkItem[] = [
     {
       title: t("servicesList.cultivationCalculator.title"),
-      href: "/produk/kalkulator-budidaya",
+      href: "/layanan/kalkulator-budidaya",
       description: t("servicesList.cultivationCalculator.description"),
       icon: Calculator,
     },
     {
       title: t("servicesList.solarCalculator.title"),
-      href: "/produk/kalkulator-plts",
+      href: "/layanan/kalkulator-plts",
       description: t("servicesList.solarCalculator.description"),
       icon: Sun,
     },

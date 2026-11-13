@@ -298,8 +298,12 @@ export default function CultivationCalculator() {
     ? actualFeedParsed.feedAmount / actualWeightGain
     : null;
 
-  const actualFeedEfficiency = isActualFeedValid
-    ? (actualWeightGain / actualFeedParsed.feedAmount) * 100
+  // Efisiensi Pakan (EPP)
+  // EPP = (Bobot Akhir - Bobot Awal) / Jumlah Pakan x 100%
+  const actualEpp = isActualFeedValid
+    ? ((actualFeedParsed.finalBiomass - actualFeedParsed.initialBiomass) /
+        actualFeedParsed.feedAmount) *
+      100
     : null;
 
   // Kategori mengikuti rentang yang diberikan tim.
@@ -510,9 +514,8 @@ export default function CultivationCalculator() {
         ? "LAPORAN KALKULASI BUDIDAYA"
         : "CULTIVATION CALCULATION REPORT";
 
-    // Header PDF mengikuti tata letak laporan Kalkulator PLTS.
     if (logo) {
-      doc.addImage(logo, "PNG", margin, 10, 35, 18);
+      doc.addImage(logo, "PNG", margin, 10, 45, 15);
     } else {
       doc.setFont("helvetica", "bold");
       doc.setFontSize(17);
@@ -693,7 +696,7 @@ export default function CultivationCalculator() {
   }
 
   async function downloadEfficiencyPdf() {
-    if (actualFcr === null || actualFeedEfficiency === null) return;
+    if (actualFcr === null || actualEpp === null) return;
 
     const logo = await loadCrusteaLogo();
 
@@ -790,11 +793,11 @@ export default function CultivationCalculator() {
         ],
         [
           locale === "id" ? "Efisiensi Pakan" : "Feed Efficiency",
-          `${formatNumber(actualFeedEfficiency, 2)}%`,
+          `${formatNumber(actualEpp, 2)}%`,
         ],
         [
           locale === "id" ? "Kategori Efisiensi" : "Efficiency Category",
-          getEfficiencyCategory(actualFeedEfficiency),
+          getEfficiencyCategory(actualEpp),
         ],
       ],
       theme: "grid",
@@ -1727,7 +1730,7 @@ export default function CultivationCalculator() {
                 <div className="space-y-5 p-5 sm:p-6">
                   {!hasCalculatedActual ||
                   actualFcr === null ||
-                  actualFeedEfficiency === null ? (
+                  actualEpp === null ? (
                     <div className="py-8 text-center">
                       <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-2xl bg-[var(--brand-secondary)]/10 text-[var(--brand-secondary)]">
                         <Gauge size={30} strokeWidth={1.6} />
@@ -1765,10 +1768,10 @@ export default function CultivationCalculator() {
                               : "Feed Efficiency"}
                           </p>
                           <p className="mt-2 text-3xl font-bold text-[var(--brand-dark)]">
-                            {formatNumber(actualFeedEfficiency, 2)}%
+                            {formatNumber(actualEpp, 2)}%
                           </p>
                           <span className="mt-2 inline-flex rounded-full bg-[var(--secondary)] px-3 py-1 text-xs font-semibold text-[var(--brand-dark)]">
-                            {getEfficiencyCategory(actualFeedEfficiency)}
+                            {getEfficiencyCategory(actualEpp)}
                           </span>
                         </div>
                       </div>
@@ -1821,12 +1824,10 @@ export default function CultivationCalculator() {
                           {formatNumber(actualFcr, 2)}
                         </p>
                         <p className="mt-2 text-xs leading-6 text-[var(--muted-foreground)]">
-                          {locale === "id"
-                            ? "Efisiensi Pakan"
-                            : "Feed Efficiency"}{" "}
-                          = ({formatNumber(actualWeightGain)} ÷{" "}
-                          {formatNumber(actualFeedParsed.feedAmount)}) × 100% ={" "}
-                          {formatNumber(actualFeedEfficiency, 2)}%
+                          EPP = ({formatNumber(actualFeedParsed.finalBiomass)} -{" "}
+                          {formatNumber(actualFeedParsed.initialBiomass)}) ÷{" "}
+                          {formatNumber(actualFeedParsed.feedAmount)} × 100% ={" "}
+                          {formatNumber(actualEpp, 2)}%
                         </p>
                       </div>
                     </>
@@ -1855,7 +1856,7 @@ export default function CultivationCalculator() {
 
               {hasCalculatedActual &&
                 actualFcr !== null &&
-                actualFeedEfficiency !== null && (
+                actualEpp !== null && (
                   <button
                     type="button"
                     onClick={downloadEfficiencyPdf}

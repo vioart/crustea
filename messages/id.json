@@ -322,7 +322,7 @@
       "items": {
         "sari": {
           "name": "Ibu Wahyuni",
-          "role": "Pengelola tambak, Lampung",
+          "role": "Pengelola tambak, Banjarnegara",
           "quote": "Sejak menggunakan aerator Crustea, saya bisa mengontrol aerator, memantau kadar DO, dan melihat penggunaan listrik lewat aplikasi dari mana saja. Budidaya ikan nila jadi lebih praktis, efisien, dan mudah dipantau."
         },
         "andi": {
@@ -761,23 +761,204 @@
   },
 
   "Akuatur": {
-    "page": {
-      "title": "Akuatur",
-      "breadcrumb": {
-        "home": "Beranda",
-        "akuatur": "Akuatur"
+    "hero": {
+      "heading": "Jelajahi Akuakultur",
+      "headingPrefix": "Bersama",
+      "description": "Ikuti pengalaman wisata edukasi tambak, tukik, dan desa pesisir. Belajar akuakultur langsung dari lokasi, bersama komunitas lokal.",
+      "exploreButton": "Jelajahi Paket Wisata",
+      "consultationButton": "Konsultasi Pemesanan",
+      "whatsappMessage": "Halo Akuatur, saya tertarik dengan paket wisata edukasi Akuatur. Mohon informasi lebih lanjut mengenai paket, jadwal, dan pemesanan.",
+      "whatsappAriaLabel": "Hubungi Akuatur melalui WhatsApp",
+      "imageAlt": "Pengalaman wisata edukasi akuakultur bersama Akuatur",
+      "benefits": {
+        "education": "Edukasi Langsung",
+        "community": "Berbasis Komunitas",
+        "group": "Cocok untuk Individu & Grup",
+        "educationDesktopLine1": "Edukasi",
+        "educationDesktopLine2": "Langsung",
+        "communityDesktopLine1": "Berbasis",
+        "communityDesktopLine2": "Komunitas",
+        "groupDesktopLine1": "Cocok untuk",
+        "groupDesktopLine2": "Individu & Grup"
+      }
+    },
+    "introduction": {
+      "eyebrow": "Mengenal Akuatur",
+      "heading": "Bukan Sekadar",
+      "headingHighlight": "Wisata Biasa",
+      "description": "Akuatur menghadirkan pengalaman wisata edukasi akuakultur yang mempertemukan pengunjung dengan dunia budidaya, teknologi, lingkungan, dan kehidupan masyarakat pesisir.",
+      "cards": {
+        "pond": {
+          "title": "Tambak & Teknologi",
+          "description": "Mengenal kegiatan budidaya, pengelolaan kolam, kualitas air, dan penerapan teknologi akuakultur.",
+          "imageAlt": "Aktivitas budidaya dan teknologi di kawasan tambak akuakultur"
+        },
+        "conservation": {
+          "title": "Alam & Konservasi",
+          "description": "Mengeksplorasi lingkungan pesisir dan aktivitas edukasi yang berkaitan dengan kelestarian alam.",
+          "imageAlt": "Aktivitas edukasi lingkungan pesisir dan konservasi alam"
+        },
+        "community": {
+          "title": "Komunitas Lokal",
+          "description": "Belajar langsung bersama petambak, pengelola lokasi, dan pelaku kegiatan akuakultur.",
+          "imageAlt": "Interaksi dan kegiatan edukasi bersama komunitas lokal"
+        }
+      }
+    },
+    "packages": {
+      "eyebrow": "Katalog Wisata",
+      "heading": "Pilih Pengalaman",
+      "headingHighlight": "Wisata Akuatur",
+      "description": "Temukan paket wisata edukasi berdasarkan kota tujuan dan kebutuhan perjalananmu.",
+      "categories": {
+        "regular": "Paket Reguler",
+        "group": "Program Grup"
       },
-      "status": "Segera Hadir",
-      "heading": "Akuatur sedang kami",
-      "headingHighlight": "persiapkan untuk Anda.",
-      "description": "Akuatur merupakan program produk Crustea yang sedang dalam tahap pengembangan. Kami tengah menyiapkan pengalaman dan inovasi teknologi akuakultur untuk mendukung kegiatan budidaya yang lebih efektif dan berkelanjutan. Nantikan kehadiran Akuatur dalam waktu dekat!",
-      "features": {
-        "sustainable": "Akuakultur Berkelanjutan",
-        "innovation": "Inovasi Teknologi",
-        "comingSoon": "Dalam Pengembangan"
+      "filters": {
+        "all": "Semua Paket",
+        "regular": "Paket Reguler",
+        "group": "Program Grup",
+        "reset": "Reset filter"
       },
-      "contactButton": "Hubungi Kami",
-      "footerNote": "Ikuti perkembangan terbaru Akuatur bersama Crustea."
+      "results": {
+        "showing": "Menampilkan",
+        "packageCount": "{count} paket",
+        "forCity": "untuk kota"
+      },
+      "card": {
+        "duration": "Durasi",
+        "participants": "Peserta",
+        "startingFrom": "Mulai dari",
+        "detail": "Lihat Detail",
+        "order": "Tanya & Pesan"
+      },
+      "fallback": {
+        "location": "Lokasi menyesuaikan program",
+        "description": "Informasi paket belum tersedia.",
+        "price": "Hubungi kami"
+      },
+      "empty": {
+        "title": "Belum ada paket untuk kota ini",
+        "description": "Silakan hubungi tim Akuatur untuk mendapatkan informasi ketersediaan paket atau menyusun program sesuai kebutuhan.",
+        "button": "Konsultasi Program"
+      },
+      "footerNote": "Harga dapat menyesuaikan jumlah peserta dan lokasi. Paket grup disusun berdasarkan kebutuhan dan kesepakatan.",
+      "whatsapp": {
+        "packageMessage": "Halo Akuatur, saya tertarik dengan paket {title}.\n\nDestinasi: {destination}\nHarga: {price}\n\nMohon informasi lebih lanjut mengenai jadwal, fasilitas, dan pemesanan.",
+        "cityMessage": "Halo Akuatur, saya tertarik dengan program wisata di {city}. Mohon informasi lebih lanjut."
+      }
+    },
+    "destinations": {
+      "eyebrow": "Jelajahi Destinasi",
+      "heading": "Temukan Lokasi",
+      "headingHighlight": "Wisata Akuatur",
+      "description": "Pilih kota untuk melihat tempat wisata yang tersedia, lalu pilih tempat yang ingin kamu kunjungi.",
+      "map": {
+        "title": "Peta Destinasi Akuatur",
+        "description": "Penanda menunjukkan tempat wisata dengan koordinat aktual.",
+        "showAll": "Lihat semua",
+        "ariaLabel": "Peta lokasi tempat wisata Akuatur",
+        "legend": {
+          "regular": "Destinasi reguler",
+          "byOrder": "Destinasi By Order"
+        },
+        "pointsCount": "{count} titik lokasi",
+        "coordinateNote": "Marker hanya ditampilkan jika koordinat latitude dan longitude tempat wisata sudah tersedia. Kota tidak digunakan sebagai titik marker."
+      },
+      "list": {
+        "title": "Daftar Destinasi",
+        "description": "Pilih kota, lalu pilih tempat wisatanya.",
+        "cityCount": "{count} kota",
+        "filters": {
+          "all": "Semua",
+          "regular": "Reguler",
+          "byOrder": "By Order"
+        },
+        "destinationCount": "{count} tempat wisata",
+        "selectedCity": "Kota dipilih",
+        "coordinatesUnavailable": "Koordinat belum tersedia",
+        "empty": "Tidak ada destinasi pada filter ini."
+      },
+      "detail": {
+        "cityLabel": "Kota:",
+        "selectedPlaceLabel": "Tempat dipilih:",
+        "eyebrow": "Tempat wisata pilihan",
+        "category": "Wisata Akuatur",
+        "packageDescription": "Paket wisata untuk tempat ini dapat dilihat pada katalog di bawah.",
+        "packageButton": "Lihat paket di {city}"
+      }
+    },
+    "targetAudience": {
+      "eyebrow": "Pilih Sesuai Kebutuhan",
+      "heading": "Akuatur untuk",
+      "headingHighlight": "Siapa?",
+      "description": "Akuatur dirancang untuk berbagai kalangan yang ingin mendapatkan pengalaman wisata sekaligus belajar mengenai dunia akuakultur.",
+      "cards": {
+        "students": {
+          "title": "Pelajar & Mahasiswa",
+          "description": "Kunjungan rombongan, materi teknologi perikanan, tur tambak, dan FGD."
+        },
+        "families": {
+          "title": "Keluarga & Komunitas",
+          "description": "Liburan sambil belajar, aktivitas alam, mancing, dan wisata edukasi."
+        },
+        "corporate": {
+          "title": "Korporat & Team Building",
+          "description": "Aktivitas kelompok di alam terbuka untuk membangun kebersamaan tim."
+        },
+        "farmers": {
+          "title": "Pembudidaya & Investor",
+          "description": "Mengenal peluang akuakultur, teknologi budidaya, dan pemantauan tambak."
+        }
+      }
+    },
+    "priceTable": {
+      "eyebrow": "Transparansi Harga",
+      "heading": "Daftar Paket",
+      "headingHighlight": "& Harga",
+      "description": "Bandingkan pilihan paket wisata Akuatur berdasarkan tempat wisata, durasi, jumlah peserta, dan harga.",
+      "columns": {
+        "program": "Program",
+        "destination": "Tempat Wisata",
+        "city": "Kota",
+        "duration": "Durasi",
+        "participants": "Peserta",
+        "price": "Harga"
+      },
+      "fallback": {
+        "destination": "By Order",
+        "city": "Menyesuaikan"
+      },
+      "footerNote": "Harga belum termasuk tiket pesawat/kereta, bagasi tambahan, pengeluaran pribadi, dan aktivitas di luar itinerary. Harga dapat menyesuaikan jumlah peserta dan lokasi."
+    },
+    "bookingSteps": {
+      "eyebrow": "Cara Pemesanan",
+      "heading": "Siap Berangkat?",
+      "headingHighlight": "Tiga Langkah Saja.",
+      "description": "Mulai rencanakan pengalaman wisata edukasi bersama Akuatur. Proses pemesanan mudah dan tim kami siap membantu setiap tahapnya.",
+      "steps": {
+        "contact": {
+          "title": "Hubungi Kami",
+          "description": "Sebutkan program wisata, tanggal kunjungan, lokasi, dan jumlah peserta."
+        },
+        "offer": {
+          "title": "Terima Penawaran",
+          "description": "Tim kami menyiapkan itinerary dan harga final sesuai lokasi serta kebutuhan rombongan."
+        },
+        "confirmation": {
+          "title": "Konfirmasi & Berangkat",
+          "description": "Setelah penawaran disepakati, tim Akuatur membantu mempersiapkan perjalanan wisata edukasimu."
+        }
+      },
+      "contact": {
+        "phone": "Telepon",
+        "email": "Email"
+      },
+      "tagline": {
+        "investment": "Kekuatan Investasi",
+        "foodSecurity": "Kestabilan Pangan",
+        "nature": "Keseimbangan Alam"
+      }
     }
   },
 

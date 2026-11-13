@@ -322,7 +322,7 @@
       "items": {
         "sari": {
           "name": "Mrs. Wahyuni",
-          "role": "Farm Manager, Lampung",
+          "role": "Farm Manager, Banjarnegara",
           "quote": "Since using Crustea aerators, I can control the aerator, monitor DO levels, and track electricity consumption through the app from anywhere. Tilapia farming has become more practical, efficient, and easier to monitor."
         },
         "andi": {
@@ -761,23 +761,204 @@
   },
 
   "Akuatur": {
-    "page": {
-      "title": "Akuatur",
-      "breadcrumb": {
-        "home": "Home",
-        "akuatur": "Akuatur"
+    "hero": {
+      "heading": "Explore Aquaculture",
+      "headingPrefix": "With",
+      "description": "Discover educational experiences at shrimp farms, sea turtle conservation sites, and coastal villages. Learn about aquaculture firsthand through immersive experiences with local communities.",
+      "exploreButton": "Explore Tour Packages",
+      "consultationButton": "Booking Consultation",
+      "whatsappMessage": "Hello Akuatur, I am interested in Akuatur's educational aquaculture tour packages. I would like to know more about the packages, schedules, and booking process.",
+      "whatsappAriaLabel": "Contact Akuatur via WhatsApp",
+      "imageAlt": "Educational aquaculture tourism experience with Akuatur",
+      "benefits": {
+        "education": "Hands-on Education",
+        "community": "Community-Based",
+        "group": "Suitable for Individuals & Groups",
+        "educationDesktopLine1": "Hands-on",
+        "educationDesktopLine2": "Education",
+        "communityDesktopLine1": "Community",
+        "communityDesktopLine2": "Based",
+        "groupDesktopLine1": "Suitable for",
+        "groupDesktopLine2": "Individuals & Groups"
+      }
+    },
+    "introduction": {
+      "eyebrow": "Discover Akuatur",
+      "heading": "More Than Just",
+      "headingHighlight": "An Ordinary Trip",
+      "description": "Akuatur offers educational aquaculture tourism experiences that connect visitors with aquaculture farming, technology, the environment, and the lives of coastal communities.",
+      "cards": {
+        "pond": {
+          "title": "Aquaculture & Technology",
+          "description": "Discover aquaculture practices, pond management, water quality monitoring, and the application of aquaculture technology.",
+          "imageAlt": "Aquaculture farming activities and technology at a shrimp farm"
+        },
+        "conservation": {
+          "title": "Nature & Conservation",
+          "description": "Explore coastal environments and educational activities focused on environmental conservation.",
+          "imageAlt": "Coastal environmental education and nature conservation activities"
+        },
+        "community": {
+          "title": "Local Communities",
+          "description": "Learn directly from fish farmers, site managers, and people involved in aquaculture activities.",
+          "imageAlt": "Educational interaction and activities with local communities"
+        }
+      }
+    },
+    "packages": {
+      "eyebrow": "Tour Catalog",
+      "heading": "Choose Your Experience",
+      "headingHighlight": "Akuatur Tours",
+      "description": "Discover educational tour packages based on your destination city and travel needs.",
+      "categories": {
+        "regular": "Regular Package",
+        "group": "Group Program"
       },
-      "status": "Coming Soon",
-      "heading": "Akuatur is being",
-      "headingHighlight": "prepared for you.",
-      "description": "Akuatur is a Crustea product program currently under development. We are preparing an experience powered by aquaculture technology innovations to support more effective and sustainable farming practices. Stay tuned for the upcoming launch of Akuatur!",
-      "features": {
-        "sustainable": "Sustainable Aquaculture",
-        "innovation": "Technology Innovation",
-        "comingSoon": "In Development"
+      "filters": {
+        "all": "All Packages",
+        "regular": "Regular Packages",
+        "group": "Group Programs",
+        "reset": "Reset filters"
       },
-      "contactButton": "Contact Us",
-      "footerNote": "Stay tuned for the latest updates on Akuatur by Crustea."
+      "results": {
+        "showing": "Showing",
+        "packageCount": "{count} packages",
+        "forCity": "for"
+      },
+      "card": {
+        "duration": "Duration",
+        "participants": "Participants",
+        "startingFrom": "Starting from",
+        "detail": "View Details",
+        "order": "Inquire & Book"
+      },
+      "fallback": {
+        "location": "Location based on program",
+        "description": "Package information is not available yet.",
+        "price": "Contact us"
+      },
+      "empty": {
+        "title": "No packages available for this city yet",
+        "description": "Please contact the Akuatur team for package availability or to arrange a program based on your needs.",
+        "button": "Consult About a Program"
+      },
+      "footerNote": "Prices may vary depending on the number of participants and location. Group packages are arranged according to specific needs and mutual agreement.",
+      "whatsapp": {
+        "packageMessage": "Hello Akuatur, I am interested in the {title} package.\n\nDestination: {destination}\nPrice: {price}\n\nPlease provide more information about the schedule, facilities, and booking process.",
+        "cityMessage": "Hello Akuatur, I am interested in a tourism program in {city}. Please provide more information."
+      }
+    },
+    "destinations": {
+      "eyebrow": "Explore Destinations",
+      "heading": "Discover",
+      "headingHighlight": "Akuatur Destinations",
+      "description": "Choose a city to explore the available destinations, then select the place you would like to visit.",
+      "map": {
+        "title": "Akuatur Destination Map",
+        "description": "Markers indicate tourist destinations with actual geographic coordinates.",
+        "showAll": "Show all",
+        "ariaLabel": "Map of Akuatur tourism destinations",
+        "legend": {
+          "regular": "Regular destinations",
+          "byOrder": "By Order destinations"
+        },
+        "pointsCount": "{count} locations",
+        "coordinateNote": "Markers are only displayed when a destination has valid latitude and longitude coordinates. Cities are not used as marker locations."
+      },
+      "list": {
+        "title": "Destination List",
+        "description": "Choose a city, then select a destination.",
+        "cityCount": "{count} cities",
+        "filters": {
+          "all": "All",
+          "regular": "Regular",
+          "byOrder": "By Order"
+        },
+        "destinationCount": "{count} destinations",
+        "selectedCity": "Selected city",
+        "coordinatesUnavailable": "Coordinates unavailable",
+        "empty": "No destinations found for this filter."
+      },
+      "detail": {
+        "cityLabel": "City:",
+        "selectedPlaceLabel": "Selected destination:",
+        "eyebrow": "Featured destination",
+        "category": "Akuatur Tourism",
+        "packageDescription": "Tour packages for this destination are available in the catalog below.",
+        "packageButton": "View packages in {city}"
+      }
+    },
+    "targetAudience": {
+      "eyebrow": "Choose Based on Your Needs",
+      "heading": "Akuatur for",
+      "headingHighlight": "Whom?",
+      "description": "Akuatur is designed for different audiences who want to enjoy tourism experiences while learning about the world of aquaculture.",
+      "cards": {
+        "students": {
+          "title": "Students & University Learners",
+          "description": "Group visits, fisheries technology learning, pond tours, and focus group discussions."
+        },
+        "families": {
+          "title": "Families & Communities",
+          "description": "Educational holidays, outdoor activities, fishing, and learning experiences."
+        },
+        "corporate": {
+          "title": "Corporate & Team Building",
+          "description": "Outdoor group activities designed to strengthen teamwork and build stronger connections."
+        },
+        "farmers": {
+          "title": "Aquaculture Farmers & Investors",
+          "description": "Explore aquaculture opportunities, farming technology, and pond monitoring."
+        }
+      }
+    },
+    "priceTable": {
+      "eyebrow": "Price Transparency",
+      "heading": "Package List",
+      "headingHighlight": "& Pricing",
+      "description": "Compare Akuatur tour packages based on destinations, duration, number of participants, and pricing.",
+      "columns": {
+        "program": "Program",
+        "destination": "Destination",
+        "city": "City",
+        "duration": "Duration",
+        "participants": "Participants",
+        "price": "Price"
+      },
+      "fallback": {
+        "destination": "By Order",
+        "city": "Flexible"
+      },
+      "footerNote": "Prices exclude flight/train tickets, additional baggage, personal expenses, and activities outside the itinerary. Prices may vary depending on the number of participants and location."
+    },
+    "bookingSteps": {
+      "eyebrow": "How to Book",
+      "heading": "Ready to Go?",
+      "headingHighlight": "Just Three Steps.",
+      "description": "Start planning your educational tourism experience with Akuatur. Our booking process is simple, and our team is ready to assist you every step of the way.",
+      "steps": {
+        "contact": {
+          "title": "Contact Us",
+          "description": "Tell us your preferred tour program, visit date, location, and number of participants."
+        },
+        "offer": {
+          "title": "Receive an Offer",
+          "description": "Our team will prepare an itinerary and final price based on your location and group requirements."
+        },
+        "confirmation": {
+          "title": "Confirm & Depart",
+          "description": "Once the offer is approved, the Akuatur team will help prepare your educational tourism journey."
+        }
+      },
+      "contact": {
+        "phone": "Phone",
+        "email": "Email"
+      },
+      "tagline": {
+        "investment": "Investment Strength",
+        "foodSecurity": "Food Security",
+        "nature": "Balance of Nature"
+      }
     }
   },
 

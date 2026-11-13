@@ -15,6 +15,7 @@ import {
   Users,
   Handshake,
   UserRound,
+  MapPinned,
   X,
 } from "lucide-react";
 
@@ -80,6 +81,11 @@ const menuItems = [
     ],
   },
   {
+    key: "akuatur",
+    href: "/portal/akuatur",
+    icon: MapPinned,
+  },
+  {
     key: "faq",
     href: "/portal/faq",
     icon: HelpCircle,
@@ -106,6 +112,7 @@ const translations = {
     technology: "Teknologi Budidaya",
     krasty: "Krasty",
     trading: "Trading",
+    akuatur: "Akuatur",
     partnerships: "Kemitraan",
     partnerList: "Daftar Partner",
     partnershipProjects: "Proyek Kemitraan",
@@ -132,6 +139,7 @@ const translations = {
     technology: "Aquaculture Technology",
     krasty: "Krasty",
     trading: "Trading",
+    akuatur: "Akuatur",
     partnerships: "Partnerships",
     partnerList: "Partner List",
     partnershipProjects: "Partnership Projects",

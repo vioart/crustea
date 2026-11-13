@@ -21,8 +21,8 @@ const productLinks = [
 
 const serviceLinks = [
   { key: "consultation", href: "/kontak" },
-  { key: "calculator", href: "/produk/kalkulator-budidaya" },
-  { key: "solar-calculator", href: "/produk/kalkulator-plts" },
+  { key: "calculator", href: "/layanan/kalkulator-budidaya" },
+  { key: "solar-calculator", href: "/layanan/kalkulator-plts" },
 ] as const;
 
 const companyLinks = [
