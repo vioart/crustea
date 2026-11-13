@@ -1,4 +1,3 @@
-
 import type { Metadata } from "next";
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/geist-mono";
@@ -24,8 +23,7 @@ export default function RootLayout({
       <body
         className="min-h-full flex flex-col"
         style={{
-          fontFamily:
-            '"Bricolage Grotesque Variable", sans-serif',
+          fontFamily: '"Bricolage Grotesque Variable", sans-serif',
         }}
       >
         {children}
